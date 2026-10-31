@@ -1,0 +1,10 @@
+# Cloudflare Pages response headers.
+# Fictional sample LPs are also noindexed by a meta tag; the header covers
+# anything under /lp/ that is not HTML.
+/lp/*
+  X-Robots-Tag: noindex
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY

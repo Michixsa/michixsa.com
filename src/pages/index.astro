@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorkCard from '../components/WorkCard.astro';
+import { getSortedWorks } from '../data/site';
+
+const featured = (await getSortedWorks()).filter((work) => work.data.featured);
+
+const services = [
+  {
+    title: 'インフラの設計・構築',
+    body: 'Linux サーバの構築から、オンプレミスとクラウドの間の移行まで。サービスを止めない切り替え手順を設計します。',
+  },
+  {
+    title: '監視の設計・監視基盤の構築',
+    body: 'Zabbix を中心に、サービスの要件から監視の間隔や通知を逆算して設計します。複数の顧客をまとめて見るマルチテナント構成も経験があります。',
+  },
+  {
+    title: '構築の自動化・AI を使った業務の自動化',
+    body: 'Ansible や NixOS で、サーバの構築を何度でも同じ結果になる手順に置き換えます。AI エージェントを安全に動かす基盤も個人で作っています。',
+  },
+];
+
+const principles = [
+  {
+    title: '作って終わりにしない',
+    body: '手順やテンプレートを標準化し、自分がいなくても回る形にしてお渡しします。',
+  },
+  {
+    title: '要件から逆算する',
+    body: 'ツールを入れることを目的にせず、「何を守りたいか」から設定値や構成を決めます。',
+  },
+  {
+    title: '止めずに変える',
+    body: '移行や入れ替えは、既存のメンテナンス時間に合わせて切り替え、追加の停止を出さない進め方を取ります。',
+  },
+];
+---
+
+<BaseLayout>
+  <section class="hero container">
+    <p class="hero__eyebrow">フリーランス・インフラエンジニア</p>
+    <h1>インフラの設計・構築と、<br /><span class="highlight">AI を使った業務の自動化</span></h1>
+    <p class="lead">
+      通信系の企業で約6年、監視基盤の立ち上げや無停止でのサーバ移行を担当してきました。現在は
+      Ansible / NixOS による構築の自動化と、AI エージェントの実行基盤づくりに取り組んでいます。
+    </p>
+    <div class="hero__actions">
+      <a class="button" href="/works/">実績を見る</a>
+      <a class="button button--ghost" href="/contact/">相談する</a>
+    </div>
+  </section>
+
+  <section class="container" aria-labelledby="services">
+    <h2 id="services">できること</h2>
+    <ul class="grid">
+      {
+        services.map((s) => (
+          <li class="panel">
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="container" aria-labelledby="featured">
+    <h2 id="featured">主な実績</h2>
+    <ul class="grid">
+      {
+        featured.map((work) => (
+          <li>
+            <WorkCard work={work} />
+          </li>
+        ))
+      }
+    </ul>
+    <p class="more"><a href="/works/">すべての実績を見る</a></p>
+  </section>
+
+  <section class="container" aria-labelledby="principles">
+    <h2 id="principles">大事にしていること</h2>
+    <ol class="grid principles">
+      {
+        principles.map((p) => (
+          <li class="panel">
+            <h3>{p.title}</h3>
+            <p>{p.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="container cta" aria-labelledby="cta">
+    <h2 id="cta">ご相談はこちらから</h2>
+    <p>
+      設計・構築フェーズや技術検証（PoC）など、まとまった単位のお仕事を中心にお受けしています。
+    </p>
+    <a class="button" href="/contact/">お問い合わせ方法を見る</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding-block: 1.5rem 1rem;
+  }
+
+  .hero__eyebrow {
+    margin: 0 0 0.5rem;
+    font-family: var(--mono);
+    color: var(--green);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .hero__eyebrow::before {
+    content: '> ';
+  }
+
+  .highlight {
+    color: var(--green);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .grid {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 720px) {
+    .grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+  }
+
+  .grid > li {
+    display: grid;
+    /* Equal-height boxes, but extra height goes below the text, not between rows. */
+    align-content: start;
+  }
+
+  .panel {
+    padding: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--green);
+    border-radius: var(--radius);
+  }
+
+  .panel h3 {
+    margin-top: 0;
+  }
+
+  .panel p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .principles {
+    counter-reset: principle;
+  }
+
+  .principles h3::before {
+    counter-increment: principle;
+    content: counter(principle) '. ';
+    font-family: var(--mono);
+    color: var(--green);
+  }
+
+  .more {
+    margin-top: 1rem;
+  }
+
+  .cta {
+    margin-top: 3rem;
+    padding-block: 0.5rem 1.5rem;
+  }
+</style>

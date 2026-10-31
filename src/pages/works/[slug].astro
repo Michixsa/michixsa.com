@@ -1,0 +1,168 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { badgeFor, kindLabels } from '../../data/site';
+
+export const getStaticPaths = (async () => {
+  const works = await getCollection('works');
+  return works.map((work) => ({ params: { slug: work.id }, props: { work } }));
+}) satisfies GetStaticPaths;
+
+const { work } = Astro.props;
+const { title, summary, period, role, tech, kind, links, cover } = work.data;
+const { Content } = await render(work);
+const isSample = kind === 'sample';
+const badge = badgeFor(work.data);
+---
+
+<BaseLayout title={title} description={summary} noindex={isSample}>
+  <article class="container work">
+    <p class="back"><a href="/works/">← 実績一覧へ</a></p>
+    <header>
+      <p class="meta">
+        <span class:list={['badge', `badge--${badge.tone}`]}>{badge.label}</span>
+        {!isSample && <span>{kindLabels[kind]}</span>}
+      </p>
+      <h1>{title}</h1>
+      <p class="lead">{summary}</p>
+    </header>
+
+    {
+      isSample && (
+        <p class="notice">
+          このページは<strong>架空のサンプル</strong>
+          の解説です。登場する店舗・企業は実在せず、受託案件でもありません。制作の考え方を示すための作例です。
+        </p>
+      )
+    }
+
+    {cover && <img class="cover" src={cover} alt="" width="760" height="428" />}
+
+    <dl class="facts">
+      <div>
+        <dt>期間</dt>
+        <dd>{period}</dd>
+      </div>
+      <div>
+        <dt>担当</dt>
+        <dd>{role}</dd>
+      </div>
+      <div>
+        <dt>使用技術</dt>
+        <dd>
+          <ul class="tags">{tech.map((t) => <li>{t}</li>)}</ul>
+        </dd>
+      </div>
+    </dl>
+
+    {
+      links && links.length > 0 && (
+        <ul class="links">
+          {links.map((link) => (
+            <li>
+              <a
+                class="button button--ghost"
+                href={link.href}
+                data-astro-reload={link.href.startsWith('/lp/') ? true : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <p class="back"><a href="/works/">← 実績一覧へ</a></p>
+  </article>
+</BaseLayout>
+
+<style>
+  .work {
+    max-width: 760px;
+  }
+
+  .back {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+  }
+
+  .back a {
+    display: inline-block;
+    padding-block: 0.6rem;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 0.5rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  .notice {
+    margin-top: 1.5rem;
+  }
+
+  .cover {
+    display: block;
+    margin-top: 1.5rem;
+    border-radius: var(--radius);
+  }
+
+  .facts {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--green);
+    border-radius: var(--radius);
+  }
+
+  .facts div {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  @media (min-width: 560px) {
+    .facts div {
+      grid-template-columns: 6rem 1fr;
+    }
+  }
+
+  .facts dt {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .facts dd {
+    margin: 0;
+  }
+
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .prose :global(h2) {
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .prose :global(li) {
+    margin-block: 0.25rem;
+  }
+</style>

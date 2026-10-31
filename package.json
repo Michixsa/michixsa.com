@@ -1,0 +1,30 @@
+{
+  "name": "portfolio",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check",
+    "lint:typos": "typos",
+    "lint:links": "lychee --no-progress --root-dir \"$PWD/dist\" \"dist/**/*.html\"",
+    "lighthouse": "lhci autorun --config=lighthouserc.json && lhci autorun --config=lighthouserc.lp.json",
+    "verify": "bun run check && bun run build && bun run lint:typos && bun run lint:links && bun run lighthouse"
+  },
+  "dependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "astro": "^7.4.4"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@lhci/cli": "^0.15.1",
+    "typescript": "^6"
+  },
+  "packageManager": "bun@1.4.3"
+}

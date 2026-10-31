@@ -1,0 +1,69 @@
+# エージェント向けの指示
+
+このリポジトリは asktt1770 のフリーランス用ポートフォリオサイトです。CrowdWorks・ココナラ・SOKUDAN・ランサーズで仕事を受けるため、クライアントから求められる「実績」と「ポートフォリオ」に、リンク1つで答えることを目的としています。オーナーは Web 開発者ではないため、判断の理由はオーナーにわかりやすい日本語で説明してください。
+
+## 言語のルール
+
+このリポジトリでは、グローバル設定の「英語で書く」ルールより、次のルールを優先します。
+
+- **日本語で書くもの**：README・AGENTS.md などのドキュメント、コミットメッセージ、PR、Issue
+- **英語で書くもの**：コードのコメント、識別子（変数名・関数名・ファイル名など）
+- **サイトの文章**：日本語
+
+## 公開するかどうかはオーナーが決める
+
+- 作業はローカルでのビルドと確認までとします。オーナーがその作業の中でその操作をはっきり指示しない限り、push、PR の作成、リリースの作成をせず、GitHub（リポジトリ設定・シークレット・公開範囲）や Cloudflare も変更しないでください。
+- 指示がない限りコミットしないでください。オーナーが1つの差分としてまとめて確認できるよう、変更は作業ツリーに残します。
+- アップロードが許可されたあとは、ブランチを切って PR を出します。`main` へ直接 push しないでください。
+- ステージするときはパスを明示します（`git add <path> …`）。`git add -A`、`git add .`、`git add -u`、`git commit -a` は使いません。
+
+## 正直さのルール（必ず守る）
+
+- 経験として書いてよいのは、オーナーの非公開プロフィール（`~/ghq/github.com/Michixsa/jobs/private/profile/` の `職務経歴書.md` と `応募の基本情報.md`）に書かれていることだけです。プロフィールはその場所で読み、フォルダやその中のファイルをこのリポジトリへコピーしないでください。経験・スキル・数値・成果を作ったり、盛ったりしないでください。
+- このフォルダには個人情報が含まれます。初期状態では匿名化します。実名、勤務先名、顧客名、具体的な数値（顧客数・サーバ台数など）は書きません。プロフィールをもとにした文章は公開前にオーナーが確認するため、使った箇所はすべて報告してください。
+- オーナーには Web 制作の実務実績がありません。このサイトやサンプル LP を受託実績として見せないでください。
+- すべての実績に `kind` を設定します。
+  - `client`：実際の受託案件。見せてよいのはスクリーンショットとリンクだけで、クライアントの許可がある場合に限ります。
+  - `employment`：会社員として担当した業務。勤務先と顧客は匿名にします。
+  - `personal`：オーナー自身のプロジェクト。
+  - `sample`：架空の作例。LP 本体とその解説の両方に「架空のサンプル」と表示し、両方に `noindex` を付けます。
+- 実在の実績（`sample` 以外）には `status`（`active`：稼働中、`completed`：完了）を必ず設定し、`sample` には設定しません。カードのバッジは `kind` と `status` から自動で決まります。
+- サンプル LP には架空の名前と住所（例：`〒000-0000 架空県…`）を使います。実在する店舗や企業の名前・ロゴ・情報は使わないでください。
+- サンプル LP には AI で生成した画像を使ってかまいません。その場合は、LP 本体と解説ページの両方に「AI で生成した画像」であることを書きます。文字・看板・ロゴ・実在の人物に見えるものは生成させず、使う前に1枚ずつ目で確認してください。画像は `src/assets/lp/<name>/` に置き、`astro:assets` の `<Picture>` で AVIF に変換して読み込みます。
+
+## 構成と決まりごと
+
+- Astro（静的出力）、TypeScript strict、Bun を使います。`npm` / `npx` ではなく `bun` / `bunx` を使ってください。
+- 実績は `src/content/works/` に1件1ファイルの Markdown で書き、`src/content.config.ts` のスキーマで検証します。必須項目が欠けたらビルドが失敗するようにしてください。
+- ポートフォリオのページは `src/layouts/BaseLayout.astro`（ヘッダー・テーマ・View Transitions）を使います。
+- `src/pages/lp/<name>/` のサンプル LP は、HTML 全体とスタイルを自分で持ちます。ポートフォリオのレイアウトや `src/styles/global.css` は読み込まないでください。
+- 各 LP には、目的・構成・デザインの判断を説明する `kind: sample` の解説ページを対応させます。
+- LP へのリンクには `data-astro-reload` を付け、View Transitions を使わずにページ全体を読み込み直すようにします。
+- モバイルファーストで作ります。狭い画面向けのスタイルを先に書き、`min-width` のメディアクエリで広げます。タップできる部分は 48px 以上にします。
+- ページは軽く保ちます。Web フォント、重い 3D やアニメーション、CMS・管理画面・データベースは使いません。
+
+## チェック
+
+作業を返す前に、次をすべて通してください。
+
+```sh
+bun run check        # astro check
+bun run build
+typos
+bun run lint:links   # dist/ に対して lychee を実行
+bun run lighthouse   # 4項目すべて 100 点（モバイル）
+```
+
+`bun run verify` で上から順にまとめて実行できます。CI（`.github/workflows/ci.yml`）も、PR ごとに同じチェックを実行します。
+
+## Astro
+
+開発サーバーは `astro dev --background` でバックグラウンド起動し、`astro dev stop`、`astro dev status`、`astro dev logs` で管理します。
+
+ドキュメント：<https://docs.astro.build>。作業の前に、関係するガイドを確認してください。
+
+- [ルーティング](https://docs.astro.build/en/guides/routing/)
+- [Astro コンポーネント](https://docs.astro.build/en/basics/astro-components/)
+- [コンテンツコレクション](https://docs.astro.build/en/guides/content-collections/)
+- [スタイリング](https://docs.astro.build/en/guides/styling/)
+- [View Transitions](https://docs.astro.build/en/guides/view-transitions/)

@@ -1,0 +1,81 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { badgeFor, kindLabels } from '../data/site';
+
+interface Props {
+  work: CollectionEntry<'works'>;
+  /** Heading level, so the card fits the outline of the page it sits on. */
+  headingLevel?: 2 | 3;
+}
+
+const { work, headingLevel = 3 } = Astro.props;
+const { title, summary, kind, tech, period } = work.data;
+const badge = badgeFor(work.data);
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
+---
+
+<article class="card">
+  <p class="card__meta">
+    <span class:list={['badge', `badge--${badge.tone}`]}>{badge.label}</span>
+    {kind !== 'sample' && <span>{kindLabels[kind]}</span>}
+    <span>{period}</span>
+  </p>
+  <Heading class="card__title">
+    <a href={`/works/${work.id}/`}>{title}</a>
+  </Heading>
+  <p class="card__summary">{summary}</p>
+  <ul class="tags" aria-label="使用技術">
+    {tech.slice(0, 5).map((t) => <li>{t}</li>)}
+  </ul>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition: border-color 0.2s;
+  }
+
+  .card:hover {
+    border-color: var(--green);
+  }
+
+  .card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.6rem;
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .card__title {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .card__title a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  /* Makes the whole card tappable while keeping one link in the tab order. */
+  .card__title a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .card__summary {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+</style>

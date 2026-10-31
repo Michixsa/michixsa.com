@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkCard from '../../components/WorkCard.astro';
+import { getSortedWorks, kindLabels, workKindOrder } from '../../data/site';
+
+const works = await getSortedWorks();
+const groups = workKindOrder
+  .map((kind) => ({ kind, works: works.filter((w) => w.data.kind === kind) }))
+  .filter((group) => group.works.length > 0);
+---
+
+<BaseLayout
+  title="実績"
+  description="asktt1770 の実績一覧。会社員時代の業務、個人開発、制作サンプルを、目的・構成・判断の理由とあわせて紹介しています。"
+>
+  <div class="container">
+    <h1>実績</h1>
+    <p class="lead">
+      それぞれのページで、目的・構成・判断の理由を説明しています。会社員時代の業務は、守秘義務のため会社名・顧客名・具体的な数値を伏せています。
+    </p>
+
+    {
+      groups.map((group) => (
+        <section aria-labelledby={`kind-${group.kind}`}>
+          <h2 id={`kind-${group.kind}`}>{kindLabels[group.kind]}</h2>
+          {group.kind === 'sample' && (
+            <p class="notice">
+              「架空のサンプル」は制作力を示すための作例です。実在の店舗・企業・案件ではありません。
+            </p>
+          )}
+          <ul class="list">
+            {group.works.map((work) => (
+              <li>
+                <WorkCard work={work} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  .list {
+    display: grid;
+    gap: 1rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 720px) {
+    .list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .list > li {
+    display: grid;
+  }
+</style>
