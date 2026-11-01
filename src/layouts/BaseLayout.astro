@@ -11,6 +11,9 @@ import '@fontsource/ibm-plex-sans/latin-700.css';
 import '@fontsource/ibm-plex-mono/latin-400.css';
 import '@fontsource/ibm-plex-mono/latin-700.css';
 import '../styles/global.css';
+// Body text starts in this face, so fetching it early keeps the font swap
+// from pushing back the largest paint.
+import bodyFont from '@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2?url';
 import { site } from '../data/site';
 
 interface Props {
@@ -45,6 +48,7 @@ const nav = [
     <meta property="og:description" content={description} />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#121812" media="(prefers-color-scheme: dark)" />
+    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <script is:inline>
