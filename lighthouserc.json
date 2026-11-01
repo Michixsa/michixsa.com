@@ -7,7 +7,7 @@
         "http://localhost/works/",
         "http://localhost/about/"
       ],
-      "numberOfRuns": 1
+      "numberOfRuns": 3
     },
     "assert": {
       "assertions": {
