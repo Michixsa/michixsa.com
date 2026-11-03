@@ -1,15 +1,28 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 
-/** Site-wide strings used by the portfolio layout and pages. */
+/** Site-wide strings for the michixsa team site. */
 export const site = {
-  name: 'asktt1770',
-  title: 'asktt1770 | インフラ設計・構築と業務自動化',
+  name: 'michixsa',
+  title: 'michixsa | 公開した日から、止まりにくく速いサイトを。',
   description:
-    'フリーランスのインフラエンジニア asktt1770 のポートフォリオ。監視基盤の設計・構築、無停止での移行、Ansible / NixOS による構築自動化の実績と、制作サンプルを掲載しています。',
+    'michixsa は、LP や小規模サイトの制作と、公開後の保守・運用を受ける小さなチームです。静的なサイトと自動チェックで、止まりにくく速いページを作ります。',
+  url: 'https://michixsa.com',
 } as const;
 
-/** Japanese labels for each `kind`, shown as badges. */
+export const mainNav = [
+  { href: '/works/', label: '制作サンプル' },
+  { href: '/about/', label: 'チーム' },
+  { href: '/contact/', label: 'お問い合わせ' },
+] as const;
+
+export const footerNav = [
+  { href: '/works/', label: '制作サンプル' },
+  { href: '/#terms', label: '料金の目安' },
+  { href: '/contact/', label: 'お問い合わせ' },
+] as const;
+
+/** Japanese labels for each `kind`, shown as group headings. */
 export const kindLabels: Record<CollectionEntry<'works'>['data']['kind'], string> = {
   client: '受託実績',
   employment: '会社員時代の業務',
@@ -41,11 +54,28 @@ export function badgeFor(
     : { label: '完了', tone: 'completed' };
 }
 
+/**
+ * Status badge, plus the AI-image badge when the work says its pictures are generated.
+ * Both use the sample badge colours so a sample never reads like client work.
+ *
+ * @param data - The work's validated frontmatter.
+ * @returns Badges in display order.
+ */
+export function badgesFor(
+  data: Pick<CollectionEntry<'works'>['data'], 'kind' | 'status' | 'aiImages'>,
+): WorkBadge[] {
+  const badges: WorkBadge[] = [badgeFor(data)];
+  if (data.aiImages) badges.push({ label: 'AI生成画像', tone: 'sample' });
+  return badges;
+}
+
 /** Order of the groups on the works page: real work first, samples last. */
 export const workKindOrder = ['client', 'employment', 'personal', 'sample'] as const satisfies readonly CollectionEntry<'works'>['data']['kind'][];
 
 /**
- * Returns every work in display order.
+ * Returns every published work in display order.
+ * Employment and personal infra notes are not in the collection: they are not
+ * the team's web-production portfolio.
  *
  * @returns Works sorted by `order`, then by title.
  * @example

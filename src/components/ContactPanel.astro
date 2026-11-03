@@ -1,0 +1,25 @@
+---
+import RichText from './RichText.astro';
+import { consultNote, contactChannelParts, inquiryPoints, replyText } from '../data/offer';
+
+interface Props {
+  /** Heading level for the "what to include" block, under the page's own title. */
+  subheading?: 'h2' | 'h3';
+}
+
+const { subheading = 'h2' } = Astro.props;
+const Subheading = subheading;
+---
+
+<div class="contact-panel">
+  <p class="lead">
+    <RichText parts={contactChannelParts} />
+  </p>
+  <p>{replyText}</p>
+  <p>{consultNote}</p>
+  <Subheading>ご相談の際に書いていただきたいこと</Subheading>
+  <ul>
+    {inquiryPoints.map((item) => <li>{item}</li>)}
+  </ul>
+  <p>要件が固まっていなくても、大丈夫です。</p>
+</div>

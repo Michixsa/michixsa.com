@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { badgeFor, kindLabels } from '../../data/site';
+import { badgesFor, kindLabels } from '../../data/site';
 
 export const getStaticPaths = (async () => {
   const works = await getCollection('works');
@@ -13,15 +13,15 @@ const { work } = Astro.props;
 const { title, summary, period, role, tech, kind, links, cover } = work.data;
 const { Content } = await render(work);
 const isSample = kind === 'sample';
-const badge = badgeFor(work.data);
+const badges = badgesFor(work.data);
 ---
 
 <BaseLayout title={title} description={summary} noindex={isSample}>
   <article class="container work">
-    <p class="back"><a href="/works/">← 実績一覧へ</a></p>
+    <p class="back"><a href="/works/">← 制作サンプルへ</a></p>
     <header>
       <p class="meta">
-        <span class:list={['badge', `badge--${badge.tone}`]}>{badge.label}</span>
+        {badges.map((badge) => <span class:list={['badge', `badge--${badge.tone}`]}>{badge.label}</span>)}
         {!isSample && <span>{kindLabels[kind]}</span>}
       </p>
       <h1>{title}</h1>
@@ -78,7 +78,7 @@ const badge = badgeFor(work.data);
       <Content />
     </div>
 
-    <p class="back"><a href="/works/">← 実績一覧へ</a></p>
+    <p class="back"><a href="/works/">← 制作サンプルへ</a></p>
   </article>
 </BaseLayout>
 
@@ -93,8 +93,9 @@ const badge = badgeFor(work.data);
   }
 
   .back a {
-    display: inline-block;
-    padding-block: 0.6rem;
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
   }
 
   .meta {
@@ -124,7 +125,7 @@ const badge = badgeFor(work.data);
     padding: 1rem 1.25rem;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-left: 3px solid var(--green);
+    border-left: 3px solid var(--accent);
     border-radius: var(--radius);
   }
 

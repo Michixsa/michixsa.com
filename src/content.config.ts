@@ -32,6 +32,8 @@ const works = defineCollection({
     tech: z.array(z.string().min(1)).min(1),
     kind: z.enum(workKinds),
     status: z.enum(workStatuses).optional(),
+    /** True when the work shows AI-generated images. Adds the AI生成画像 badge. */
+    aiImages: z.boolean().default(false),
     links: z
       .array(
         z.object({

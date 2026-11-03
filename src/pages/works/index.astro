@@ -10,13 +10,13 @@ const groups = workKindOrder
 ---
 
 <BaseLayout
-  title="実績"
-  description="asktt1770 の実績一覧。会社員時代の業務、個人開発、制作サンプルを、目的・構成・判断の理由とあわせて紹介しています。"
+  title="制作サンプル"
+  description="michixsa の制作サンプル。架空の作例について、目的・構成・デザインの判断を説明しています。受託実績ではありません。"
 >
   <div class="container">
-    <h1>実績</h1>
+    <h1>制作サンプル</h1>
     <p class="lead">
-      それぞれのページで、目的・構成・判断の理由を説明しています。会社員時代の業務は、守秘義務のため会社名・顧客名・具体的な数値を伏せています。
+      制作の考え方を示すための作例です。実在の店舗・企業・受託案件ではありません。
     </p>
 
     {
@@ -25,7 +25,7 @@ const groups = workKindOrder
           <h2 id={`kind-${group.kind}`}>{kindLabels[group.kind]}</h2>
           {group.kind === 'sample' && (
             <p class="notice">
-              「架空のサンプル」は制作力を示すための作例です。実在の店舗・企業・案件ではありません。
+              「架空のサンプル」は制作の考え方を示す作例です。実在の店舗・企業・案件ではありません。画像を使っている作例には「AI生成画像」と表示します。
             </p>
           )}
           <ul class="list">

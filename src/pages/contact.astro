@@ -1,23 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactPanel from '../components/ContactPanel.astro';
 ---
 
 <BaseLayout
   title="お問い合わせ"
-  description="asktt1770 へのお問い合わせ方法。このサイトを見つけたサービスのメッセージ機能からご連絡ください。"
+  description="michixsa へのお問い合わせ。ご相談とお見積もりは無料で、返信の目安は通常2営業日以内です。"
 >
   <div class="container narrow">
     <h1>お問い合わせ</h1>
-    <p class="lead">
-      お仕事のご相談は、このサイトを見つけたサービスのメッセージ機能からお送りください。内容を確認し、対応できるかどうかを含めてお返事します。
-    </p>
-
-    <h2>ご相談の際にお知らせいただきたいこと</h2>
-    <ul>
-      <li>解決したい課題と、今の構成（わかる範囲で構いません）</li>
-      <li>希望の時期と、おおよその期間</li>
-      <li>オンプレミス / クラウドなど、作業する環境</li>
-    </ul>
-    <p>まだ要件が固まっていない段階のご相談でも大丈夫です。</p>
+    <ContactPanel />
+    <p class="cta"><a class="button button--ghost" href="/#terms">料金の目安を見る</a></p>
   </div>
 </BaseLayout>
+
+<style>
+  .cta {
+    margin-top: 1.5rem;
+  }
+</style>

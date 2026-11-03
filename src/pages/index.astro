@@ -1,128 +1,181 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WorkCard from '../components/WorkCard.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+import RichText from '../components/RichText.astro';
 import { getSortedWorks } from '../data/site';
+import { faqs, priceIntro, prices, services, steps, strengths, terms } from '../data/offer';
 
-const featured = (await getSortedWorks()).filter((work) => work.data.featured);
-
-const services = [
-  {
-    title: 'インフラの設計・構築',
-    body: 'Linux サーバの構築から、オンプレミスとクラウドの間の移行まで。サービスを止めない切り替え手順を設計します。',
-  },
-  {
-    title: '監視の設計・監視基盤の構築',
-    body: 'Zabbix を中心に、サービスの要件から監視の間隔や通知を逆算して設計します。複数の顧客をまとめて見るマルチテナント構成も経験があります。',
-  },
-  {
-    title: '構築の自動化・AI を使った業務の自動化',
-    body: 'Ansible や NixOS で、サーバの構築を何度でも同じ結果になる手順に置き換えます。AI エージェントを安全に動かす基盤も個人で作っています。',
-  },
-];
-
-const principles = [
-  {
-    title: '作って終わりにしない',
-    body: '手順やテンプレートを標準化し、自分がいなくても回る形にしてお渡しします。',
-  },
-  {
-    title: '要件から逆算する',
-    body: 'ツールを入れることを目的にせず、「何を守りたいか」から設定値や構成を決めます。',
-  },
-  {
-    title: '止めずに変える',
-    body: '移行や入れ替えは、既存のメンテナンス時間に合わせて切り替え、追加の停止を出さない進め方を取ります。',
-  },
-];
+const samples = (await getSortedWorks()).filter((work) => work.data.kind === 'sample');
 ---
 
 <BaseLayout>
   <section class="hero container">
-    <p class="hero__eyebrow">フリーランス・インフラエンジニア</p>
-    <h1>インフラの設計・構築と、<br /><span class="highlight">AI を使った業務の自動化</span></h1>
+    <p class="hero__eyebrow">小さな Web 制作チーム</p>
+    <h1>公開した日から、<br /><span class="hero-line"><span class="highlight">止まりにくく速い</span>サイトを。</span></h1>
     <p class="lead">
-      通信系の企業で約6年、監視基盤の立ち上げや無停止でのサーバ移行を担当してきました。現在は
-      Ansible / NixOS による構築の自動化と、AI エージェントの実行基盤づくりに取り組んでいます。
+      michixsa は、LP や小規模なサイトの制作と、公開後の保守・運用をお受けします。静的な作りと、公開前の自動チェックで、表示の速さと止まりにくさを最初から織り込みます。
     </p>
-    <div class="hero__actions">
-      <a class="button" href="/works/">実績を見る</a>
-      <a class="button button--ghost" href="/contact/">相談する</a>
+    <div class="actions">
+      <a class="button" href="#contact">相談する</a>
+      <a class="button button--ghost" href="#terms">料金の目安</a>
     </div>
   </section>
 
-  <section class="container" aria-labelledby="services">
-    <h2 id="services">できること</h2>
+  <section class="container" id="strengths" aria-labelledby="strengths-heading">
+    <h2 id="strengths-heading">強み</h2>
     <ul class="grid">
       {
-        services.map((s) => (
+        strengths.map((item) => (
           <li class="panel">
-            <h3>{s.title}</h3>
-            <p>{s.body}</p>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
           </li>
         ))
       }
     </ul>
   </section>
 
-  <section class="container" aria-labelledby="featured">
-    <h2 id="featured">主な実績</h2>
+  <section class="container" id="scope" aria-labelledby="scope-heading">
+    <h2 id="scope-heading">対応範囲</h2>
     <ul class="grid">
       {
-        featured.map((work) => (
+        services.map((item) => (
+          <li class="panel">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="container" id="samples" aria-labelledby="samples-heading">
+    <h2 id="samples-heading">制作サンプル</h2>
+    <p class="notice">
+      掲載しているのは架空のサンプルです。実在の店舗・企業の案件ではなく、受託実績ではありません。画像を使っている作例には「AI生成画像」と表示します。
+    </p>
+    {
+      samples.length === 0 ? (
+        <p>掲載中の制作サンプルは、まだありません。</p>
+      ) : (
+        <ul class="grid">
+          {samples.map((work) => (
+            <li>
+              <WorkCard work={work} />
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <div class="actions">
+      <a class="button" href="#contact">相談する</a>
+    </div>
+  </section>
+
+  <section class="container" id="flow" aria-labelledby="flow-heading">
+    <h2 id="flow-heading">制作の流れ</h2>
+    <ol class="steps">
+      {
+        steps.map((step) => (
           <li>
-            <WorkCard work={work} />
-          </li>
-        ))
-      }
-    </ul>
-    <p class="more"><a href="/works/">すべての実績を見る</a></p>
-  </section>
-
-  <section class="container" aria-labelledby="principles">
-    <h2 id="principles">大事にしていること</h2>
-    <ol class="grid principles">
-      {
-        principles.map((p) => (
-          <li class="panel">
-            <h3>{p.title}</h3>
-            <p>{p.body}</p>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
           </li>
         ))
       }
     </ol>
   </section>
 
-  <section class="container cta" aria-labelledby="cta">
-    <h2 id="cta">ご相談はこちらから</h2>
-    <p>
-      設計・構築フェーズや技術検証（PoC）など、まとまった単位のお仕事を中心にお受けしています。
-    </p>
-    <a class="button" href="/contact/">お問い合わせ方法を見る</a>
+  <section class="container" id="terms" aria-labelledby="terms-heading">
+    <h2 id="terms-heading">料金の目安・取引条件</h2>
+    <p class="lead">{priceIntro}</p>
+    <ul class="prices">
+      {
+        prices.map((item) => (
+          <li>
+            <p class="price__name">{item.name}</p>
+            <p class="price">
+              <span class="price__label">目安（税込）</span>
+              <span class="price__figures">
+                {item.figures.map((figure, index) => (
+                  <>
+                    {index > 0 && <span class="price__joiner">{item.joiner}</span>}
+                    <span class="price__amount">{figure}</span>
+                  </>
+                ))}
+              </span>
+            </p>
+            {item.note && <p class="price__note">{item.note}</p>}
+            <p class="price__includes">{item.includes}</p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h3>取引条件</h3>
+    <dl class="terms">
+      {
+        terms.map((item) => (
+          <div>
+            <dt>{item.term}</dt>
+            <dd>{item.detail}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section class="container" id="faq" aria-labelledby="faq-heading">
+    <h2 id="faq-heading">よくある質問</h2>
+    <div class="faq">
+      {
+        faqs.map((item) => (
+          <details>
+            <summary>{item.question}</summary>
+            <p>
+              <RichText parts={item.parts} />
+            </p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="container" id="contact" aria-labelledby="contact-heading">
+    <h2 id="contact-heading">お問い合わせ</h2>
+    <ContactPanel subheading="h3" />
   </section>
 </BaseLayout>
 
 <style>
   .hero {
-    padding-block: 1.5rem 1rem;
+    padding-block: 0.5rem 0.5rem;
   }
 
   .hero__eyebrow {
     margin: 0 0 0.5rem;
-    font-family: var(--mono);
-    color: var(--green);
+    color: var(--accent);
     font-weight: 700;
     font-size: 0.9rem;
   }
 
-  .hero__eyebrow::before {
-    content: '> ';
+  .hero h1 {
+    overflow-wrap: normal;
+    /* Sized so the second line stays on one row, down to a 320px screen. */
+    font-size: clamp(1.25rem, 5.8vw, 2.4rem);
+    letter-spacing: 0.01em;
+  }
+
+  .hero-line {
+    white-space: nowrap;
   }
 
   .highlight {
-    color: var(--green);
+    color: var(--accent);
   }
 
-  .hero__actions {
+  .actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
@@ -137,28 +190,22 @@ const principles = [
     list-style: none;
   }
 
-  @media (min-width: 720px) {
-    .grid {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-  }
-
   .grid > li {
     display: grid;
-    /* Equal-height boxes, but extra height goes below the text, not between rows. */
     align-content: start;
   }
 
   .panel {
-    padding: 1.25rem;
+    padding: 1.15rem 1.2rem;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-top: 3px solid var(--green);
+    border-top: 3px solid var(--accent);
     border-radius: var(--radius);
   }
 
   .panel h3 {
-    margin-top: 0;
+    margin: 0 0 0.35rem;
+    color: var(--heading);
   }
 
   .panel p {
@@ -167,23 +214,197 @@ const principles = [
     font-size: 0.95rem;
   }
 
-  .principles {
-    counter-reset: principle;
+  #samples .notice {
+    margin-top: 0;
   }
 
-  .principles h3::before {
-    counter-increment: principle;
-    content: counter(principle) '. ';
+  .steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+  }
+
+  .steps li {
+    position: relative;
+    padding: 0.15rem 0 0.15rem 3.25rem;
+    margin: 0 0 1rem;
+  }
+
+  .steps li::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--main-soft);
+    color: var(--main);
     font-family: var(--mono);
-    color: var(--green);
+    font-weight: 700;
   }
 
-  .more {
-    margin-top: 1rem;
+  .steps h3 {
+    margin: 0;
   }
 
-  .cta {
-    margin-top: 3rem;
-    padding-block: 0.5rem 1.5rem;
+  .steps p {
+    margin: 0.15rem 0 0;
+    color: var(--muted);
+  }
+
+  .prices {
+    display: grid;
+    gap: 0.75rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .prices li {
+    padding: 1rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .price__name {
+    margin: 0;
+    font-weight: 700;
+    color: var(--heading);
+  }
+
+  .price {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    margin: 0.35rem 0 0.2rem;
+  }
+
+  .price__label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .price__figures {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.5rem;
+  }
+
+  .price__amount {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--heading);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .price__joiner {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .price__note {
+    margin: 0.15rem 0 0;
+    font-weight: 700;
+  }
+
+  .price__includes {
+    margin: 0.35rem 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .terms {
+    margin: 0;
+  }
+
+  .terms div {
+    display: grid;
+    gap: 0.2rem;
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .terms dt {
+    font-weight: 700;
+  }
+
+  .terms dd {
+    margin: 0;
+  }
+
+  .faq {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .faq details {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding-inline: 1rem;
+  }
+
+  .faq summary {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 48px;
+    padding-block: 0.6rem;
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq summary::after {
+    content: '+';
+    margin-left: auto;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .faq details[open] summary::after {
+    content: '–';
+  }
+
+  .faq p {
+    margin: 0 0 1rem;
+  }
+
+  @media (min-width: 720px) {
+    .grid {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem 1.5rem;
+    }
+
+    .prices {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .terms div {
+      grid-template-columns: 8rem 1fr;
+      gap: 1rem;
+      align-items: baseline;
+    }
   }
 </style>

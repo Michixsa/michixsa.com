@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { badgeFor, kindLabels } from '../data/site';
+import { badgesFor, kindLabels } from '../data/site';
 
 interface Props {
   work: CollectionEntry<'works'>;
@@ -10,13 +10,13 @@ interface Props {
 
 const { work, headingLevel = 3 } = Astro.props;
 const { title, summary, kind, tech, period } = work.data;
-const badge = badgeFor(work.data);
+const badges = badgesFor(work.data);
 const Heading = `h${headingLevel}` as 'h2' | 'h3';
 ---
 
 <article class="card">
   <p class="card__meta">
-    <span class:list={['badge', `badge--${badge.tone}`]}>{badge.label}</span>
+    {badges.map((badge) => <span class:list={['badge', `badge--${badge.tone}`]}>{badge.label}</span>)}
     {kind !== 'sample' && <span>{kindLabels[kind]}</span>}
     <span>{period}</span>
   </p>
@@ -35,15 +35,15 @@ const Heading = `h${headingLevel}` as 'h2' | 'h3';
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    height: 100%;
     padding: 1.25rem;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    transition: border-color 0.2s;
   }
 
   .card:hover {
-    border-color: var(--green);
+    border-color: var(--accent);
   }
 
   .card__meta {
