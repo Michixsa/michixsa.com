@@ -24,9 +24,9 @@ export const footerNav = [
 
 /** Japanese labels for each `kind`, shown as group headings. */
 export const kindLabels: Record<CollectionEntry<'works'>['data']['kind'], string> = {
-  client: '受託実績',
-  employment: '会社員時代の業務',
-  personal: '個人開発',
+  client: '受託案件',
+  employment: '担当した業務',
+  personal: '自主制作',
   sample: '架空のサンプル',
 };
 
