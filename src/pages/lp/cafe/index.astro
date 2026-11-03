@@ -6,7 +6,7 @@
  * The shop does not exist; every page view says so and it is noindexed.
  * The photo-style images are AI-generated, and the page says that too.
  * They are not photographs of a real shop, person, or dish.
- * Hero and banner sources are 1152px wide, so generated widths stop at 800.
+ * Hero and banner sources are 1152px wide, so that is the largest generated width.
  */
 import { Picture } from 'astro:assets';
 import hero from '../../../assets/lp/cafe/hero.webp';
@@ -160,7 +160,7 @@ const hours = [
             src={hero}
             formats={['avif']}
             fallbackFormat="webp"
-            widths={[480, 800]}
+            widths={[480, 800, 1152]}
             sizes="(min-width: 860px) 58vw, 100vw"
             alt="朝の光が入る店内のカウンターで、ケトルからドリッパーにお湯を注いでいる手元"
             loading="eager"
@@ -281,7 +281,7 @@ const hours = [
             src={banner}
             formats={['avif']}
             fallbackFormat="webp"
-            widths={[480, 800]}
+            widths={[480, 800, 1152]}
             sizes="(min-width: 860px) 50vw, 100vw"
             alt="朝日が差し込む窓際の席に置かれた、コーヒーとバタートースト、開いた本"
           />
@@ -544,8 +544,9 @@ const hours = [
   }
 
   .sample-bar a {
-    display: inline-block;
-    padding-block: 0.3rem;
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
     color: var(--paper);
     text-decoration: underline;
   }
@@ -1303,8 +1304,15 @@ const hours = [
 
   .faq__q,
   .faq__a {
+    flex: none;
     font-weight: 800;
     color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* Sit beside the first line. Stretching would make the label as tall as a wrapped answer. */
+  .faq__a {
+    align-self: flex-start;
   }
 
   details p {
@@ -1386,7 +1394,8 @@ const hours = [
   }
 
   .footer a {
-    display: inline-block;
-    padding-block: 0.3rem;
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
   }
 </style>
