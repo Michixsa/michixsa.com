@@ -3,25 +3,28 @@
 export const TODAY = '2026-11-04';
 export const STORAGE_KEY = 'michixsa-demo-v1';
 
-export const statuses = [
-  'inquiry',
-  'survey',
-  'quote',
-  'won',
-  'working',
-  'done',
-  'cancel',
-] as const;
+export const statuses = ['inquiry', 'estimate', 'won', 'working', 'done', 'hold'] as const;
 export type Status = (typeof statuses)[number];
 
 export const statusLabel: Record<Status, string> = {
   inquiry: '問い合わせ',
-  survey: '現地調査',
-  quote: '見積もり',
+  estimate: '調査・見積',
   won: '受注',
   working: '工事中',
   done: '完了',
-  cancel: 'キャンセル',
+  hold: '保留',
+};
+
+const legacyStatus: Record<string, Status> = {
+  inquiry: 'inquiry',
+  survey: 'estimate',
+  quote: 'estimate',
+  estimate: 'estimate',
+  won: 'won',
+  working: 'working',
+  done: 'done',
+  cancel: 'hold',
+  hold: 'hold',
 };
 
 export const kinds = ['water', 'air', 'check'] as const;
@@ -63,6 +66,14 @@ export interface Job {
   due: string;
   yen: number;
   memo: string;
+  /** Clock time on the due date, stable for the sample. */
+  time: string;
+  /** Short fictional task name. */
+  topic: string;
+  /** Status to restore when leaving 保留. */
+  heldFrom?: Status;
+  alias?: string;
+  place?: string;
 }
 
 export interface LogItem {
@@ -72,6 +83,7 @@ export interface LogItem {
   what: string;
   before: string;
   after: string;
+  kind?: 'status' | 'edit' | 'csv';
 }
 
 export interface DemoState {
@@ -91,7 +103,23 @@ function rng(seed: number) {
 }
 
 const surnames = ['佐藤', '鈴木', '高橋', '田中', '伊藤', '渡辺', '山本', '中村', '小林', '加藤', '吉田', '山田', '佐々木', '山口', '松本', '井上', '木村', '林', '斎藤', '清水', '山崎', '森', '池田', '橋本', '阿部', '石川', '山下', '中島', '石井', '小川', '前田', '岡田', '長谷川', '藤田', '近藤', '後藤', '村上', '遠藤', '青木', '坂本'];
+const orgs = [
+  '月読ポンプ同好会（架空）',
+  '紺青どぶろっく管理室（架空）',
+  '銀河湯たんぽ会館（架空）',
+  'ねむのき観測小屋（架空）',
+  '紙飛行機倉庫組合（架空）',
+  '三毛猫水道クラブ（架空）',
+  '星屑ボイラー室（架空）',
+  '亀甲配管友の会（架空）',
+];
 const towns = ['みどり', 'さくら', 'かわべ', 'ひかり', 'みなみ', 'きた', 'まつ', 'うみ'];
+const topics: Record<Kind, string[]> = {
+  water: ['給水管', '排水', '蛇口'],
+  air: ['空調', '換気', '室外機'],
+  check: ['点検', '器具の確認', '定期の確認'],
+};
+const times = ['9:00', '10:30', '13:00', '14:30', '16:00'];
 
 export function buildCustomers(): Customer[] {
   const rand = rng(20261104);
@@ -100,9 +128,10 @@ export function buildCustomers(): Customer[] {
     const town = towns[Math.floor(rand() * towns.length)];
     const block = 1 + Math.floor(rand() * 9);
     const num = 1 + Math.floor(rand() * 20);
+    const org = i % 5 === 4 ? orgs[i % orgs.length] : '';
     return {
       id: `C-${n}`,
-      name: `${surnames[i % surnames.length]} 様`,
+      name: org || `${surnames[i % surnames.length]} 様`,
       phone: `000-0000-${String(1000 + i).slice(0, 4)}`,
       address: `〒000-0000 架空県サンプル市${town}${block}-${num}`,
     };
@@ -117,20 +146,25 @@ function addDays(iso: string, days: number): string {
 
 export function buildJobs(): Job[] {
   const rand = rng(42);
-  const flow: Status[] = ['inquiry', 'survey', 'quote', 'won', 'working', 'done', 'cancel'];
+  const flow: Status[] = ['inquiry', 'estimate', 'won', 'working', 'done', 'hold'];
   return Array.from({ length: 150 }, (_, i) => {
     const n = String(i + 1).padStart(3, '0');
     const status = flow[Math.floor(rand() * flow.length)];
     const dueOffset = Math.floor(rand() * 21) - 7;
+    const kind = kinds[Math.floor(rand() * kinds.length)];
+    const topic = topics[kind][Math.floor(rand() * topics[kind].length)];
     return {
       id: `K-${n}`,
       customerId: `C-${String((i % 80) + 1).padStart(3, '0')}`,
-      kind: kinds[Math.floor(rand() * kinds.length)],
+      kind,
       status,
       ownerId: users[Math.floor(rand() * users.length)].id,
       due: addDays(TODAY, dueOffset),
       yen: (2 + Math.floor(rand() * 18)) * 10000,
       memo: '架空のメモです。',
+      time: times[i % times.length],
+      topic,
+      heldFrom: status === 'hold' ? 'estimate' : undefined,
     };
   });
 }
@@ -140,10 +174,11 @@ export function buildLog(jobs: Job[]): LogItem[] {
     at: `${addDays(TODAY, -((i % 12) + 1))} 09:00`,
     user: users[i % users.length].name,
     jobId: job.id,
-    what: '状態',
-    before: '問い合わせ',
-    after: statusLabel[job.status],
-  }));
+      what: '状態',
+      before: '問い合わせ',
+      after: statusLabel[job.status],
+      kind: 'status' as const,
+    }));
 }
 
 export function seedState(): DemoState {
@@ -158,8 +193,18 @@ export function loadState(): DemoState {
     if (!raw) return seed;
     const saved = JSON.parse(raw) as Partial<DemoState>;
     if (!saved.jobs || !Array.isArray(saved.jobs)) return seed;
+    const jobs = saved.jobs.map((job, index) => {
+      const status = legacyStatus[String(job.status)] ?? 'inquiry';
+      return {
+        ...seed.jobs[index % seed.jobs.length],
+        ...job,
+        status,
+        time: job.time || times[index % times.length],
+        topic: job.topic || topics[job.kind]?.[0] || '点検',
+      };
+    });
     return {
-      jobs: saved.jobs,
+      jobs,
       log: saved.log ?? seed.log,
       userId: saved.userId ?? seed.userId,
     };
@@ -180,11 +225,18 @@ export function userById(id: string): User {
   return users.find((item) => item.id === id) ?? users[0];
 }
 
+export const flow: Status[] = ['inquiry', 'estimate', 'won', 'working', 'done'];
+
 export function nextStatus(status: Status): Status | null {
-  const order: Status[] = ['inquiry', 'survey', 'quote', 'won', 'working', 'done'];
-  const index = order.indexOf(status);
-  if (index < 0 || index === order.length - 1) return null;
-  return order[index + 1];
+  const index = flow.indexOf(status);
+  if (index < 0 || index === flow.length - 1) return null;
+  return flow[index + 1];
+}
+
+export function prevStatus(status: Status): Status | null {
+  const index = flow.indexOf(status);
+  if (index <= 0) return null;
+  return flow[index - 1];
 }
 
 export function weekDays(anchor = TODAY): string[] {
