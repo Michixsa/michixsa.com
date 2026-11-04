@@ -46,16 +46,20 @@ flowchart LR
 src/
 ├─ pages/
 │  ├─ index.astro            # トップページ
-│  ├─ works/index.astro      # 制作サンプル一覧
-│  ├─ works/[slug].astro     # サンプルの解説
-│  ├─ about.astro            # チームについて（個人の紹介は載せない）
-│  ├─ contact.astro          # お問い合わせ
-│  └─ lp/<name>/index.astro  # 独立したサンプル LP
-├─ content/works/*.md        # 制作サンプル（1件1ファイル）
-├─ layouts/BaseLayout.astro  # チームサイトのレイアウト（サンプル LP は使わない）
-├─ data/site.ts              # サイト名、ナビゲーション、バッジ
-├─ data/offer.ts             # 料金の目安・取引条件・FAQ
-└─ content.config.ts         # 制作サンプルの zod スキーマ
+│  ├─ works/                 # 作れるものの例
+│  ├─ pricing.astro          # 料金と取引条件
+│  ├─ partners.astro         # 同業者さまへ
+│  ├─ about.astro            # チーム（個人の紹介は載せない）
+│  ├─ faq.astro              # よくある質問
+│  ├─ contact.astro          # メール（info@michixsa.com）
+│  ├─ privacy.astro
+│  ├─ demo/clinic-admin/     # 架空の予約管理画面
+│  └─ lp/<name>/             # 独立したサンプル LP
+├─ content/works/*.md
+├─ layouts/BaseLayout.astro
+├─ data/site.ts
+├─ data/offer.ts
+└─ content.config.ts
 ```
 
 トップページの並びは、最初の画面、強み、対応範囲、制作サンプル、制作の流れ、料金の目安・取引条件、よくある質問、お問い合わせです。

@@ -4,11 +4,17 @@ import { getCollection } from 'astro:content';
 /** Site-wide strings for the michixsa team site. */
 export const site = {
   name: 'michixsa',
-  title: 'michixsa | 公開した日から、止まりにくく速いサイトを。',
+  title: 'michixsa｜途中からでも、はじめからでも。Web制作・システム開発・サーバー運用',
   description:
-    'michixsa は、LP や小規模サイトの制作と、公開後の保守・運用を受ける小さなチームです。静的なサイトと自動チェックで、止まりにくく速いページを作ります。',
+    'michixsaは、ホームページの制作、業務システム・管理画面の開発と改修、サーバー・クラウドの構築と移転、公開後の保守・運用までをお受けする少人数のチームです。全国オンライン対応。',
   url: 'https://michixsa.com',
+  email: 'info@michixsa.com',
 } as const;
+
+/** mailto with a subject and a short body template. */
+export function mailHref(subject: string, body: string): string {
+  return `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
 export const mainNav = [
   { href: '/works/', label: '制作サンプル' },

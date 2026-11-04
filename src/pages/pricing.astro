@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { incidentNote, priceGroups, priceIntro, terms } from '../data/offer';
+import { mailHref } from '../data/site';
+
+const consultHref = mailHref('ご相談', '作りたいもの：\n希望の時期：\n');
+---
+
+<BaseLayout
+  title="料金の目安"
+  description="michixsa の料金の目安と取引条件です。金額は税込の目安で、内容を伺ってからお見積もりします。"
+>
+  <div class="page-hero">
+    <div class="wrap">
+      <h1 class="sec-title">料金の目安</h1>
+      <p class="lead">{priceIntro}</p>
+    </div>
+  </div>
+  <section class="page-section" aria-labelledby="price-tables">
+    <div class="wrap">
+      <h2 id="price-tables" class="visually-hidden">料金の表</h2>
+      <div class="price-groups">
+        {
+          priceGroups.map((group) => (
+            <table class="price-table">
+              <caption>{group.caption}</caption>
+              <tbody>
+                {group.rows.map((row) => (
+                  <tr>
+                    <th scope="row">{row.name}</th>
+                    <td>{row.price}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ))
+        }
+      </div>
+      <p class="notice" style="margin-top:24px">{incidentNote}</p>
+      <p style="margin-top:16px">ドメイン・サーバーの実費は、お客様のご負担です。契約の名義は、原則としてお客様です。</p>
+    </div>
+  </section>
+  <section id="terms" aria-labelledby="h-terms">
+    <div class="wrap wrap-narrow">
+      <h2 id="h-terms" class="sec-title">取引条件</h2>
+      <dl class="terms-block">
+        {
+          terms.map((item) => (
+            <div>
+              <dt>{item.term}</dt>
+              <dd>{item.detail}</dd>
+            </div>
+          ))
+        }
+      </dl>
+      <p style="margin-top:24px"><a class="btn btn-primary" href={consultHref}>メールで相談する</a></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

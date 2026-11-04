@@ -18,7 +18,7 @@ const badges = badgesFor(work.data);
 
 <BaseLayout title={title} description={summary} noindex={isSample}>
   <article class="container work">
-    <p class="back"><a href="/works/">← 制作サンプルへ</a></p>
+    <p class="back"><a href="/works/">← 作れるものの例へ</a></p>
     <header>
       <p class="meta">
         {badges.map((badge) => <span class:list={['badge', `badge--${badge.tone}`]}>{badge.label}</span>)}
@@ -78,7 +78,7 @@ const badges = badgesFor(work.data);
       <Content />
     </div>
 
-    <p class="back"><a href="/works/">← 制作サンプルへ</a></p>
+    <p class="back"><a href="/works/">← 作れるものの例へ</a></p>
   </article>
 </BaseLayout>
 

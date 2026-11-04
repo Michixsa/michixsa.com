@@ -1,62 +1,93 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import WorkCard from '../../components/WorkCard.astro';
-import { getSortedWorks, kindLabels, workKindOrder } from '../../data/site';
-
-const works = await getSortedWorks();
-const groups = workKindOrder
-  .map((kind) => ({ kind, works: works.filter((w) => w.data.kind === kind) }))
-  .filter((group) => group.works.length > 0);
+import hero from '../../assets/lp/cafe/hero.webp';
+import { upcomingSamples } from '../../data/offer';
 ---
 
 <BaseLayout
-  title="制作サンプル"
-  description="michixsa の制作サンプル。架空の作例について、目的・構成・デザインの判断を説明しています。受託実績ではありません。"
+  title="作れるものの例"
+  description="michixsa の作れるものの例です。架空のサンプルで、受託実績ではありません。"
 >
-  <div class="container">
-    <h1>制作サンプル</h1>
-    <p class="lead">
-      制作の考え方を示すための作例です。実在の店舗・企業・受託案件ではありません。
-    </p>
-
-    {
-      groups.map((group) => (
-        <section aria-labelledby={`kind-${group.kind}`}>
-          <h2 id={`kind-${group.kind}`}>{kindLabels[group.kind]}</h2>
-          {group.kind === 'sample' && (
-            <p class="notice">
-              「架空のサンプル」は制作の考え方を示す作例です。実在の店舗・企業・案件ではありません。画像を使っている作例には「AI生成画像」と表示します。
-            </p>
-          )}
-          <ul class="list">
-            {group.works.map((work) => (
-              <li>
-                <WorkCard work={work} />
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))
-    }
+  <div class="page-hero">
+    <div class="wrap">
+      <h1 class="sec-title">作れるものの例</h1>
+      <p class="lead">
+        業種ごとに目的を決めて作った架空のサンプルです。実在の店舗・企業の案件ではなく、受託実績ではありません。
+      </p>
+    </div>
   </div>
+  <section class="works page-section">
+    <div class="wrap">
+      <div class="work-grid">
+        <article class="work-card work-feature">
+          <a class="work-link" href="/works/sample-cafe-lp/">
+            <div class="work-thumb">
+              <Image
+                src={hero}
+                alt=""
+                widths={[480, 768]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                format="avif"
+                quality={50}
+                loading="lazy"
+              />
+              <span class="tag-sample">架空のサンプル</span>
+            </div>
+            <div class="work-body">
+              <p class="work-meta"><span class="cat">カフェ</span><span class="type">LP・1ページ</span></p>
+              <h2>珈琲 ゆうまど</h2>
+              <p>写真を主役に、営業時間とアクセスまで迷わず届けるカフェのLP。</p>
+              <p class="work-note">写真はAI生成画像です</p>
+            </div>
+          </a>
+        </article>
+        {
+          upcomingSamples.map((item) => (
+            <article class="work-card soon">
+              <div class="work-link">
+                <div class="work-thumb">
+                  <div class="ph"><span>準備中</span></div>
+                  <span class="tag-sample">架空のサンプル</span>
+                </div>
+                <div class="work-body">
+                  <p class="work-meta">
+                    <span class="cat">{item.cat}</span>
+                    <span class="type">{item.type}</span>
+                  </p>
+                  <h2>{item.name}</h2>
+                  <p>{item.body}</p>
+                  <p class="soon-label">準備中</p>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+        <article class="work-card">
+          <a class="work-link" href="/works/sample-clinic-admin/">
+            <div class="work-thumb">
+              <div class="ph"><span>予約管理の画面</span></div>
+              <span class="tag-sample">架空のサンプル</span>
+            </div>
+            <div class="work-body">
+              <p class="work-meta"><span class="cat">業務システム</span><span class="type">管理画面・4画面</span></p>
+              <h2>かさね台整骨院 予約管理</h2>
+              <p>院の側が使う予約の画面です。名前も予約もデモデータです。</p>
+              <p class="work-note">画面の名前・予約はすべてデモデータです</p>
+            </div>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
-  .list {
-    display: grid;
-    gap: 1rem;
-    margin: 1rem 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  @media (min-width: 720px) {
-    .list {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .list > li {
-    display: grid;
+  .work-body h2 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--main);
+    line-height: 1.45;
+    margin-bottom: 6px;
   }
 </style>

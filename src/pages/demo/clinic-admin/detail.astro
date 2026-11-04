@@ -1,0 +1,30 @@
+---
+import DemoLayout from '../../../layouts/DemoLayout.astro';
+---
+
+<DemoLayout title="予約の詳細" current="detail">
+  <dl class="facts">
+    <div><dt>日時</dt><dd>10月14日（水）10:30</dd></div>
+    <div><dt>お名前</dt><dd>高橋 様</dd></div>
+    <div><dt>メニュー</dt><dd>自費施術 60分</dd></div>
+    <div><dt>連絡先</dt><dd>000-0000-0000</dd></div>
+    <div><dt>メモ</dt><dd>駐車場を使います</dd></div>
+  </dl>
+  <p class="actions">
+    <span class="fake">変更</span>
+    <span class="fake">キャンセル</span>
+  </p>
+  <p class="muted">ボタンは見た目だけです。この画面では保存されません。</p>
+  <p><a href="/demo/clinic-admin/">今日の予約へ戻る</a></p>
+</DemoLayout>
+
+<style>
+  .facts { margin: 0 0 16px; }
+  .facts div { display: grid; gap: 4px; padding: 10px 0; border-bottom: 1px solid #e3e9ee; }
+  .facts dt { font-weight: 800; }
+  .facts dd { margin: 0; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  @media (min-width: 560px) {
+    .facts div { grid-template-columns: 8rem 1fr; }
+  }
+</style>

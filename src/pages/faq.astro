@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { faqMore, faqs } from '../data/offer';
+
+const all = [...faqs, ...faqMore];
+---
+
+<BaseLayout
+  title="よくある質問"
+  description="相談の費用、デザインだけの依頼、他社が作ったシステムの改修、障害対応、遠方からの依頼について。"
+>
+  <div class="page-hero">
+    <div class="wrap wrap-narrow">
+      <h1 class="sec-title">よくある質問</h1>
+    </div>
+  </div>
+  <section class="faq page-section" aria-labelledby="h-faq">
+    <div class="wrap wrap-narrow">
+      <h2 id="h-faq" class="visually-hidden">質問と答え</h2>
+      {
+        all.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>
+              {item.a}
+              {item.q.startsWith('制作会社') && (
+                <>
+                  {' '}
+                  <a href="/partners/">同業者さまへ</a>
+                </>
+              )}
+            </p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .faq a {
+    color: var(--accent-ink);
+    font-weight: 700;
+  }
+</style>

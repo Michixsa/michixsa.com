@@ -1,0 +1,164 @@
+---
+/**
+ * Standalone screens for the fictional clinic admin sample.
+ * Does not use the team site layout or global.css.
+ */
+interface Props {
+  title: string;
+  current: 'today' | 'week' | 'detail' | 'news';
+}
+
+const { title, current } = Astro.props;
+const nav = [
+  { id: 'today', href: '/demo/clinic-admin/', label: '今日の予約' },
+  { id: 'week', href: '/demo/clinic-admin/week/', label: '1週間の予約表' },
+  { id: 'detail', href: '/demo/clinic-admin/detail/', label: '予約の詳細' },
+  { id: 'news', href: '/demo/clinic-admin/news/', label: 'お知らせ' },
+] as const;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}｜かさね台整骨院 予約管理（架空のサンプル）</title>
+    <meta name="robots" content="noindex" />
+    <meta
+      name="description"
+      content="架空のサンプルです。かさね台整骨院の予約管理画面に、デモデータを書き込んだ静的な見本です。保存はできません。"
+    />
+  </head>
+  <body>
+    <p class="banner">
+      架空のサンプル（デモデータ）。実在の院ではありません。この画面では保存されません。
+      <a href="/works/sample-clinic-admin/">解説を見る</a>
+    </p>
+    <div class="app">
+      <header class="top">
+        <p class="brand">かさね台整骨院　予約管理</p>
+        <p class="date">10月14日（水）</p>
+      </header>
+      <div class="body">
+        <nav aria-label="画面">
+          {
+            nav.map((item) => (
+              <a href={item.href} aria-current={item.id === current ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+        <main id="main">
+          <h1>{title}</h1>
+          <slot />
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    color-scheme: light;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI', Meiryo, sans-serif;
+    color: #1c2b36;
+    background: #eef3f6;
+    line-height: 1.7;
+  }
+  a { color: #17557f; }
+  a:focus-visible, button:focus-visible { outline: 3px solid #1e3a5f; outline-offset: 2px; }
+  .banner {
+    margin: 0;
+    padding: 12px 16px;
+    background: #14283f;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .banner a {
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    margin-left: 8px;
+  }
+  .app { max-width: 960px; margin: 16px auto; padding: 0 16px 32px; }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    background: #1f6fa8;
+    color: #fff;
+    padding: 14px 16px;
+    border-radius: 12px 12px 0 0;
+  }
+  .brand, .date { margin: 0; font-weight: 800; }
+  .body {
+    display: grid;
+    background: #fff;
+    border: 1px solid #d6e0e7;
+    border-top: 0;
+    border-radius: 0 0 12px 12px;
+  }
+  nav { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px; border-bottom: 1px solid #d6e0e7; }
+  nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #4b5d6b;
+    font-weight: 700;
+  }
+  nav a[aria-current='page'] { background: #e6f1f8; color: #17557f; }
+  main { padding: 16px; }
+  h1 { font-size: 22px; margin: 0 0 12px; line-height: 1.4; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 10px 8px; border-top: 1px solid #e3e9ee; vertical-align: top; }
+  th { color: #4b5d6b; font-weight: 700; }
+  .sum { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; padding: 0; list-style: none; }
+  .sum li { background: #f3f6f8; border-radius: 8px; padding: 8px 12px; }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #e6f1f8;
+    color: #17557f;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .tag.done { background: #eef1f0; color: #4a5662; }
+  .tag.chg { background: #fdf0d5; color: #7a4b00; }
+  .muted { color: #4b5d6b; }
+  .fake {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 2px solid #1f6fa8;
+    background: #fff;
+    color: #17557f;
+    font-weight: 800;
+  }
+  textarea {
+    width: 100%;
+    min-height: 140px;
+    font: inherit;
+    padding: 12px;
+    border: 1px solid #d6e0e7;
+    border-radius: 8px;
+    background: #f7fafc;
+  }
+  @media (min-width: 720px) {
+    .body { grid-template-columns: 200px 1fr; }
+    nav { flex-direction: column; border-bottom: 0; border-right: 1px solid #d6e0e7; }
+  }
+</style>

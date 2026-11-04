@@ -1,0 +1,39 @@
+---
+import DemoLayout from '../../../layouts/DemoLayout.astro';
+
+const rows = [
+  { time: '9:00', name: '佐藤 様', menu: '自費施術 30分', state: '来院済み', tone: 'done' },
+  { time: '9:30', name: '鈴木 様', menu: 'はじめての方', state: '来院済み', tone: 'done' },
+  { time: '10:30', name: '高橋 様', menu: '自費施術 60分', state: 'これから', tone: '' },
+  { time: '11:30', name: '田中 様', menu: '自費施術 30分', state: '日時変更', tone: 'chg' },
+  { time: '14:00', name: '空き', menu: '—', state: '空き', tone: '' },
+  { time: '15:00', name: '伊藤 様', menu: '自費施術 30分', state: 'これから', tone: '' },
+  { time: '16:00', name: '空き', menu: '—', state: '空き', tone: '' },
+];
+---
+
+<DemoLayout title="今日の予約" current="today">
+  <ul class="sum">
+    <li><strong>12</strong> 件の予約</li>
+    <li><strong>3</strong> 枠の空き</li>
+    <li><strong>1</strong> 件の変更</li>
+  </ul>
+  <table>
+    <thead>
+      <tr><th>時刻</th><th>お名前</th><th>メニュー</th><th>状態</th></tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row) => (
+          <tr>
+            <td>{row.time}</td>
+            <td>{row.name === '高橋 様' ? <a href="/demo/clinic-admin/detail/">{row.name}</a> : row.name}</td>
+            <td>{row.menu}</td>
+            <td><span class:list={['tag', row.tone]}>{row.state}</span></td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+  <p class="muted">名前もメニューもデモデータです。症状の欄はありません。</p>
+</DemoLayout>

@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { partnerPromises } from '../data/offer';
+import { mailHref } from '../data/site';
+
+const partnerHref = mailHref(
+  '【同業者さま】ご相談',
+  'ご依頼したい工程：\n希望の時期：\n秘密保持契約の要否：\n',
+);
+---
+
+<BaseLayout
+  title="同業者さまへ"
+  description="制作会社・開発会社さまからの下請けのご相談です。分業の範囲、秘密保持、名乗り方、料金の示し方をまとめています。"
+>
+  <div class="page-hero">
+    <div class="wrap wrap-narrow">
+      <h1 class="sec-title">同業者さまへ</h1>
+      <p class="lead">
+        制作会社・開発会社さまからのご依頼もお受けしています。システムの開発や改修、サーバーの構築と移転、公開後の保守など、必要な工程だけをお引き受けできます。
+      </p>
+    </div>
+  </div>
+  <section class="page-section">
+    <div class="wrap">
+      <ol class="partner-list">
+        {
+          partnerPromises.map((item) => (
+            <li>
+              <h2>{item.title}</h2>
+              <p>{item.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+  <section>
+    <div class="wrap wrap-narrow prose">
+      <h2>料金の示し方（仮）</h2>
+      <p class="notice">この欄の単価は仮です。ご依頼の内容を伺ってから、お見積もりします。</p>
+      <ul>
+        <li>時間単価 5,500円〜（仮・税込）</li>
+        <li>人日（8時間）40,000円〜（仮・税込）</li>
+        <li>作業範囲ごとの金額でもお見積もりします</li>
+      </ul>
+      <p>着手前に、分業の範囲と受け渡しの形を文書で決めます。秘密保持契約は、御社のひな形でもかまいません。</p>
+      <p>御社のお客様への名乗り方は、ご指示に合わせます。成果物を当方の作例として載せることはしません。</p>
+      <p>月単位でまとめて受けること、お支払いを元請けさまの締め日に合わせることは、【要確認】です。</p>
+      <p><a class="btn btn-primary" href={partnerHref}>メールで相談する</a></p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .partner-list h2 {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--main);
+    line-height: 1.45;
+    margin-bottom: 6px;
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .partner-list h2::before {
+    content: counter(pt, decimal-leading-zero);
+    font-size: 13px;
+    color: var(--accent-ink);
+    letter-spacing: 0.08em;
+  }
+</style>
