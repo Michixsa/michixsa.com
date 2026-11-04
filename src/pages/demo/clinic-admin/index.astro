@@ -14,8 +14,8 @@ const rows = [
 
 <DemoLayout title="今日の予約" current="today">
   <ul class="sum">
-    <li><strong>12</strong> 件の予約</li>
-    <li><strong>3</strong> 枠の空き</li>
+    <li><strong>5</strong> 件の予約</li>
+    <li><strong>2</strong> 枠の空き</li>
     <li><strong>1</strong> 件の変更</li>
   </ul>
   <table>
@@ -27,7 +27,7 @@ const rows = [
         rows.map((row) => (
           <tr>
             <td>{row.time}</td>
-            <td>{row.name === '高橋 様' ? <a href="/demo/clinic-admin/detail/">{row.name}</a> : row.name}</td>
+            <td>{row.name === '高橋 様' ? <a class="tap" href="/demo/clinic-admin/detail/">{row.name}</a> : row.name}</td>
             <td>{row.menu}</td>
             <td><span class:list={['tag', row.tone]}>{row.state}</span></td>
           </tr>

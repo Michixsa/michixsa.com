@@ -17,14 +17,15 @@ const badges = badgesFor(work.data);
 ---
 
 <BaseLayout title={title} description={summary} noindex={isSample}>
-  <article class="container work">
-    <p class="back"><a href="/works/">← 作れるものの例へ</a></p>
+  <article class="page-section">
+    <div class="wrap wrap-narrow work">
+    <p class="back"><a class="text-link" href="/works/">← 作れるものの例へ</a></p>
     <header>
       <p class="meta">
         {badges.map((badge) => <span class:list={['badge', `badge--${badge.tone}`]}>{badge.label}</span>)}
         {!isSample && <span>{kindLabels[kind]}</span>}
       </p>
-      <h1>{title}</h1>
+      <h1 class="sec-title">{title}</h1>
       <p class="lead">{summary}</p>
     </header>
 
@@ -62,7 +63,7 @@ const badges = badgesFor(work.data);
           {links.map((link) => (
             <li>
               <a
-                class="button button--ghost"
+                class="btn btn-ghost"
                 href={link.href}
                 data-astro-reload={link.href.startsWith('/lp/') ? true : undefined}
               >
@@ -78,13 +79,22 @@ const badges = badgesFor(work.data);
       <Content />
     </div>
 
-    <p class="back"><a href="/works/">← 作れるものの例へ</a></p>
+    <p class="back"><a class="text-link" href="/works/">← 作れるものの例へ</a></p>
+    </div>
   </article>
 </BaseLayout>
 
 <style>
   .work {
     max-width: 760px;
+    padding-bottom: 64px;
+  }
+
+  .work :global(pre) {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
 
   .back {
@@ -138,6 +148,24 @@ const badges = badgesFor(work.data);
     .facts div {
       grid-template-columns: 6rem 1fr;
     }
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .tags li {
+    background: var(--tint);
+    color: var(--accent-ink);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 6px;
   }
 
   .facts dt {

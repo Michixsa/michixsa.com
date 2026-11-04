@@ -101,11 +101,14 @@ const nav = [
   .brand, .date { margin: 0; font-weight: 800; }
   .body {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
     background: #fff;
     border: 1px solid #d6e0e7;
     border-top: 0;
     border-radius: 0 0 12px 12px;
   }
+  main { min-width: 0; }
   nav { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px; border-bottom: 1px solid #d6e0e7; }
   nav a {
     display: inline-flex;
@@ -157,8 +160,10 @@ const nav = [
     border-radius: 8px;
     background: #f7fafc;
   }
+  textarea:focus-visible { outline: 3px solid #1e3a5f; outline-offset: 2px; }
+  a.tap { display: inline-flex; align-items: center; min-height: 48px; }
   @media (min-width: 720px) {
-    .body { grid-template-columns: 200px 1fr; }
+    .body { grid-template-columns: 200px minmax(0, 1fr); }
     nav { flex-direction: column; border-bottom: 0; border-right: 1px solid #d6e0e7; }
   }
 </style>

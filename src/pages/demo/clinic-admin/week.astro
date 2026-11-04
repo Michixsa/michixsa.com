@@ -11,6 +11,7 @@ const filled: Record<string, string> = {
   '水-9:00': '予約',
   '水-10:00': '予約',
   '水-11:00': '予約',
+  '水-15:00': '予約',
   '金-15:00': '予約',
   '土-9:00': '予約',
   '土-10:00': '予約',
@@ -18,13 +19,13 @@ const filled: Record<string, string> = {
 ---
 
 <DemoLayout title="1週間の予約表" current="week">
-  <p class="muted">10月13日（月）からの1週間です。木・日は休診の例です。</p>
-  <div class="scroll">
+  <p class="muted">10月12日（月）からの1週間です。14日（水）が「今日の予約」です。木・日は休診の例です。</p>
+  <div class="scroll" tabindex="0" role="region" aria-label="1週間の予約表">
     <table>
       <thead>
         <tr>
-          <th>時刻</th>
-          {days.map((day) => <th>{day}</th>)}
+          <th scope="col">時刻</th>
+          {days.map((day) => <th scope="col">{day}</th>)}
         </tr>
       </thead>
       <tbody>

@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import hero from '../assets/lp/cafe/hero.webp';
+import desk from '../assets/site/team-desk.webp';
 import { mailHref } from '../data/site';
 import {
   carePlans,
@@ -68,9 +69,9 @@ const partnerHref = mailHref(
           <div class="phone-ui">
             <p class="phone-ui__bar">予約管理</p>
             <ul>
-              <li><b>9:00</b> 佐藤 様</li>
-              <li><b>10:30</b> 高橋 様</li>
-              <li><b>11:30</b> 田中 様</li>
+              <li><b>9:00</b><span>佐藤 様</span></li>
+              <li><b>10:30</b><span>高橋 様</span></li>
+              <li><b>11:30</b><span>田中 様</span></li>
             </ul>
           </div>
           <figcaption class="tag-sample">架空</figcaption>
@@ -198,8 +199,8 @@ const partnerHref = mailHref(
                 </ul>
                 <div class="adm-main">
                   <ul class="adm-sum">
-                    <li><b>12</b>件の予約</li>
-                    <li><b>3</b>枠の空き</li>
+                    <li><b>5</b>件の予約</li>
+                    <li><b>2</b>枠の空き</li>
                     <li><b>1</b>件の変更</li>
                   </ul>
                   <table class="adm-table">
@@ -208,6 +209,9 @@ const partnerHref = mailHref(
                     <tr><td>9:30</td><td>鈴木 様</td><td>はじめての方</td><td><span class="st st-done">来院済み</span></td></tr>
                     <tr><td>10:30</td><td>高橋 様</td><td>自費施術 60分</td><td><span class="st">これから</span></td></tr>
                     <tr><td>11:30</td><td>田中 様</td><td>自費施術 30分</td><td><span class="st st-chg">日時変更</span></td></tr>
+                    <tr><td>14:00</td><td>空き</td><td>—</td><td><span class="st">空き</span></td></tr>
+                    <tr><td>15:00</td><td>伊藤 様</td><td>自費施術 30分</td><td><span class="st">これから</span></td></tr>
+                    <tr><td>16:00</td><td>空き</td><td>—</td><td><span class="st">空き</span></td></tr>
                   </table>
                 </div>
               </div>
@@ -350,11 +354,17 @@ const partnerHref = mailHref(
 
   <section class="team" id="team" aria-labelledby="h-team">
     <div class="wrap team-in">
-      <div class="desk" aria-hidden="true">
-        <span class="desk__top"></span>
-        <span class="desk__screen"></span>
-        <span class="desk__book"></span>
-      </div>
+      <figure class="team-photo">
+        <Image
+          src={desk}
+          alt="作業机とノートPC。AIで生成した画像です"
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 960px) 46vw, 100vw"
+          format="avif"
+          quality={60}
+          loading="lazy"
+        />
+      </figure>
       <div>
         <p class="sec-no">08 / Team</p>
         <h2 id="h-team" class="sec-title">画面も、しくみも、サーバーも。<br />少人数のチームで受けます。</h2>
@@ -395,15 +405,6 @@ const partnerHref = mailHref(
 </BaseLayout>
 
 <style>
-  .desk {
-    aspect-ratio: 16 / 10;
-    border-radius: 20px;
-    background:
-      linear-gradient(#d7e4df, #d7e4df) 18% 22% / 46% 38% no-repeat,
-      linear-gradient(#1e3a5f, #1e3a5f) 22% 28% / 38% 26% no-repeat,
-      linear-gradient(#0e7c66, #0e7c66) 68% 58% / 18% 8% no-repeat,
-      linear-gradient(#c4b39a, #c4b39a) 0 78% / 100% 22% no-repeat,
-      #e7eeea;
-    position: relative;
-  }
+  .team-photo { margin: 0; }
+  .team-photo :global(img) { width: 100%; height: auto; border-radius: 20px; }
 </style>
