@@ -1,0 +1,27 @@
+---
+import HoshinamiLayout from '../../../layouts/HoshinamiLayout.astro';
+
+const items = [
+  { date: '2026年10月1日', title: '秋の点検を受け付けます（架空）', open: true, body: '10月中の点検の申し込み、という架空のお知らせです。実在の受付ではありません。' },
+  { date: '2026年9月1日', title: '受付時間のお知らせ（架空）', open: false, body: '平日 9:00–17:00、という架空の時間です。' },
+  { date: '2026年8月1日', title: '対応エリアのお知らせ（架空）', open: false, body: '架空県サンプル市ほか、という架空の範囲です。' },
+];
+---
+
+<HoshinamiLayout
+  title="お知らせ"
+  description="架空の設備工事会社「ほしなみ設備」のお知らせです。"
+  current="news"
+>
+  <h1>お知らせ</h1>
+  <p class="muted">更新の見本です。管理画面はありません。</p>
+  {
+    items.map((item) => (
+      <article>
+        <h2>{item.title}</h2>
+        <p class="muted">{item.date}</p>
+        {item.open && <p>{item.body}</p>}
+      </article>
+    ))
+  }
+</HoshinamiLayout>

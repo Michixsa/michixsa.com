@@ -1,8 +1,13 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SampleCard from '../components/SampleCard.astro';
 import hero from '../assets/lp/cafe/hero.webp';
 import desk from '../assets/site/team-desk.webp';
+import salonHero from '../assets/lp/salon/salon-hero.webp';
+import clinicHero from '../assets/lp/clinic/clinic-hero.webp';
+import recruitHero from '../assets/lp/recruit/recruit-hero.webp';
+import corpHero from '../assets/lp/corp/corp-hero.webp';
 import { mailHref } from '../data/site';
 import {
   carePlans,
@@ -15,7 +20,6 @@ import {
   services,
   steps,
   strengths,
-  upcomingSamples,
 } from '../data/offer';
 
 const consultHref = mailHref(
@@ -163,26 +167,42 @@ const partnerHref = mailHref(
           </a>
         </article>
 
-        {
-          upcomingSamples.map((item) => (
-            <article class="work-card soon">
-              <div class="work-link">
-                <div class="work-thumb">
-                  <div class="ph"><span>{item.ph}</span></div>
-                  <span class="tag-sample">架空のサンプル</span>
-                </div>
-                <div class="work-body">
-                  <p class="work-meta">
-                    <span class="cat">{item.cat}</span><span class="type">{item.type}</span>
-                  </p>
-                  <h3>{item.name}</h3>
-                  <p>{item.body}</p>
-                  <p class="soon-label">準備中</p>
-                </div>
-              </div>
-            </article>
-          ))
-        }
+        <SampleCard
+          href="/works/sample-salon-lp/"
+          image={salonHero}
+          alt="淡いグレーのセット面と丸い鏡。AI生成画像です"
+          cat="美容室"
+          type="LP・予約導線"
+          title="ヘアサロン ノコリビ"
+          body="余白と淡い色で、はじめてでも予約しやすい小さなサロンのLP。"
+        />
+        <SampleCard
+          href="/works/sample-clinic-lp/"
+          image={clinicHero}
+          alt="白い施術ベッドがある施術室。AI生成画像です"
+          cat="整骨院"
+          type="LP・地域向け"
+          title="かさね台整骨院"
+          body="大きな文字と表で、受付時間と通い方がすぐ分かる院のLP。"
+        />
+        <SampleCard
+          href="/works/sample-recruit-lp/"
+          image={recruitHero}
+          alt="作業台の工具と金属部品。AI生成画像です"
+          cat="採用"
+          type="採用LP"
+          title="ナガレ精機 製造スタッフ募集"
+          body="人物写真に頼らず、道具と一日の流れで仕事を伝える採用LP。"
+        />
+        <SampleCard
+          href="/works/sample-corporate/"
+          image={corpHero}
+          alt="棚に並んだ配管と継手。AI生成画像です"
+          cat="設備工事"
+          type="会社サイト・5ページ"
+          title="ほしなみ設備"
+          body="事業内容・会社概要・お知らせを分けた、更新しやすい会社サイト。"
+        />
 
         <article class="work-card work-system">
           <a class="work-link" href="/works/sample-clinic-admin/">

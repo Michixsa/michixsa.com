@@ -1,0 +1,233 @@
+---
+/**
+ * Fictional hair-salon landing page. Standalone document, no team-site layout.
+ * The salon does not exist. Images are AI-generated and the page says so.
+ */
+import { Picture } from 'astro:assets';
+import hero from '../../../assets/lp/salon/salon-hero.webp';
+import tools from '../../../assets/lp/salon/salon-tools.webp';
+import shampoo from '../../../assets/lp/salon/salon-shampoo.webp';
+import windowSeat from '../../../assets/lp/salon/salon-window.webp';
+
+const steps = [
+  { title: '予約の内容を決める', body: 'カットだけか、カラーも入れるか。初めてでも、メニュー名のままで選べます。' },
+  { title: '来店して待つ', body: '窓際の席で、順番まで過ごせます。待ち時間の目安は予約時にお伝えします。' },
+  { title: '仕上がりを一緒に見る', body: '鏡の前で長さと形を確認してから、仕上げます。' },
+  { title: '会計して帰る', body: '所要時間と料金は、始める前にお伝えした内容です。' },
+];
+
+const points = [
+  { title: '少人数で見る', body: '一度に見る人数を少なくして、話を聞きながら進めます。' },
+  { title: '道具をその日のうちに整える', body: 'ハサミとコームは、使う前に揃えておきます。' },
+  { title: 'はじめての人も同じメニュー', body: '初めてだから高い、ということはありません。料金表のとおりです。' },
+];
+
+const menu = [
+  { name: 'カット', price: '4,400円', note: '税込・架空の価格' },
+  { name: 'カット＋カラー', price: '9,900円', note: '税込・架空の価格' },
+  { name: 'カット＋トリートメント', price: '6,600円', note: '税込・架空の価格' },
+];
+
+const faqs = [
+  { q: '予約は必要ですか？', a: 'このサンプルでは予約は送信されません。実在の店でもありません。' },
+  { q: '子どもと一緒でも大丈夫ですか？', a: '架空の設定では、待合の席を使えます。' },
+  { q: '支払い方法は？', a: '架空の設定では、現金とキャッシュレスの両方、としています。' },
+];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ヘアサロン ノコリビ（架空のサンプル）｜はじめてでも、予約しやすい。</title>
+    <meta name="description" content="架空の美容室「ヘアサロン ノコリビ」のランディングページ。実在しない店舗の作例です。" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#6B4E71" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <p class="bar">
+      これは架空のサンプルです。「ヘアサロン ノコリビ」は実在しません。写真はAI生成画像です。
+      <a href="/works/sample-salon-lp/">解説を見る</a>
+    </p>
+    <header class="head">
+      <a class="logo" href="#top">ヘアサロン ノコリビ</a>
+      <a class="btn" href="#reserve">予約する</a>
+    </header>
+    <main id="top">
+      <section class="hero">
+        <div class="hero__copy">
+          <p class="eyebrow">架空のサンプル</p>
+          <h1>はじめてでも、<br />予約しやすい。</h1>
+          <p>少人数のサロンです。来る前に、メニューと時間の目安が分かります。</p>
+          <a class="btn" href="#reserve">予約する</a>
+        </div>
+        <Picture
+          src={hero}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={[640, 960, 1280]}
+          sizes="(min-width: 800px) 50vw, 100vw"
+          alt="淡いグレーの壁と丸い鏡、木の台と黒い椅子があるセット面。AI生成画像です"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </section>
+
+      <section class="section" aria-labelledby="first">
+        <div class="wrap">
+          <h2 id="first">はじめての方へ</h2>
+          <Picture
+            src={windowSeat}
+            formats={['avif']}
+            fallbackFormat="webp"
+            widths={[480, 800]}
+            sizes="(min-width: 800px) 320px, 100vw"
+            alt="窓際の小さなソファとサイドテーブル。AI生成画像です"
+            loading="lazy"
+          />
+          <ol class="steps">
+            {steps.map((step, i) => (
+              <li>
+                <span>{i + 1}</span>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section class="section section--tint" aria-labelledby="points">
+        <div class="wrap">
+          <h2 id="points">こだわり</h2>
+          <div class="split">
+            <Picture
+              src={tools}
+              formats={['avif']}
+              fallbackFormat="webp"
+              widths={[400, 800]}
+              sizes="(min-width: 800px) 40vw, 100vw"
+              alt="白い布の上に並んだハサミとコーム。AI生成画像です"
+              loading="lazy"
+            />
+            <ul class="cards">
+              {points.map((point) => (
+                <li>
+                  <h3>{point.title}</h3>
+                  <p>{point.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="menu">
+        <div class="wrap">
+          <h2 id="menu">メニューと料金</h2>
+          <p class="note">金額は架空です。税込の表記例です。</p>
+          <ul class="menu">
+            {menu.map((item) => (
+              <li>
+                <span>{item.name}</span>
+                <strong>{item.price}</strong>
+                <small>{item.note}</small>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section class="section section--tint" aria-labelledby="room">
+        <div class="wrap split">
+          <div>
+            <h2 id="room">店内</h2>
+            <p>シャンプー台と待合を、明るく保つ想定です。人の写真は使っていません。</p>
+          </div>
+          <Picture
+            src={shampoo}
+            formats={['avif']}
+            fallbackFormat="webp"
+            widths={[640, 960]}
+            sizes="(min-width: 800px) 46vw, 100vw"
+            alt="白いタオルをたたんだシャンプー台。AI生成画像です"
+            loading="lazy"
+          />
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="faq">
+        <div class="wrap">
+          <h2 id="faq">よくある質問</h2>
+          {faqs.map((item) => (
+            <details>
+              <summary>{item.q}</summary>
+              <p>{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section class="section section--tint" id="reserve" aria-labelledby="reserve-title">
+        <div class="wrap">
+          <h2 id="reserve-title">予約方法</h2>
+          <p>このページは見本です。予約は送信されません。</p>
+          <p><button class="btn" type="button">予約ページ（架空）</button></p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="access">
+        <div class="wrap">
+          <h2 id="access">営業時間とアクセス</h2>
+          <p>水〜日 10:00–19:00（架空）／月・火 休み（架空）</p>
+          <p>〒000-0000 架空県サンプル市はなまち2-3-4</p>
+          <p>電話 000-0000-0000</p>
+          <p class="note">写真はAI生成画像です。実在の店舗・人物ではありません。</p>
+        </div>
+      </section>
+    </main>
+    <footer class="foot">
+      <p>ヘアサロン ノコリビ（架空のサンプル）</p>
+      <p>写真はAI生成画像です。</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f7f5f8; color: #2a2430; font-family: system-ui, "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", Meiryo, sans-serif; font-size: 16px; line-height: 1.8; }
+  img { max-width: 100%; height: auto; display: block; }
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid #6b4e71; outline-offset: 3px; }
+  .bar { margin: 0; padding: 12px 20px; background: #2a2430; color: #fff; font-size: 14px; }
+  .bar a { color: #fff; display: inline-flex; align-items: center; min-height: 48px; margin-left: 8px; }
+  .head, .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 20px; }
+  .logo { color: #6b4e71; font-weight: 800; text-decoration: none; min-height: 48px; display: inline-flex; align-items: center; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border-radius: 999px; background: #6b4e71; color: #fff; font-weight: 800; text-decoration: none; border: 0; font: inherit; }
+  .hero, .split { display: grid; gap: 24px; }
+  .hero { padding: 32px 20px 8px; align-items: center; }
+  .hero__copy h1 { margin: 8px 0; font-size: clamp(32px, 7vw, 52px); line-height: 1.25; color: #6b4e71; }
+  .eyebrow { display: inline-block; margin: 0; padding: 4px 10px; border-radius: 999px; background: #fff; color: #6b4e71; font-weight: 800; font-size: 13px; }
+  .section { padding: 48px 0; }
+  .section--tint { background: #fff; }
+  .wrap { width: min(960px, calc(100% - 40px)); margin-inline: auto; }
+  h2 { margin: 0 0 16px; font-size: clamp(26px, 4vw, 36px); line-height: 1.35; color: #6b4e71; }
+  h3 { margin: 0 0 4px; font-size: 18px; }
+  .steps, .cards, .menu { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 12px; }
+  .steps li, .cards li, .menu li { background: #fff; border: 1px solid #e4dfe8; border-radius: 16px; padding: 16px; }
+  .section--tint .cards li { background: #f7f5f8; }
+  .steps span { display: inline-flex; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; background: #6b4e71; color: #fff; font-weight: 800; }
+  .menu li { display: grid; gap: 2px; }
+  .menu strong { font-size: 22px; color: #6b4e71; }
+  .note, small { color: #6a6170; }
+  details { border-top: 1px solid #e4dfe8; }
+  summary { min-height: 48px; display: flex; align-items: center; font-weight: 800; cursor: pointer; }
+  .foot { background: #2a2430; color: #fff; }
+  .foot p { margin: 4px 0; }
+  @media (min-width: 800px) {
+    .hero, .split { grid-template-columns: 1fr 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+  }
+</style>

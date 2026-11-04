@@ -1,0 +1,65 @@
+---
+import { Picture } from 'astro:assets';
+import HoshinamiLayout from '../../../layouts/HoshinamiLayout.astro';
+import hero from '../../../assets/lp/corp/corp-hero.webp';
+
+const services = [
+  { title: '給排水', body: '家や店の水まわりを、新しく引き直す仕事の例です。' },
+  { title: '空調', body: '部屋の空調機器を、付け替える仕事の例です。' },
+  { title: '保守点検', body: '動いている設備を、定期的に見る仕事の例です。' },
+];
+const news = [
+  { date: '2026年10月1日', title: '架空のお知らせ：秋の点検' },
+  { date: '2026年9月1日', title: '架空のお知らせ：受付時間' },
+  { date: '2026年8月1日', title: '架空のお知らせ：対応エリア' },
+];
+---
+
+<HoshinamiLayout
+  title="給排水と空調"
+  description="架空の設備工事会社「ほしなみ設備」のトップページです。実在の会社ではありません。"
+  current="top"
+>
+  <section class="hero">
+    <div>
+      <p class="muted">架空のサンプル</p>
+      <h1>水と空気の設備を、<br />地域で引き受ける。</h1>
+      <p class="lead">給排水と空調の工事、点検を行う会社、という設定です。</p>
+      <p><a class="btn" href="/corp/hoshinami/contact/">お問い合わせ</a></p>
+    </div>
+    <Picture
+      src={hero}
+      formats={['avif']}
+      fallbackFormat="webp"
+      widths={[640, 960, 1280]}
+      sizes="(min-width: 800px) 46vw, 100vw"
+      alt="棚に並んだ銅管と白い配管、継手。人はいない。AI生成画像です"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </section>
+  <h2>事業内容</h2>
+  <div class="grid cols-3">
+    {services.map((item) => (
+      <article class="card">
+        <h3>{item.title}</h3>
+        <p>{item.body}</p>
+      </article>
+    ))}
+  </div>
+  <p><a href="/corp/hoshinami/service/">事業内容を見る</a></p>
+  <h2>対応エリア</h2>
+  <p>架空県サンプル市ほか（架空）</p>
+  <h2>お知らせ</h2>
+  <ul>
+    {news.map((item) => (
+      <li>{item.date}　<a href="/corp/hoshinami/news/">{item.title}</a></li>
+    ))}
+  </ul>
+</HoshinamiLayout>
+
+<style>
+  h3 { margin: 0 0 8px; }
+  a:not(.btn) { color: #7e5f17; font-weight: 700; }
+  li a { display: inline-flex; align-items: center; min-height: 48px; }
+</style>

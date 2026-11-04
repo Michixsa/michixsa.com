@@ -3,7 +3,11 @@
     "collect": {
       "staticDistDir": "./dist",
       "url": [
-        "http://localhost/lp/cafe/"
+        "http://localhost/lp/cafe/",
+        "http://localhost/lp/salon/",
+        "http://localhost/lp/clinic/",
+        "http://localhost/lp/recruit/",
+        "http://localhost/corp/hoshinami/"
       ],
       "numberOfRuns": 3,
       "settings": {

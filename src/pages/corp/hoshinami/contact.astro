@@ -1,0 +1,33 @@
+---
+import { Picture } from 'astro:assets';
+import HoshinamiLayout from '../../../layouts/HoshinamiLayout.astro';
+import office from '../../../assets/lp/corp/corp-office.webp';
+---
+
+<HoshinamiLayout
+  title="お問い合わせ"
+  description="架空の設備工事会社「ほしなみ設備」のお問い合わせページです。送信はされません。"
+  current="contact"
+>
+  <h1>お問い合わせ</h1>
+  <Picture
+    src={office}
+    formats={['avif']}
+    fallbackFormat="webp"
+    widths={[640, 960]}
+    sizes="(min-width: 800px) 70vw, 100vw"
+    alt="木の机と椅子、文字のないファイルボックスがある事務所。人はいない。AI生成画像です"
+    loading="eager"
+  />
+  <p>電話 000-0000-0000（架空）</p>
+  <p>下の欄は見本です。送信ボタンを押しても、内容は送られません。</p>
+  <form action="#" method="post">
+    <label for="name">お名前</label>
+    <input id="name" name="name" type="text" autocomplete="name" />
+    <label for="tel">電話</label>
+    <input id="tel" name="tel" type="tel" autocomplete="tel" />
+    <label for="body">ご用件</label>
+    <textarea id="body" name="body" rows="5"></textarea>
+    <p><button class="btn" type="button">送信（このサンプルでは送られません）</button></p>
+  </form>
+</HoshinamiLayout>
