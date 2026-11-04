@@ -9,24 +9,26 @@ interface Props {
   title?: string;
   description?: string;
   noindex?: boolean;
+  /** Home hero sits under a transparent header. */
+  overlayHeader?: boolean;
 }
 
-const { title, description = site.description, noindex = false } = Astro.props;
+const { title, description = site.description, noindex = false, overlayHeader = false } = Astro.props;
 const pageTitle = title ? `${title}｜${site.name}` : site.title;
 const path = Astro.url.pathname;
 const canonical = new URL(path, site.url).href;
 
 const nav = [
   { href: '/#services', label: 'できること' },
-  { href: '/works/', label: '作れるものの例' },
+  { href: '/#samples', label: 'サンプル' },
+  { href: '/#flow', label: '進め方' },
   { href: '/pricing/', label: '料金' },
-  { href: '/partners/', label: '同業者さまへ' },
   { href: '/faq/', label: 'よくある質問' },
 ];
 
 const footer = [
   { href: '/#services', label: 'できること' },
-  { href: '/works/', label: '作れるものの例' },
+  { href: '/works/', label: 'サンプル' },
   { href: '/pricing/', label: '料金' },
   { href: '/partners/', label: '同業者さまへ' },
   { href: '/faq/', label: 'よくある質問' },
@@ -62,10 +64,23 @@ function current(href: string) {
     <meta name="theme-color" content="#F6F8F7" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    {
+      path === '/' && (
+        <link
+          rel="preload"
+          as="image"
+          type="image/avif"
+          imagesrcset="/hero/hero-sp-640.avif 640w, /hero/hero-sp-960.avif 960w, /hero/hero-sp-1122.avif 1122w"
+          imagesizes="100vw"
+          media="not all and ((orientation: landscape) and (min-width: 768px), (min-width: 1024px))"
+          fetchpriority="high"
+        />
+      )
+    }
   </head>
-  <body>
+  <body class:list={{ home: overlayHeader }}>
     <a class="skip" href="#main">本文へ移動</a>
-    <header class="site-header">
+    <header class:list={['site-header', { 'is-overlay': overlayHeader }]}>
       <div class="wrap header-in">
         <a class="logo" href="/" aria-current={path === '/' ? 'page' : undefined}>
           <span class="logo-mark" aria-hidden="true"></span>{site.name}

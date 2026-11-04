@@ -1,0 +1,76 @@
+---
+/**
+ * Recreated "old" landscaper site. Intentionally dated layout.
+ * Links stay at least 48px so the page can still meet the site's checks.
+ */
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>木立造園（再現した旧ページ・架空のサンプル）</title>
+    <meta name="description" content="架空の造園会社「木立造園」の、作り直す前を想定して再現したページです。" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <p class="return"><a href="/">michixsa のトップへ戻る</a></p>
+    <p class="oldband">再現した旧ページ（架空のサンプル）</p>
+    <table class="frame" role="presentation">
+      <tr>
+        <td class="side">
+          <p class="brand">木立造園</p>
+          <ul>
+            <li><a href="#news">お知らせ</a></li>
+            <li><a href="#about">会社案内</a></li>
+            <li><a href="#price">料金</a></li>
+            <li><a href="/lp/kodachi/">新しいサイトを見る</a></li>
+          </ul>
+        </td>
+        <td class="main">
+          <p class="banner">庭木の剪定、承ります</p>
+          <h1>木立造園</h1>
+          <p class="small">
+            このページは、10年ほど前のサイトにありがちな形を、特定の会社に似せず再現したものです。幅を固定し、表で段組みし、本文を小さくしています。
+          </p>
+          <h2 id="news">お知らせ</h2>
+          <ul class="news">
+            <li>2023年4月1日　春の剪定（架空・更新は止まっている設定）</li>
+            <li>2022年11月1日　落ち葉の片付け（架空）</li>
+            <li>2021年6月1日　ホームページを開設（架空）</li>
+          </ul>
+          <h2 id="about">会社案内</h2>
+          <table class="info">
+            <tr><th scope="row">所在地</th><td>〒000-0000 架空県サンプル市こだち2-8</td></tr>
+            <tr><th scope="row">電話</th><td>000-0000-0000</td></tr>
+          </table>
+          <h2 id="price">料金</h2>
+          <p class="small">料金の表は別のページに置いてある、という古い形です。ファイル自体は置いていません。</p>
+          <p><a href="/lp/kodachi/legacy/price/">料金表（PDF）</a></p>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+
+<style>
+  body { margin: 0; background: #e8e4dc; color: #222; font-family: "MS PGothic", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; font-size: 13px; line-height: 1.6; }
+  .return { margin: 0; background: #1e3a5f; }
+  .return a { color: #fff; display: inline-flex; align-items: center; min-height: 48px; padding: 0 16px; font-weight: 700; }
+  .oldband { margin: 0; padding: 12px 16px; background: #7a3b00; color: #fff; font-weight: 800; font-size: 16px; }
+  .frame { width: 960px; margin: 16px auto; background: #fff; border: 1px solid #bbb; border-collapse: collapse; }
+  .side { width: 180px; vertical-align: top; background: #f3f0e8; border-right: 1px solid #ccc; padding: 8px; }
+  .main { vertical-align: top; padding: 12px 16px 32px; }
+  .brand { font-weight: 800; font-size: 16px; margin: 8px; }
+  .side a, .main a { display: flex; align-items: center; min-height: 48px; color: #063a7a; font-weight: 700; }
+  .banner { margin: 0 0 12px; padding: 28px 12px; background: #6a8f4e; color: #fff; font-size: 22px; font-weight: 800; text-align: center; }
+  h1 { font-size: 18px; margin: 8px 0; }
+  h2 { font-size: 15px; margin: 16px 0 4px; border-bottom: 1px solid #ccc; }
+  .small { font-size: 13px; }
+  .news { margin: 0; padding-left: 1.2em; }
+  .info { width: 100%; border-collapse: collapse; }
+  .info th, .info td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+  a:focus-visible { outline: 3px solid #063a7a; outline-offset: 2px; }
+</style>

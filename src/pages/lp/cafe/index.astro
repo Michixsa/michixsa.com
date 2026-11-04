@@ -111,8 +111,9 @@ const hours = [
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
+    <p class="return-bar"><a href="/">michixsa のトップへ戻る</a></p>
     <p class="sample-bar" role="note">
-      これは制作サンプルです。「珈琲 ゆうまど」は<strong>架空の店舗</strong>で、実在しません。
+      これは架空のサンプルです。「珈琲 ゆうまど」は<strong>架空の店舗</strong>で、実在しません。
       <a href="/works/sample-cafe-lp/">制作の解説を見る</a>
     </p>
 
@@ -530,6 +531,20 @@ const hours = [
   }
 
   /* ---------- sample notice and header ---------- */
+
+  .return-bar {
+    margin: 0;
+    background: #1e3a5f;
+  }
+
+  .return-bar a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 1.25rem;
+    color: #fff;
+    font-weight: 700;
+  }
 
   .sample-bar {
     padding: 0.5rem 1.25rem;

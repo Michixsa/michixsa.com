@@ -1,0 +1,17 @@
+---
+import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
+
+const steps = ['庭を見る', '残す木と変える場所を決める', '図で共有する', '作業する', '仕上がりを一緒に見る'];
+---
+
+<KodachiLayout
+  title="庭づくり"
+  description="架空の造園会社「木立造園」の庭づくりの段取りです。"
+  current="build"
+>
+  <h1>ご相談から仕上がりまで、5つの段取りで進めます。</h1>
+  <ol class="steps">
+    {steps.map((step) => <li>{step}</li>)}
+  </ol>
+  <p><a class="btn" href="/lp/kodachi/contact/">相談する</a></p>
+</KodachiLayout>

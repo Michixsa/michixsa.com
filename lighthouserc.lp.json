@@ -4,10 +4,10 @@
       "staticDistDir": "./dist",
       "url": [
         "http://localhost/lp/cafe/",
-        "http://localhost/lp/salon/",
-        "http://localhost/lp/clinic/",
-        "http://localhost/lp/recruit/",
-        "http://localhost/corp/mizukane/"
+        "http://localhost/lp/kodachi/",
+        "http://localhost/lp/kodachi/legacy/",
+        "http://localhost/demo/mizukane/",
+        "http://localhost/lp/hinata/"
       ],
       "numberOfRuns": 3,
       "settings": {

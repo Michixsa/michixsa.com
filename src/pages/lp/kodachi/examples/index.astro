@@ -1,0 +1,31 @@
+---
+import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
+
+const items = [
+  { title: '生垣の刈り込み（架空）', body: '道路側の生垣を、高さ1.5mに揃えた、という設定です。' },
+  { title: '伸びた松の手入れ（架空）', body: '隣家にかかっていた枝を、残しながら短くした、という設定です。' },
+  { title: '砂利と飛び石（架空）', body: '通り道だけ砂利を足した、という設定です。' },
+];
+---
+
+<KodachiLayout
+  title="施工の例"
+  description="架空の造園会社「木立造園」の施工例です。実在の庭ではありません。"
+  current="examples"
+>
+  <h1>施工の例（架空）</h1>
+  <p>ここに置いた庭は、すべて架空です。</p>
+  <div class="grid">
+    {
+      items.map((item) => (
+        <article class="card">
+          <div class="ph" role="img" aria-label={`写真の仮置き。${item.title}`}>
+            <span>写真の仮置き</span>
+          </div>
+          <h2>{item.title}</h2>
+          <p>{item.body}</p>
+        </article>
+      ))
+    }
+  </div>
+</KodachiLayout>

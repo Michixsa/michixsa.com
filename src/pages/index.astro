@@ -2,12 +2,8 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SampleCard from '../components/SampleCard.astro';
-import hero from '../assets/lp/cafe/hero.webp';
+import cafeCard from '../assets/lp/cafe/banner.webp';
 import desk from '../assets/site/team-desk.webp';
-import salonHero from '../assets/lp/salon/salon-hero.webp';
-import clinicHero from '../assets/lp/clinic/clinic-hero.webp';
-import recruitHero from '../assets/lp/recruit/recruit-hero.webp';
-import corpHero from '../assets/lp/corp/corp-hero.webp';
 import { mailHref } from '../data/site';
 import {
   carePlans,
@@ -17,10 +13,18 @@ import {
   plans,
   priceGroups,
   priceIntro,
-  services,
   steps,
   strengths,
 } from '../data/offer';
+
+const numbered = [
+  { n: '01', title: 'LP・ホームページ制作', body: 'お店や会社の、1ページから数ページのサイト。' },
+  { n: '02', title: '業務システム・管理画面', body: '紙や表計算の作業を、ブラウザで使える画面に。' },
+  { n: '03', title: '既存の改修', body: 'いま動いているサイトやシステムに、足す・直す。' },
+  { n: '04', title: 'サーバー・クラウド構築', body: 'サイトやシステムを載せる場所を、お客様の名義で。' },
+  { n: '05', title: '保守・運用・障害対応', body: '公開したあとも、止まっていないかを見守る。' },
+  { n: '06', title: '移転・リニューアル', body: '古いサーバーからの引っ越しや、作り直し。' },
+];
 
 const consultHref = mailHref(
   'ご相談',
@@ -32,85 +36,69 @@ const partnerHref = mailHref(
 );
 ---
 
-<BaseLayout>
-  <section class="hero" id="top">
-    <div class="wrap hero-in">
-      <div class="hero-copy">
-        <p class="eyebrow">Web制作・システム開発・サーバー運用<span class="eyebrow-break">｜</span>全国オンライン対応</p>
-        <h1 class="hero-title">
-          <span class="line"><em>途中から</em>でも、</span>
-          <span class="line">はじめからでも。</span>
-        </h1>
-        <p class="lead">
-          ホームページや<wbr />業務の画面を<wbr />いちから<wbr />作ることも、<wbr />いま動いている<wbr />サイトや<wbr />システムの<wbr />手直し、<wbr />サーバーの<wbr />用意や<wbr />引っ越し、<wbr />公開後の<wbr />見守りも、<wbr />少人数の<wbr />チームが<wbr />お引き受けします。
-        </p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="#contact">メールで相談する（無料）</a>
-          <a class="btn btn-ghost" href="#services">できることを見る</a>
-        </div>
-        <ul class="chips" aria-label="特長">
-          <li>相談・見積もり無料</li>
-          <li>打ち合わせはオンライン</li>
-          <li><a href="#partners">同業者さまからのご依頼も</a></li>
-        </ul>
-      </div>
-      <div class="hero-visual">
-        <figure class="device device-pc">
-          <div class="device-bar" aria-hidden="true"><i></i><i></i><i></i></div>
-          <Image
-            src={hero}
-            alt="カウンターでケトルからコーヒーを注ぐ手元（AIで生成した画像です）"
-            widths={[480, 768, 1152]}
-            sizes="(min-width: 1024px) 42vw, 100vw"
-            format="avif"
-            quality={55}
-            loading="eager"
-            fetchpriority="high"
-          />
-          <figcaption class="tag-sample">架空のサンプル</figcaption>
-        </figure>
-        <figure class="device device-sp">
-          <div class="phone-ui">
-            <p class="phone-ui__bar">予約管理（架空）</p>
-            <ul>
-              <li><b>9:00</b><span>佐藤 様</span></li>
-              <li><b>11:00</b><span>高橋 様</span></li>
-              <li><b>13:00</b><span>田中 様</span></li>
-            </ul>
-          </div>
-        </figure>
+<BaseLayout overlayHeader>
+  <section class="hero-full" id="top" aria-labelledby="hero-title">
+    <picture class="hero-photo">
+      <source
+        media="(orientation: landscape) and (min-width: 768px), (min-width: 1024px)"
+        type="image/avif"
+        srcset="/hero/hero-pc-1280.avif 1280w, /hero/hero-pc-1672.avif 1672w"
+        sizes="100vw"
+      />
+      <source
+        media="(orientation: landscape) and (min-width: 768px), (min-width: 1024px)"
+        type="image/webp"
+        srcset="/hero/hero-pc-1280.webp 1280w, /hero/hero-pc-1672.webp 1672w"
+        sizes="100vw"
+      />
+      <source
+        type="image/avif"
+        srcset="/hero/hero-sp-640.avif 640w, /hero/hero-sp-960.avif 960w, /hero/hero-sp-1122.avif 1122w"
+        sizes="100vw"
+      />
+      <img
+        src="/hero/hero-sp-960.webp"
+        srcset="/hero/hero-sp-640.webp 640w, /hero/hero-sp-960.webp 960w, /hero/hero-sp-1122.webp 1122w"
+        sizes="100vw"
+        width="960"
+        height="1200"
+        alt=""
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
+    <div class="hero-copy">
+      <p class="eyebrow">
+        Web制作・システム開発・サーバー運用<span class="sep" aria-hidden="true">｜</span><span class="area">全国オンライン対応</span>
+      </p>
+      <h1 id="hero-title"><em>途中から</em>でも、<br />はじめからでも。</h1>
+      <p class="lead">
+        <span class="w">ホームページや</span><span class="w">業務の画面を</span><span class="w">いちから作ることも、</span><span class="w">いま動いている</span><span class="w">サイトやシステムの手直し、</span><span class="w">サーバーの用意や</span><span class="w">引っ越し、</span><span class="w">公開後の見守りも、</span><span class="w">少人数のチームが</span><span class="w">お引き受けします。</span>
+      </p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#contact">メールで相談する（無料）</a>
+        <a class="btn s" href="#services">できることを見る</a>
       </div>
     </div>
+    <span class="cue">SCROLL</span>
   </section>
 
-  <section class="services band-tint" id="services" aria-labelledby="h-services">
+  <section class="services" id="services" aria-labelledby="h-services">
     <div class="wrap">
-      <div class="sec-head">
-        <div>
-          <p class="sec-no">01 / Services</p>
-          <h2 id="h-services" class="sec-title">できること</h2>
-        </div>
-        <p class="sec-desc">
-          作ること、直すこと、動かし続けること。必要なところだけでも、まとめてでもお引き受けします。何を頼めばよいか分からない段階でも、ご相談ください。
-        </p>
-      </div>
-      <div class="svc-grid">
+      <p class="sec-no">SERVICES</p>
+      <h2 id="h-services" class="sec-title">できること</h2>
+      <p class="sec-desc">どれか1つだけでも、組み合わせてもご相談いただけます。</p>
+      <ul class="num-list">
         {
-          services.map((item) => (
-            <article class="svc">
-              <span class:list={['svc-ic', item.icon]} aria-hidden="true" />
+          numbered.map((item) => (
+            <li>
+              <span class="n" aria-hidden="true">{item.n}</span>
               <h3>{item.title}</h3>
               <p>{item.body}</p>
-              <ul class="svc-ex">
-                {item.examples.map((example) => (
-                  <li>{example}</li>
-                ))}
-              </ul>
-              <p class="svc-price">{item.price}</p>
-            </article>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </div>
   </section>
 
@@ -132,122 +120,53 @@ const partnerHref = mailHref(
     </div>
   </section>
 
-  <section class="works" id="works" aria-labelledby="h-works">
+  <section class="works" id="samples" aria-labelledby="h-samples">
     <div class="wrap">
-      <div class="sec-head">
-        <div>
-          <p class="sec-no">03 / Samples</p>
-          <h2 id="h-works" class="sec-title">作れるものの例</h2>
-        </div>
-        <p class="sec-desc">
-          業種ごとに目的を決めて作った<strong>架空のサンプル</strong>です。実在の店舗・企業の案件ではなく、受託実績ではありません。
-        </p>
-      </div>
-      <div class="work-grid">
-        <article class="work-card work-feature">
-          <a class="work-link" href="/works/sample-cafe-lp/">
-            <div class="work-thumb">
-              <Image
-                src={hero}
-                alt="カウンターでコーヒーを淹れる手元（AIで生成した画像です）"
-                widths={[480, 768]}
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                format="avif"
-                quality={50}
-                loading="lazy"
-              />
-              <span class="tag-sample">架空のサンプル</span>
-            </div>
-            <div class="work-body">
-              <p class="work-meta"><span class="cat">カフェ</span><span class="type">LP・1ページ</span></p>
-              <h3>珈琲 ゆうまど</h3>
-              <p>写真を主役に、営業時間とアクセスまで迷わず届けるカフェのLP。</p>
-              <p class="work-note">写真はAI生成画像です</p>
-            </div>
-          </a>
-        </article>
-
+      <p class="sec-no">SAMPLES</p>
+      <h2 id="h-samples" class="sec-title">サンプル</h2>
+      <p class="sec-desc">
+        お店のサイトから業務の画面、サーバーの引っ越しの記録まで、私たちが作った架空のサンプルです。実在するお店や会社、実際のお客様の案件ではありません。
+      </p>
+      <ul class="sample-grid">
         <SampleCard
-          href="/works/sample-salon-lp/"
-          image={salonHero}
-          alt="淡いグレーのセット面と丸い鏡（AIで生成した画像です）"
-          cat="美容室"
-          type="LP・予約導線"
-          title="ヘアサロン ノコリビ"
-          body="余白と淡い色で、はじめてでも予約しやすい小さなサロンのLP。"
+          href="/lp/cafe/"
+          moreHref="/works/sample-cafe-lp/"
+          image={cafeCard}
+          alt="朝日が差し込む窓際の席に置かれた、コーヒーとバタートースト、開いた本（AIで生成した画像です）"
+          tone="cafe"
+          kind="喫茶店のLP"
+          title="珈琲 ゆうまど"
+          body="営業時間とメニュー、行き方がひと目でわかる1ページ。"
+          note="画像はAI生成"
         />
         <SampleCard
-          href="/works/sample-clinic-lp/"
-          image={clinicHero}
-          alt="白い施術ベッドがある施術室（AIで生成した画像です）"
-          cat="整骨院"
-          type="LP・地域向け"
-          title="かさね台整骨院"
-          body="大きな文字と表で、受付時間と通い方がすぐ分かる院のLP。"
+          href="/lp/kodachi/"
+          moreHref="/works/sample-kodachi/"
+          tone="kodachi"
+          kind="古いサイトの作り直し"
+          title="木立造園"
+          body="PC向けの古いサイトを、スマートフォンで電話しやすい形に。旧ページと見比べられます。"
+          note="写真は仮置き"
         />
         <SampleCard
-          href="/works/sample-recruit-lp/"
-          image={recruitHero}
-          alt="作業台の工具と金属部品（AIで生成した画像です）"
-          cat="採用"
-          type="採用LP"
-          title="ナガレ精機 製造スタッフ募集"
-          body="人物写真に頼らず、道具と一日の流れで仕事を伝える採用LP。"
-        />
-        <SampleCard
-          href="/works/sample-corporate/"
-          image={corpHero}
-          alt="棚に並んだ配管と継手（AIで生成した画像です）"
-          cat="設備工事"
-          type="会社サイト・5ページ"
+          href="/demo/mizukane/"
+          moreHref="/works/sample-mizukane/"
+          tone="mizukane"
+          kind="案件管理画面のデモ"
           title="みずかね設備"
-          body="事業内容・会社概要・お知らせを分けた、更新しやすい会社サイト。"
+          body="工事の案件と予定をまとめる画面。操作でき、入力はこの端末のブラウザにだけ保存されます。"
+          note="画面はデモの実物"
         />
-
-        <article class="work-card work-system">
-          <a class="work-link" href="/works/sample-clinic-admin/">
-            <div class="adm" aria-hidden="true">
-              <div class="adm-bar">
-                <span class="adm-title">かさね台整骨院　予約管理</span><span class="adm-date">10月14日（水）</span>
-              </div>
-              <div class="adm-in">
-                <ul class="adm-nav">
-                  <li class="on">今日の予約</li>
-                  <li>週の予約表</li>
-                  <li>お知らせ</li>
-                </ul>
-                <div class="adm-main">
-                  <ul class="adm-sum">
-                    <li><b>5</b>件の予約</li>
-                    <li><b>2</b>枠の空き</li>
-                    <li><b>1</b>件の変更</li>
-                  </ul>
-                  <table class="adm-table">
-                    <tr><th>時刻</th><th>お名前</th><th>メニュー</th><th>状態</th></tr>
-                    <tr><td>9:00</td><td>佐藤 様</td><td>自費施術 30分</td><td><span class="st st-done">来院済み</span></td></tr>
-                    <tr><td>10:00</td><td>鈴木 様</td><td>自費施術 30分</td><td><span class="st st-done">来院済み</span></td></tr>
-                    <tr><td>11:00</td><td>高橋 様</td><td>自費施術 60分</td><td><span class="st">これから</span></td></tr>
-                    <tr><td>13:00</td><td>田中 様</td><td>自費施術 30分</td><td><span class="st st-chg">日時変更</span></td></tr>
-                    <tr><td>14:00</td><td>空き</td><td>—</td><td><span class="st">空き</span></td></tr>
-                    <tr><td>15:00</td><td>伊藤 様</td><td>自費施術 30分</td><td><span class="st">これから</span></td></tr>
-                    <tr><td>16:00</td><td>空き</td><td>—</td><td><span class="st">空き</span></td></tr>
-                  </table>
-                </div>
-              </div>
-              <span class="tag-sample">架空のサンプル（デモデータ）</span>
-            </div>
-            <div class="work-body">
-              <p class="work-meta"><span class="cat">業務システム</span><span class="type">管理画面・4画面</span></p>
-              <h3>かさね台整骨院 予約管理</h3>
-              <p>
-                整骨院LPの「予約する」の先で、院の側が使う画面の例です。今日の予約、1週間の予約表、予約の詳細と変更、お知らせの更新を、画面と解説でお見せします。
-              </p>
-              <p class="work-note">画面の名前・予約はすべてデモデータです</p>
-            </div>
-          </a>
-        </article>
-      </div>
-      <p class="works-more"><a class="text-link" href="/works/">作れるものの例 一覧へ</a></p>
+        <SampleCard
+          href="/lp/hinata/"
+          moreHref="/works/sample-hinata/"
+          tone="hinata"
+          kind="サーバー移転の記録"
+          title="ひなた堂印刷"
+          body="注文フォームとメールを載せたサーバーの引っ越しを、調査から毎月の報告まで記録しました。"
+          note="写真は仮置き"
+        />
+      </ul>
     </div>
   </section>
 
@@ -332,15 +251,14 @@ const partnerHref = mailHref(
 
   <section class="flow" id="flow" aria-labelledby="h-flow">
     <div class="wrap">
-      <p class="sec-no">06 / Flow</p>
-      <h2 id="h-flow" class="sec-title">ご相談から公開まで</h2>
-      <ol class="flow-list">
+      <p class="sec-no">FLOW</p>
+      <h2 id="h-flow" class="sec-title">進め方</h2>
+      <ol class="chevron-list">
         {
           steps.map((step, index) => (
             <li>
-              <span>{index + 1}</span>
-              <h3>{step.title}</h3>
-              <p>{step.body}</p>
+              <span class="st">STEP {index + 1}</span>
+              <b>{index === 0 ? 'ご相談' : step.title}</b>
             </li>
           ))
         }
@@ -419,6 +337,7 @@ const partnerHref = mailHref(
       <p class="contact-mail">宛先：info@michixsa.com</p>
       <p><a class="contact-sub" href={partnerHref}>制作会社・開発会社さまのご相談はこちら</a></p>
       <p class="contact-note">相談・見積もり無料｜全国オンライン対応｜対面での打ち合わせは行っていません</p>
+      <p class="photo-credit">最初の画面の写真は、AI で生成した画像です。</p>
     </div>
   </section>
 </BaseLayout>

@@ -1,104 +1,67 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SampleCard from '../../components/SampleCard.astro';
-import hero from '../../assets/lp/cafe/hero.webp';
-import salonHero from '../../assets/lp/salon/salon-hero.webp';
-import clinicHero from '../../assets/lp/clinic/clinic-hero.webp';
-import recruitHero from '../../assets/lp/recruit/recruit-hero.webp';
-import corpHero from '../../assets/lp/corp/corp-hero.webp';
+import cafeCard from '../../assets/lp/cafe/banner.webp';
 ---
 
 <BaseLayout
-  title="作れるものの例"
-  description="michixsa の作れるものの例です。架空のサンプルで、受託実績ではありません。"
+  title="サンプル"
+  description="michixsa が作った架空のサンプルです。実在するお店や会社、実際のお客様の案件ではありません。"
 >
   <div class="page-hero">
     <div class="wrap">
-      <h1 class="sec-title">作れるものの例</h1>
+      <h1 class="sec-title">サンプル</h1>
       <p class="lead">
-        業種ごとに目的を決めて作った架空のサンプルです。実在の店舗・企業の案件ではなく、受託実績ではありません。
+        お店のサイトから業務の画面、サーバーの引っ越しの記録まで、私たちが作った架空のサンプルです。実在するお店や会社、実際のお客様の案件ではありません。
       </p>
     </div>
   </div>
   <section class="works page-section">
     <div class="wrap">
-      <div class="work-grid">
+      <ul class="sample-grid">
         <SampleCard
-          feature
           level="h2"
-          href="/works/sample-cafe-lp/"
-          image={hero}
-          alt="カウンターでコーヒーを淹れる手元（AIで生成した画像です）"
-          cat="カフェ"
-          type="LP・1ページ"
+          href="/lp/cafe/"
+          moreHref="/works/sample-cafe-lp/"
+          image={cafeCard}
+          alt="朝日が差し込む窓際の席に置かれた、コーヒーとバタートースト、開いた本（AIで生成した画像です）"
+          tone="cafe"
+          kind="喫茶店のLP"
           title="珈琲 ゆうまど"
-          body="写真を主役に、営業時間とアクセスまで迷わず届けるカフェのLP。"
+          body="営業時間とメニュー、行き方がひと目でわかる1ページ。"
+          note="画像はAI生成"
         />
         <SampleCard
           level="h2"
-          href="/works/sample-salon-lp/"
-          image={salonHero}
-          alt="淡いグレーのセット面と丸い鏡（AIで生成した画像です）"
-          cat="美容室"
-          type="LP・予約導線"
-          title="ヘアサロン ノコリビ"
-          body="余白と淡い色で、はじめてでも予約しやすい小さなサロンのLP。"
+          href="/lp/kodachi/"
+          moreHref="/works/sample-kodachi/"
+          tone="kodachi"
+          kind="古いサイトの作り直し"
+          title="木立造園"
+          body="PC向けの古いサイトを、スマートフォンで電話しやすい形に。旧ページと見比べられます。"
+          note="写真は仮置き"
         />
         <SampleCard
           level="h2"
-          href="/works/sample-clinic-lp/"
-          image={clinicHero}
-          alt="白い施術ベッドがある施術室（AIで生成した画像です）"
-          cat="整骨院"
-          type="LP・地域向け"
-          title="かさね台整骨院"
-          body="大きな文字と表で、受付時間と通い方がすぐ分かる院のLP。"
-        />
-        <SampleCard
-          level="h2"
-          href="/works/sample-recruit-lp/"
-          image={recruitHero}
-          alt="作業台の工具と金属部品（AIで生成した画像です）"
-          cat="採用"
-          type="採用LP"
-          title="ナガレ精機 製造スタッフ募集"
-          body="人物写真に頼らず、道具と一日の流れで仕事を伝える採用LP。"
-        />
-        <SampleCard
-          level="h2"
-          href="/works/sample-corporate/"
-          image={corpHero}
-          alt="棚に並んだ配管と継手（AIで生成した画像です）"
-          cat="設備工事"
-          type="会社サイト・5ページ"
+          href="/demo/mizukane/"
+          moreHref="/works/sample-mizukane/"
+          tone="mizukane"
+          kind="案件管理画面のデモ"
           title="みずかね設備"
-          body="事業内容・会社概要・お知らせを分けた、更新しやすい会社サイト。"
+          body="工事の案件と予定をまとめる画面。操作でき、入力はこの端末のブラウザにだけ保存されます。"
+          note="画面はデモの実物"
         />
-        <article class="work-card">
-          <a class="work-link" href="/works/sample-clinic-admin/">
-            <div class="work-thumb">
-              <div class="ph"><span>予約管理の画面</span></div>
-              <span class="tag-sample">架空のサンプル</span>
-            </div>
-            <div class="work-body">
-              <p class="work-meta"><span class="cat">業務システム</span><span class="type">管理画面・4画面</span></p>
-              <h2>かさね台整骨院 予約管理</h2>
-              <p>院の側が使う予約の画面です。名前も予約もデモデータです。</p>
-              <p class="work-note">画面の名前・予約はすべてデモデータです</p>
-            </div>
-          </a>
-        </article>
-      </div>
+        <SampleCard
+          level="h2"
+          href="/lp/hinata/"
+          moreHref="/works/sample-hinata/"
+          tone="hinata"
+          kind="サーバー移転の記録"
+          title="ひなた堂印刷"
+          body="注文フォームとメールを載せたサーバーの引っ越しを、調査から毎月の報告まで記録しました。"
+          note="写真は仮置き"
+        />
+      </ul>
     </div>
   </section>
 </BaseLayout>
-
-<style>
-  .work-body h2 {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--main);
-    line-height: 1.45;
-    margin-bottom: 6px;
-  }
-</style>

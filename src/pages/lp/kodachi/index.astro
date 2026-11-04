@@ -1,0 +1,37 @@
+---
+import KodachiLayout from '../../../layouts/KodachiLayout.astro';
+
+const services = [
+  { title: '手入れ・剪定', body: '年に一度の剪定から、伸びすぎた木の相談まで。', href: '/lp/kodachi/care/' },
+  { title: '庭づくり', body: 'ご相談から仕上がりまで、段取りを先に共有します。', href: '/lp/kodachi/build/' },
+  { title: '施工の例', body: '架空の庭を3件、作業のあとで置いています。', href: '/lp/kodachi/examples/' },
+];
+---
+
+<KodachiLayout
+  title="庭木の手入れから、庭づくりまで"
+  description="架空の造園会社「木立造園」のサイトです。実在の会社ではありません。"
+  current="top"
+>
+  <h1>庭木の手入れから、<br />庭づくりまで。</h1>
+  <p class="lead">年に一度の剪定も、伸びすぎた木の相談も。写真を送っていただければ、おおよその目安をお返しします。</p>
+  <div class="ph" role="img" aria-label="写真の仮置き。手入れを終えた庭の予定です。"><span>写真の仮置き</span></div>
+  <p><a class="btn" href="/lp/kodachi/contact/">写真を添えて相談する</a></p>
+  <h2>仕事</h2>
+  <div class="grid cols-3">
+    {
+      services.map((item) => (
+        <article class="card">
+          <h3>{item.title}</h3>
+          <p>{item.body}</p>
+          <p><a href={item.href}>詳しく見る</a></p>
+        </article>
+      ))
+    }
+  </div>
+</KodachiLayout>
+
+<style>
+  h3 { margin: 0 0 8px; }
+  a:not(.btn) { color: #245c32; font-weight: 700; display: inline-flex; align-items: center; min-height: 48px; }
+</style>

@@ -17,23 +17,31 @@ export function mailHref(subject: string, body: string): string {
 }
 
 export const mainNav = [
-  { href: '/works/', label: '制作サンプル' },
+  { href: '/works/', label: 'サンプル' },
   { href: '/about/', label: 'チーム' },
   { href: '/contact/', label: 'お問い合わせ' },
 ] as const;
 
 export const footerNav = [
-  { href: '/works/', label: '制作サンプル' },
+  { href: '/works/', label: 'サンプル' },
   { href: '/#terms', label: '料金の目安' },
   { href: '/contact/', label: 'お問い合わせ' },
 ] as const;
 
 /** Japanese labels for each `kind`, shown as group headings. */
+export const fictionalKinds = ['sample', 'demo', 'case'] as const;
+
+export function isFictional(kind: CollectionEntry<'works'>['data']['kind']): boolean {
+  return (fictionalKinds as readonly string[]).includes(kind);
+}
+
 export const kindLabels: Record<CollectionEntry<'works'>['data']['kind'], string> = {
   client: '受託案件',
   employment: '担当した業務',
   personal: '自主制作',
   sample: '架空のサンプル',
+  demo: '架空のサンプル',
+  case: '架空のサンプル',
 };
 
 /** A status badge as shown on cards and case studies. */
@@ -54,7 +62,7 @@ export interface WorkBadge {
 export function badgeFor(
   data: Pick<CollectionEntry<'works'>['data'], 'kind' | 'status'>,
 ): WorkBadge {
-  if (data.kind === 'sample') return { label: '架空のサンプル', tone: 'sample' };
+  if (isFictional(data.kind)) return { label: '架空のサンプル', tone: 'sample' };
   return data.status === 'active'
     ? { label: '稼働中', tone: 'active' }
     : { label: '完了', tone: 'completed' };
@@ -76,7 +84,7 @@ export function badgesFor(
 }
 
 /** Order of the groups on the works page: real work first, samples last. */
-export const workKindOrder = ['client', 'employment', 'personal', 'sample'] as const satisfies readonly CollectionEntry<'works'>['data']['kind'][];
+export const workKindOrder = ['client', 'employment', 'personal', 'sample', 'demo', 'case'] as const satisfies readonly CollectionEntry<'works'>['data']['kind'][];
 
 /**
  * Returns every published work in display order.

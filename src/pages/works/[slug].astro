@@ -2,7 +2,7 @@
 import type { GetStaticPaths } from 'astro';
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { badgesFor, kindLabels } from '../../data/site';
+import { badgesFor, isFictional, kindLabels } from '../../data/site';
 
 export const getStaticPaths = (async () => {
   const works = await getCollection('works');
@@ -12,14 +12,14 @@ export const getStaticPaths = (async () => {
 const { work } = Astro.props;
 const { title, summary, period, role, tech, kind, links, cover } = work.data;
 const { Content } = await render(work);
-const isSample = kind === 'sample';
+const isSample = isFictional(kind);
 const badges = badgesFor(work.data);
 ---
 
 <BaseLayout title={title} description={summary} noindex={isSample}>
   <article class="page-section">
     <div class="wrap wrap-narrow work">
-    <p class="back"><a class="text-link" href="/works/">← 作れるものの例へ</a></p>
+    <p class="back"><a class="text-link" href="/works/">← サンプルへ</a></p>
     <header>
       <p class="meta">
         {badges.map((badge) => <span class:list={['badge', `badge--${badge.tone}`]}>{badge.label}</span>)}
@@ -35,6 +35,29 @@ const badges = badgesFor(work.data);
           このページは<strong>架空のサンプル</strong>
           の解説です。登場する店舗・企業は実在せず、受託案件でもありません。制作の考え方を示すための作例です。
         </p>
+      )
+    }
+
+    {
+      work.id === 'sample-kodachi' && (
+        <div class="phones">
+          <figure>
+            <figcaption>再現した旧ページ</figcaption>
+            <div class="phone old">
+              <p class="band">再現した旧ページ</p>
+              <p class="tiny">庭木の剪定、承ります</p>
+              <p>本文が小さく、幅が固定です。</p>
+            </div>
+          </figure>
+          <figure>
+            <figcaption>新しいサイト</figcaption>
+            <div class="phone next">
+              <p class="band">木立造園</p>
+              <p class="big">庭木の手入れから、庭づくりまで。</p>
+              <p class="tap">写真を添えて相談する</p>
+            </div>
+          </figure>
+        </div>
       )
     }
 
@@ -79,7 +102,7 @@ const badges = badgesFor(work.data);
       <Content />
     </div>
 
-    <p class="back"><a class="text-link" href="/works/">← 作れるものの例へ</a></p>
+    <p class="back"><a class="text-link" href="/works/">← サンプルへ</a></p>
     </div>
   </article>
 </BaseLayout>
@@ -193,5 +216,67 @@ const badges = badgesFor(work.data);
 
   .prose :global(li) {
     margin-block: 0.25rem;
+  }
+
+  .phones {
+    display: grid;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  .phones figure {
+    margin: 0;
+  }
+
+  .phone {
+    border: 8px solid #1c2b24;
+    border-radius: 24px;
+    min-height: 280px;
+    padding: 16px;
+    background: #fff;
+  }
+
+  .phone .band {
+    margin: 0 0 12px;
+    padding: 8px;
+    color: #fff;
+    font-weight: 800;
+  }
+
+  .old {
+    background: #f3f0e8;
+  }
+
+  .old .band {
+    background: #6a8f4e;
+  }
+
+  .old .tiny {
+    font-size: 13px;
+  }
+
+  .next .band {
+    background: #243028;
+  }
+
+  .next .big {
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .next .tap {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 12px;
+    background: #243028;
+    color: #fff;
+    font-weight: 800;
+  }
+
+  @media (min-width: 720px) {
+    .phones {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 </style>

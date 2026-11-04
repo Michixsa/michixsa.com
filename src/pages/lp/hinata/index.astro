@@ -1,0 +1,164 @@
+---
+/**
+ * Fictional print shop: a written record of a server move and later care.
+ * No claim of zero downtime or round-the-clock support.
+ */
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>引っ越しの段取り｜ひなた堂印刷（架空のサンプル）</title>
+    <meta name="description" content="架空の印刷会社を想定して、サーバー移転の調査から、移転後の毎月の報告までをまとめた見本です。" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <p class="return"><a href="/">michixsa のトップへ戻る</a></p>
+    <p class="bar">これは架空のサンプルです。「ひなた堂印刷」は実在しません。<a href="/works/sample-hinata/">解説を見る</a></p>
+    <main>
+      <p class="kicker">サーバー移転の記録</p>
+      <h1>注文フォームとメールを止めないための、引っ越しの段取り。</h1>
+      <p class="lead">架空の印刷会社を想定して、サーバー移転の調査から、移転後の毎月の報告までを1冊の記録にした見本です。</p>
+      <div class="ph" role="img" aria-label="写真の仮置き。小さな印刷所の作業台の予定です。"><span>写真の仮置き</span></div>
+
+      <h2>きっかけ</h2>
+      <p>Web での注文受付と入稿、メールが、契約の切れる古いサーバーにまとめて載っている、という設定です。前の担当と連絡が取れず、ログインできる情報も一部しか残っていません。</p>
+
+      <h2>調査</h2>
+      <table>
+        <caption>持ち物の棚卸し（架空）</caption>
+        <thead>
+          <tr><th scope="col">項目</th><th scope="col">見つかったこと</th><th scope="col">名義</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">ドメイン</th><td>更新日が近い</td><td>会社名義（架空）</td></tr>
+          <tr><th scope="row">名前の向け先</th><td>古いサーバーを指している</td><td>不明のまま残っている設定</td></tr>
+          <tr><th scope="row">サーバー</th><td>サイトとメールが同じ場所</td><td>前の担当の連絡先しかない</td></tr>
+          <tr><th scope="row">メール</th><td>注文の控えが届く宛先</td><td>会社名義（架空）</td></tr>
+          <tr><th scope="row">証明書</th><td>期限が短い</td><td>サーバー側で更新</td></tr>
+          <tr><th scope="row">定期の処理</th><td>毎朝、注文の一覧を作っている</td><td>手順書がない</td></tr>
+          <tr><th scope="row">バックアップ</th><td>世代が1つだけ</td><td>取り出し方を確認した</td></tr>
+        </tbody>
+      </table>
+
+      <h2>構成</h2>
+      <figure>
+        <svg viewBox="0 0 720 220" role="img" aria-labelledby="fig-title">
+          <title id="fig-title">移転前は1台にサイトとメールと注文が同居し、移転後はサイトとメールを分け、控えを別に置く図</title>
+          <rect x="8" y="8" width="340" height="200" rx="12" fill="#f4f1ea" stroke="#1c2b24" />
+          <text x="24" y="36" font-size="16" font-weight="700">移転前</text>
+          <rect x="24" y="56" width="300" height="120" rx="8" fill="#fff" stroke="#7a3b00" />
+          <text x="40" y="90" font-size="14">古いサーバー</text>
+          <text x="40" y="116" font-size="14">サイト・注文・メール</text>
+          <text x="40" y="142" font-size="14">控えは1世代</text>
+          <rect x="372" y="8" width="340" height="200" rx="12" fill="#f4f1ea" stroke="#1c2b24" />
+          <text x="388" y="36" font-size="16" font-weight="700">移転後</text>
+          <rect x="388" y="56" width="140" height="70" rx="8" fill="#fff" stroke="#3d6b45" />
+          <text x="400" y="96" font-size="14">新しいサイト</text>
+          <rect x="544" y="56" width="148" height="70" rx="8" fill="#fff" stroke="#3d6b45" />
+          <text x="560" y="96" font-size="14">メールは別</text>
+          <rect x="388" y="140" width="304" height="48" rx="8" fill="#fff" stroke="#1e3a5f" />
+          <text x="400" y="170" font-size="14">控えは世代を分ける</text>
+        </svg>
+        <figcaption>図の中の箱は、説明のための架空の構成です。</figcaption>
+      </figure>
+
+      <h2>移転の計画</h2>
+      <p>日付は架空の日程です。</p>
+      <table>
+        <caption>日程（架空）</caption>
+        <thead><tr><th scope="col">日程</th><th scope="col">すること</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">11月10日</th><td>持ち物の確認と、控えの取り出し</td></tr>
+          <tr><th scope="row">11月17日</th><td>新しい場所で、表示・注文・メールを確かめる</td></tr>
+          <tr><th scope="row">11月24日</th><td>向け先を切り替える。うまくいかなければ戻す</td></tr>
+        </tbody>
+      </table>
+      <h3>戻すと決める基準</h3>
+      <ul>
+        <li>注文フォームの内容が届かない</li>
+        <li>メールの送受信ができない</li>
+        <li>主要なページの表示が大きく崩れる</li>
+      </ul>
+      <p>このどれかがあれば、名前の向け先を切り替え前に戻します。切り替えのあいだ、注文フォームを一時的に閉じることがあります。障害時の受付時間や対応範囲は、ご相談のうえ決めます。</p>
+
+      <h2>確認の一覧</h2>
+      <ul class="checks">
+        <li>表示</li>
+        <li>フォームの送信</li>
+        <li>入稿ファイルの受け取り</li>
+        <li>メールの送受信</li>
+        <li>証明書</li>
+        <li>古いアドレスからの転送</li>
+        <li>定期の処理</li>
+        <li>バックアップからの復元</li>
+      </ul>
+
+      <h2>前後の数値</h2>
+      <p>表の上にも、表の下にも、説明用の架空の値であることを書いています。</p>
+      <table>
+        <caption>説明用の架空の値</caption>
+        <thead><tr><th scope="col">項目</th><th scope="col">移転前</th><th scope="col">移転後</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">最初の表示の目安</th><td>4.8秒</td><td>1.6秒</td></tr>
+          <tr><th scope="row">証明書の期限</th><td>14日後</td><td>90日後</td></tr>
+          <tr><th scope="row">バックアップの世代</th><td>1</td><td>7</td></tr>
+        </tbody>
+      </table>
+      <p class="note">説明用の架空の値です。実在の計測ではありません。</p>
+
+      <h2>月次報告の見本</h2>
+      <article class="sheet">
+        <h3>今月の確認結果と、来月までにやること。</h3>
+        <p>対象月：2026年11月（架空）</p>
+        <ul>
+          <li>サイトの表示と、注文フォームの送信を確認した</li>
+          <li>バックアップから、試しに1世代を復元した</li>
+          <li>来月：証明書の更新日をカレンダーに残す</li>
+        </ul>
+      </article>
+
+      <h2>障害報告書の見本</h2>
+      <article class="sheet">
+        <h3>注文の控えメールが届かなかった件（架空）</h3>
+        <p>起きたこと：11月24日の午後、注文の控えが30分ほど届かなかった、という設定です。</p>
+        <p>影響：そのあいだの注文は画面には残っていました。お客さまへの自動返信が遅れました。</p>
+        <p>時系列：14:10 届かないことに気づく。14:20 向け先を確認。14:40 メールの受け口を戻して届くことを確認。</p>
+        <p>原因：切り替えのとき、メールの向け先だけ新しい場所を向いたままだった、という設定です。</p>
+        <p>直したこと：メールの向け先を戻し、確認の一覧に「メールの送受信」を独立した項目として残した。</p>
+        <p>次に防ぐこと：切り替え当日の時間割に、メールの確認を2回入れる。</p>
+        <p>受付時間は、ご相談のうえ決めた範囲の中で対応した、という書き方にしています。</p>
+      </article>
+    </main>
+  </body>
+</html>
+
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f7f4ee; color: #1c2b24; font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, sans-serif; font-size: 16px; line-height: 1.75; }
+  a:focus-visible { outline: 3px solid #1e3a5f; outline-offset: 3px; }
+  .return { margin: 0; background: #1e3a5f; }
+  .return a, .bar a { color: #fff; display: inline-flex; align-items: center; min-height: 48px; font-weight: 700; }
+  .return a { padding: 0 20px; }
+  .bar { margin: 0; padding: 8px 20px; background: #7a3b00; color: #fff; }
+  main { width: min(800px, calc(100% - 40px)); margin: 0 auto; padding: 32px 0 64px; }
+  h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.35; margin: 8px 0 12px; }
+  h2 { margin: 36px 0 8px; font-size: 24px; }
+  .kicker { margin: 0; font-weight: 800; color: #7a3b00; }
+  .lead { font-size: 18px; }
+  .ph { aspect-ratio: 16/9; margin: 16px 0; border-radius: 12px; background: linear-gradient(135deg, #d8d2c4, #a49c8c); position: relative; }
+  .ph span { position: absolute; left: 12px; top: 12px; color: #fff; background: rgba(20, 32, 24, .75); font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; }
+  th, td { text-align: left; padding: 12px 8px; border-bottom: 1px solid #e4dccb; vertical-align: top; }
+  caption { text-align: left; font-weight: 800; padding: 8px 0; }
+  svg { width: 100%; height: auto; background: #fff; }
+  svg text { font-family: inherit; fill: #1c2b24; }
+  .checks { padding-left: 1.2em; }
+  .checks li { min-height: 32px; }
+  .note { font-size: 14px; }
+  .sheet { background: #fff; border: 1px solid #e4dccb; border-radius: 12px; padding: 16px 20px; }
+</style>
