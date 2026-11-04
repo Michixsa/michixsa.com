@@ -3,7 +3,7 @@ import DemoLayout from '../../../layouts/DemoLayout.astro';
 
 const days = ['月', '火', '水', '木', '金', '土', '日'];
 const closed = new Set(['木', '日']);
-const hours = ['9:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
+const hours = ['9:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'];
 const filled: Record<string, string> = {
   '月-9:00': '予約',
   '月-10:00': '予約',
@@ -11,6 +11,7 @@ const filled: Record<string, string> = {
   '水-9:00': '予約',
   '水-10:00': '予約',
   '水-11:00': '予約',
+  '水-13:00': '予約',
   '水-15:00': '予約',
   '金-15:00': '予約',
   '土-9:00': '予約',

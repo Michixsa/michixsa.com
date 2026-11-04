@@ -12,7 +12,6 @@ const steps = ['受付', '問診票', '説明', '施術', 'お会計'];
 const menu = [
   { name: '自費施術 30分', price: '3,300円（架空・税込）' },
   { name: '自費施術 60分', price: '5,500円（架空・税込）' },
-  { name: 'はじめての方', price: '2,200円（架空・税込）' },
 ];
 const faqs = [
   { q: '予約しないと行けませんか？', a: '架空の設定では、予約の人が優先です。このページから予約は送信されません。' },
@@ -34,7 +33,7 @@ const faqs = [
   </head>
   <body>
     <p class="bar">
-      これは架空のサンプルです。「かさね台整骨院」は実在しません。症状の説明や効果の約束はありません。写真はAI生成画像です。
+      これは架空のサンプルです。「かさね台整骨院」は実在しません。
       <a href="/works/sample-clinic-lp/">解説を見る</a>
     </p>
     <header class="head">
@@ -44,9 +43,8 @@ const faqs = [
     <main id="top">
       <section class="hero">
         <div>
-          <p class="eyebrow">架空のサンプル</p>
           <h1>受付時間と、<br />通い方がすぐ分かる。</h1>
-          <p>住宅地の小さな院、という設定です。施術の効果は書いていません。</p>
+          <p>住宅地の小さな院、という設定です。</p>
           <table>
             <caption>受付時間（架空）</caption>
             <tbody>
@@ -55,9 +53,9 @@ const faqs = [
               <tr><th scope="row">水・日</th><td>休診</td></tr>
             </tbody>
           </table>
+          <p>電話 000-0000-0000</p>
           <p class="actions">
-            <a class="btn" href="tel:0000000000">000-0000-0000</a>
-            <a class="btn btn--line" href="#reserve">予約を見る</a>
+            <a class="btn" href="#reserve">予約を見る</a>
           </p>
         </div>
         <Picture
@@ -66,7 +64,7 @@ const faqs = [
           fallbackFormat="webp"
           widths={[640, 960, 1280]}
           sizes="(min-width: 800px) 48vw, 100vw"
-          alt="白い施術ベッドと淡いブルーのカーテンがある施術室。人はいない。AI生成画像です"
+          alt="白い施術ベッドと淡いブルーのカーテンがある施術室（AIで生成した画像です）"
           loading="eager"
           fetchpriority="high"
         />
@@ -75,7 +73,7 @@ const faqs = [
       <section class="section">
         <div class="wrap">
           <h2>はじめての方へ</h2>
-          <p>来院から帰るまでの流れの例です。施術の方法や技能は書いていません。</p>
+          <p>来院から帰るまでの流れです。</p>
           <ol class="steps">
             {steps.map((step, i) => (
               <li><span>{i + 1}</span>{step}</li>
@@ -87,14 +85,14 @@ const faqs = [
       <section class="section section--blue">
         <div class="wrap">
           <h2>自費施術の内容と費用</h2>
-          <p>金額は架空です。症状名や、治るという約束は入れていません。</p>
           <ul class="menu">
             {menu.map((item) => (
               <li><span>{item.name}</span><strong>{item.price}</strong></li>
             ))}
           </ul>
+          <p class="fee">初回のみ、初診料 1,100円（架空・税込）</p>
           <h2>主なリスク・注意</h2>
-          <p>体の状態によって、向かないことがあります。気になることは、受ける前に聞いてください。この文章は見本で、実際の院では自治体の案内も確認します。</p>
+          <p>体の状態によって、向かないことがあります。気になることは、受ける前に聞いてください。</p>
         </div>
       </section>
 
@@ -110,7 +108,7 @@ const faqs = [
             fallbackFormat="webp"
             widths={[400, 800]}
             sizes="(min-width: 800px) 40vw, 100vw"
-            alt="木のベンチと淡いブルーのクッションがある待合。人はいない。AI生成画像です"
+            alt="木のベンチと淡いブルーのクッションがある待合（AIで生成した画像です）"
             loading="lazy"
           />
         </div>
@@ -124,7 +122,7 @@ const faqs = [
             fallbackFormat="webp"
             widths={[640, 960]}
             sizes="(min-width: 800px) 46vw, 100vw"
-            alt="白い受付カウンターとペン立て。掲示物はない。AI生成画像です"
+            alt="白い受付カウンターとペン立て（AIで生成した画像です）"
             loading="lazy"
           />
           <div>
@@ -158,8 +156,8 @@ const faqs = [
       </section>
     </main>
     <footer class="foot">
-      <p>かさね台整骨院（架空のサンプル）</p>
-      <p>写真はAI生成画像です。体験談や施術の前後の写真はありません。</p>
+      <p>かさね台整骨院</p>
+      <p>写真はAIで生成した画像です。</p>
     </footer>
   </body>
 </html>
@@ -175,9 +173,9 @@ const faqs = [
   .head, .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: center; padding: 8px 20px; }
   .logo { color: #1f6fa8; font-weight: 800; text-decoration: none; min-height: 48px; display: inline-flex; align-items: center; }
   .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 20px; border-radius: 8px; background: #1f6fa8; color: #fff; font-weight: 800; text-decoration: none; }
-  .btn--line { background: #fff; color: #1f6fa8; border: 2px solid #1f6fa8; }
+  .fee { margin: 0 0 24px; font-size: 16px; color: #4b5d6b; }
   .hero, .split { display: grid; gap: 24px; align-items: center; }
-  .hero { padding: 28px 20px; }
+  .hero { width: min(960px, calc(100% - 40px)); margin-inline: auto; padding: 28px 0; }
   h1 { margin: 8px 0; font-size: clamp(32px, 6vw, 48px); line-height: 1.3; color: #1f6fa8; }
   h2 { margin: 0 0 12px; font-size: clamp(26px, 4vw, 36px); color: #1f6fa8; line-height: 1.35; }
   .eyebrow { margin: 0; font-weight: 800; color: #1f6fa8; font-size: 14px; }
@@ -198,6 +196,5 @@ const faqs = [
   .foot { background: #1c2b36; color: #fff; }
   @media (min-width: 800px) {
     .hero, .split { grid-template-columns: 1fr 1fr; }
-    .hero { padding-inline: 40px; }
   }
 </style>

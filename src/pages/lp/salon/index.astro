@@ -48,7 +48,7 @@ const faqs = [
   </head>
   <body>
     <p class="bar">
-      これは架空のサンプルです。「ヘアサロン ノコリビ」は実在しません。写真はAI生成画像です。
+      これは架空のサンプルです。「ヘアサロン ノコリビ」は実在しません。
       <a href="/works/sample-salon-lp/">解説を見る</a>
     </p>
     <header class="head">
@@ -58,7 +58,6 @@ const faqs = [
     <main id="top">
       <section class="hero">
         <div class="hero__copy">
-          <p class="eyebrow">架空のサンプル</p>
           <h1>はじめてでも、<br />予約しやすい。</h1>
           <p>少人数のサロンです。来る前に、メニューと時間の目安が分かります。</p>
           <a class="btn" href="#reserve">予約する</a>
@@ -69,7 +68,7 @@ const faqs = [
           fallbackFormat="webp"
           widths={[640, 960, 1280]}
           sizes="(min-width: 800px) 50vw, 100vw"
-          alt="淡いグレーの壁と丸い鏡、木の台と黒い椅子があるセット面。AI生成画像です"
+          alt="淡いグレーの壁と丸い鏡、木の台と黒い椅子があるセット面（AIで生成した画像です）"
           loading="eager"
           fetchpriority="high"
         />
@@ -84,7 +83,7 @@ const faqs = [
             fallbackFormat="webp"
             widths={[480, 800]}
             sizes="(min-width: 800px) 320px, 100vw"
-            alt="窓際の小さなソファとサイドテーブル。AI生成画像です"
+            alt="窓際の小さなソファとサイドテーブル（AIで生成した画像です）"
             loading="lazy"
           />
           <ol class="steps">
@@ -109,7 +108,7 @@ const faqs = [
               fallbackFormat="webp"
               widths={[400, 800]}
               sizes="(min-width: 800px) 40vw, 100vw"
-              alt="白い布の上に並んだハサミとコーム。AI生成画像です"
+              alt="白い布の上に並んだハサミとコーム（AIで生成した画像です）"
               loading="lazy"
             />
             <ul class="cards">
@@ -144,7 +143,7 @@ const faqs = [
         <div class="wrap split">
           <div>
             <h2 id="room">店内</h2>
-            <p>シャンプー台と待合を、明るく保つ想定です。人の写真は使っていません。</p>
+            <p>シャンプー台と待合を、明るく保つ想定です。</p>
           </div>
           <Picture
             src={shampoo}
@@ -152,7 +151,7 @@ const faqs = [
             fallbackFormat="webp"
             widths={[640, 960]}
             sizes="(min-width: 800px) 46vw, 100vw"
-            alt="白いタオルをたたんだシャンプー台。AI生成画像です"
+            alt="白いタオルをたたんだシャンプー台（AIで生成した画像です）"
             loading="lazy"
           />
         </div>
@@ -184,13 +183,12 @@ const faqs = [
           <p>水〜日 10:00–19:00（架空）／月・火 休み（架空）</p>
           <p>〒000-0000 架空県サンプル市はなまち2-3-4</p>
           <p>電話 000-0000-0000</p>
-          <p class="note">写真はAI生成画像です。実在の店舗・人物ではありません。</p>
         </div>
       </section>
     </main>
     <footer class="foot">
-      <p>ヘアサロン ノコリビ（架空のサンプル）</p>
-      <p>写真はAI生成画像です。</p>
+      <p>ヘアサロン ノコリビ</p>
+      <p>写真はAIで生成した画像です。</p>
     </footer>
   </body>
 </html>
@@ -207,7 +205,7 @@ const faqs = [
   .logo { color: #6b4e71; font-weight: 800; text-decoration: none; min-height: 48px; display: inline-flex; align-items: center; }
   .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border-radius: 999px; background: #6b4e71; color: #fff; font-weight: 800; text-decoration: none; border: 0; font: inherit; }
   .hero, .split { display: grid; gap: 24px; }
-  .hero { padding: 32px 20px 8px; align-items: center; }
+  .hero { width: min(960px, calc(100% - 40px)); margin-inline: auto; padding: 32px 0 8px; align-items: center; }
   .hero__copy h1 { margin: 8px 0; font-size: clamp(32px, 7vw, 52px); line-height: 1.25; color: #6b4e71; }
   .eyebrow { display: inline-block; margin: 0; padding: 4px 10px; border-radius: 999px; background: #fff; color: #6b4e71; font-weight: 800; font-size: 13px; }
   .section { padding: 48px 0; }

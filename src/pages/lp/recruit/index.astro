@@ -39,7 +39,7 @@ const faqs = [
   </head>
   <body>
     <p class="bar">
-      これは架空のサンプルです。「ナガレ精機」は実在しません。給与の数字は置いていません。写真はAI生成画像です。
+      これは架空のサンプルです。「ナガレ精機」は実在しません。
       <a href="/works/sample-recruit-lp/">解説を見る</a>
     </p>
     <header class="head">
@@ -49,9 +49,9 @@ const faqs = [
     <main id="top">
       <section class="hero">
         <div>
-          <p class="eyebrow">製造スタッフ募集・架空のサンプル</p>
+          <p class="eyebrow">製造スタッフ募集</p>
           <h1>ものづくりの仕事、<br />はじめから教えます。</h1>
-          <p>金属部品を加工する町工場、という設定です。働く人の顔写真は使っていません。</p>
+          <p>金属部品を加工する町工場、という設定です。</p>
           <a class="btn" href="#apply">応募方法を見る</a>
         </div>
         <Picture
@@ -60,7 +60,7 @@ const faqs = [
           fallbackFormat="webp"
           widths={[640, 960, 1280]}
           sizes="(min-width: 800px) 50vw, 100vw"
-          alt="作業台の上に並んだスパナ、ノギス、金属部品。人はいない。AI生成画像です"
+          alt="作業台の上に並んだスパナ、ノギス、金属部品（AIで生成した画像です）"
           loading="eager"
           fetchpriority="high"
         />
@@ -80,7 +80,7 @@ const faqs = [
             fallbackFormat="webp"
             widths={[400, 800]}
             sizes="(min-width: 800px) 40vw, 100vw"
-            alt="ノギスが金属部品をはさんで置かれている接写。目盛りは読めない。AI生成画像です"
+            alt="ノギスが金属部品をはさんで置かれている接写（AIで生成した画像です）"
             loading="lazy"
           />
         </div>
@@ -106,7 +106,7 @@ const faqs = [
             fallbackFormat="webp"
             widths={[640, 960]}
             sizes="(min-width: 800px) 48vw, 100vw"
-            alt="機械が並ぶ工場の通路と、床の黄色い線。人はいない。AI生成画像です"
+            alt="機械が並ぶ工場の通路と、床の黄色い線（AIで生成した画像です）"
             loading="lazy"
           />
           <div>
@@ -128,7 +128,7 @@ const faqs = [
             fallbackFormat="webp"
             widths={[400, 800]}
             sizes="(min-width: 800px) 40vw, 100vw"
-            alt="白いテーブルと椅子、電気ポットがある休憩スペース。人はいない。AI生成画像です"
+            alt="白いテーブルと椅子、電気ポットがある休憩スペース（AIで生成した画像です）"
             loading="lazy"
           />
         </div>
@@ -142,7 +142,7 @@ const faqs = [
             fallbackFormat="webp"
             widths={[400, 800]}
             sizes="(min-width: 800px) 40vw, 100vw"
-            alt="たたんだ作業服、安全靴、手袋、保護メガネ。ロゴはない。AI生成画像です"
+            alt="たたんだ作業服、安全靴、手袋、保護メガネ（AIで生成した画像です）"
             loading="lazy"
           />
           <div>
@@ -157,7 +157,6 @@ const faqs = [
       <section class="section section--paper" id="faq">
         <div class="wrap">
           <h2>よくある質問</h2>
-          <p>インタビューや名前は使っていません。</p>
           {faqs.map((item) => (
             <details>
               <summary>{item.q}</summary>
@@ -173,10 +172,15 @@ const faqs = [
           <table>
             <tbody>
               <tr><th scope="row">仕事</th><td>製造（架空）</td></tr>
-              <tr><th scope="row">給与</th><td>月給 〇〇円（架空）</td></tr>
-              <tr><th scope="row">賞与</th><td>〇〇円（架空）</td></tr>
-              <tr><th scope="row">休日</th><td>週休2日（架空）</td></tr>
-              <tr><th scope="row">場所</th><td>〒000-0000 架空県サンプル市ながれ1-8</td></tr>
+              <tr><th scope="row">就業時間</th><td>〇〇（架空）</td></tr>
+              <tr><th scope="row">休憩</th><td>〇〇（架空）</td></tr>
+              <tr><th scope="row">休日</th><td>〇〇（架空）</td></tr>
+              <tr><th scope="row">契約期間</th><td>〇〇（架空）</td></tr>
+              <tr><th scope="row">試用期間</th><td>〇〇（架空）</td></tr>
+              <tr><th scope="row">就業場所</th><td>〒000-0000 架空県サンプル市ながれ1-8（架空）</td></tr>
+              <tr><th scope="row">賃金</th><td>月給 〇〇円（架空）</td></tr>
+              <tr><th scope="row">加入保険</th><td>〇〇（架空）</td></tr>
+              <tr><th scope="row">受動喫煙対策</th><td>〇〇（架空）</td></tr>
             </tbody>
           </table>
         </div>
@@ -189,8 +193,8 @@ const faqs = [
       </section>
     </main>
     <footer class="foot">
-      <p>ナガレ精機（架空のサンプル）</p>
-      <p>写真はAI生成画像です。人物は写していません。</p>
+      <p>ナガレ精機</p>
+      <p>写真はAIで生成した画像です。</p>
     </footer>
   </body>
 </html>
@@ -208,7 +212,7 @@ const faqs = [
   .logo { color: #1a1a1a; font-weight: 800; text-decoration: none; min-height: 48px; display: inline-flex; align-items: center; border-bottom: 3px solid #b93a0a; }
   .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; background: #b93a0a; color: #fff; font-weight: 800; text-decoration: none; border: 0; font: inherit; cursor: pointer; }
   .hero, .split { display: grid; gap: 24px; align-items: center; }
-  .hero { padding: 32px 20px; }
+  .hero { width: min(960px, calc(100% - 40px)); margin-inline: auto; padding: 32px 0; }
   h1 { margin: 8px 0; font-size: clamp(32px, 6vw, 48px); line-height: 1.3; }
   h2 { margin: 0 0 12px; font-size: clamp(24px, 4vw, 34px); line-height: 1.35; }
   .eyebrow { margin: 0; font-weight: 800; color: #b93a0a; font-size: 14px; }
@@ -229,6 +233,5 @@ const faqs = [
   .apply .btn { background: #b93a0a; }
   @media (min-width: 800px) {
     .hero, .split { grid-template-columns: 1fr 1fr; }
-    .hero { padding-inline: 40px; }
   }
 </style>
