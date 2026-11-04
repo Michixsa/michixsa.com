@@ -1,0 +1,54 @@
+---
+import { seedState } from '../../../demo/mizukane/model';
+import { appHtml, tabbar } from '../../../demo/mizukane/view';
+
+const inner = appHtml(seedState(), { path: 'today', params: new URLSearchParams() }, { error: false, picked: [], userId: 'u5' });
+const tabs = tabbar('today');
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>今日の対応｜みずかね設備 案件管理（架空のサンプル）</title>
+    <meta name="description" content="架空の設備会社を想定した、案件管理画面の見本です。データはすべて架空です。" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/demo/mizukane.css" />
+  </head>
+  <body>
+    <div class="band" role="note">
+      <span class="band-tag">架空のサンプル</span>
+      <span class="band-txt">みずかね設備は実在しません。入力はこの端末のブラウザにだけ保存されます。</span>
+      <span class="band-act">
+        <a class="home" href="/">トップへ</a>
+        <a href="/works/sample-mizukane/">解説</a>
+        <button type="button" class="band-reset" data-act="reset">最初の状態に戻す</button>
+      </span>
+    </div>
+    <div id="app" class="app" set:html={inner} />
+    <nav id="tabs" class="tabbar" aria-label="メニュー" set:html={tabs} />
+    <dialog id="ask" class="dlg">
+      <form method="dialog">
+        <h2 id="ask-title">確認</h2>
+        <p id="ask-body"></p>
+        <div class="dlg-a">
+          <button value="cancel" class="btn" type="submit">やめる</button>
+          <button id="ask-ok" value="ok" class="btn p" type="submit">保存する</button>
+        </div>
+      </form>
+    </dialog>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <script>
+      window.addEventListener(
+        'load',
+        () => {
+          void import('../../../demo/mizukane/app').then((mod) => mod.boot());
+        },
+        { once: true },
+      );
+    </script>
+  </body>
+</html>
+

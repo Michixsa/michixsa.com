@@ -1,2 +1,8 @@
+[default.extend-words]
+michixsa = "michixsa"
+
+[default.extend-identifiers]
+michixsa = "michixsa"
+
 [files]
 extend-exclude = ["bun.lock", "dist/", ".astro/", ".lighthouseci/", "public/favicon.*"]

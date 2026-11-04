@@ -3,9 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="ページが見つかりません" noindex>
-  <div class="container">
-    <h1>ページが見つかりません</h1>
-    <p>お探しのページは移動したか、削除された可能性があります。</p>
-    <p><a href="/">トップページへ戻る</a></p>
+  <div class="page-hero">
+    <div class="wrap wrap-narrow">
+      <h1 class="sec-title">ページが見つかりません</h1>
+      <p class="lead">お探しのページは移動したか、まだ公開していません。</p>
+      <p><a class="btn btn-primary" href="/">トップへ戻る</a></p>
+    </div>
   </div>
 </BaseLayout>

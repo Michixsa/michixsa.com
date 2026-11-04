@@ -1,10 +1,10 @@
-# portfolio
+# michixsa
 
-フリーランスのインフラエンジニア **asktt1770** のポートフォリオサイトです（インフラの設計・構築、監視、Ansible・NixOS・AI エージェントによる自動化）。
+小さな Web 制作チーム **michixsa** のサイトです。LP や小規模サイトの制作、ドメインと公開の設定、インフラ・自動化の相談、公開後の保守・運用を受けます。
 
-公開中のサイト：<https://asktt1770.pages.dev/>
+公開予定のドメインは <https://michixsa.com> です。ホスティングは Cloudflare Pages のままです。ドメインの接続と本番の切り替えは、オーナーが行います。
 
-サイトは [Astro](https://astro.build/) で作った静的サイトです。実績は Markdown で書き、変更はすべて PR を通します。CI で型チェック・ビルド・誤字チェック・リンクチェック・Lighthouse による採点に合格するまで、本番には反映しません。
+サイトは [Astro](https://astro.build/) で作った静的サイトです。制作サンプルは Markdown で書き、変更はすべて PR を通します。CI で型チェック・ビルド・誤字チェック・リンクチェック・Lighthouse による採点に合格するまで、本番には反映しません。
 
 ## 変更が公開されるまでの流れ
 
@@ -24,7 +24,7 @@ flowchart LR
     F --> G["Cloudflare Pages が<br/>本番をビルドして公開"]
 ```
 
-1. **書く**：実績は1件ごとに `src/content/works/` の Markdown ファイルで書きます。先頭の項目（frontmatter）は zod のスキーマ（`src/content.config.ts`）で検証します。タイトル・期間・担当・使用技術・`kind` のどれかが欠けているとビルドが失敗するので、書きかけのページが公開されることはありません。
+1. **書く**：制作サンプルは1件ごとに `src/content/works/` の Markdown ファイルで書きます。先頭の項目（frontmatter）は zod のスキーマ（`src/content.config.ts`）で検証します。タイトル・期間・担当・使用技術・`kind` のどれかが欠けているとビルドが失敗するので、書きかけのページが公開されることはありません。
 2. **PR を出す**：`main` に直接反映することはありません。
 3. **チェックとプレビュー**：CI が下のチェックを実行し、同じコミットについて Cloudflare Pages がプレビュー URL を作ります。公開前にスマートフォンで見た目を確認できます。
 4. **マージ**：`main` にマージすると、Cloudflare Pages で本番への公開が始まります。
@@ -46,18 +46,38 @@ flowchart LR
 src/
 ├─ pages/
 │  ├─ index.astro            # トップページ
-│  ├─ works/index.astro      # 実績一覧（種類ごとに表示）
-│  ├─ works/[slug].astro     # src/content/works から作る実績の詳細
-│  ├─ about.astro            # プロフィールとスキル
-│  ├─ contact.astro          # お問い合わせ方法
-│  └─ lp/<name>/index.astro  # 独立したサンプル LP
-├─ content/works/*.md        # 実績（1件1ファイル）
-├─ layouts/BaseLayout.astro  # ポートフォリオのレイアウト（サンプル LP は使わない）
-├─ data/site.ts              # サイトの文言、種類のラベル
-└─ content.config.ts         # 実績の zod スキーマ
+│  ├─ works/                 # サンプル
+│  ├─ pricing.astro          # 料金と取引条件
+│  ├─ partners.astro         # 同業者さまへ
+│  ├─ about.astro            # チーム（個人の紹介は載せない）
+│  ├─ faq.astro              # よくある質問
+│  ├─ contact.astro          # メール（info@michixsa.com）
+│  ├─ privacy.astro
+│  ├─ demo/clinic-admin/     # 架空の予約管理画面
+│  └─ lp/<name>/             # 独立したサンプル LP
+├─ content/works/*.md
+├─ layouts/BaseLayout.astro
+├─ data/site.ts
+├─ data/offer.ts
+└─ content.config.ts
 ```
 
-実績にはすべて `kind`（`client`・`employment`・`personal`・`sample`）があります。実在の実績には `status`（`active`・`completed`）も必須で、カードには「稼働中」「完了」「架空のサンプル」のバッジが自動で付きます。サイト上でそれぞれにラベルを表示し、架空のサンプルを受託実績と取り違えられないようにしています。
+トップページの並びは、最初の画面、できること、強み、サンプル、料金の目安、保守、進め方、同業者さまへ、チーム、よくある質問、お問い合わせです。
+
+掲載するものにはすべて `kind`（`client`・`employment`・`personal`・`sample`）があります。実在の実績には `status`（`active`・`completed`）も必須で、カードには「稼働中」「完了」「架空のサンプル」のバッジが自動で付きます。AI で生成した画像を使う作例は `aiImages: true` とし、「AI生成画像」も同じ仕組みで出します。架空のサンプルを受託実績と取り違えられないようにしています。
+
+会社員時代のインフラ業務は、制作実績としては出していません。チームのページに、個人名・勤務先・数値を出さない短い説明だけを残しています。
+
+## 料金
+
+金額は `src/data/offer.ts` にまとめています。ページでは「目安（税込）」と、その金額からという意味の「〜」を付けて表示します。金額は勝手に変えないでください。
+
+## まだ決まっていないこと
+
+サイト上の【要確認】は、次の2つです。
+
+- お問い合わせの窓口（どの手段で連絡を受けるか）
+- 遠方からのご依頼と、対面での打ち合わせ
 
 ## ローカルでの開発
 

@@ -1,0 +1,18 @@
+# Old personal-portfolio case studies now live under the sample index.
+# Cloudflare matches the slash exactly, so both forms are listed.
+/works/dotfiles /works/ 301
+/works/dotfiles/ /works/ 301
+/works/hermes-agent-cachix /works/ 301
+/works/hermes-agent-cachix/ /works/ 301
+/works/iris /works/ 301
+/works/iris/ /works/ 301
+/works/monitoring-migration /works/ 301
+/works/monitoring-migration/ /works/ 301
+/works/monitoring-platform /works/ 301
+/works/monitoring-platform/ /works/ 301
+/works/this-portfolio /works/ 301
+/works/this-portfolio/ /works/ 301
+/works/voip-troubleshooting /works/ 301
+/works/voip-troubleshooting/ /works/ 301
+/works/zarigani /works/ 301
+/works/zarigani/ /works/ 301

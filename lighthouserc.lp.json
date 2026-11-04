@@ -3,7 +3,11 @@
     "collect": {
       "staticDistDir": "./dist",
       "url": [
-        "http://localhost/lp/cafe/"
+        "http://localhost/lp/cafe/",
+        "http://localhost/lp/kodachi/",
+        "http://localhost/lp/kodachi/legacy/",
+        "http://localhost/demo/mizukane/",
+        "http://localhost/lp/hinata/"
       ],
       "numberOfRuns": 3,
       "settings": {

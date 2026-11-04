@@ -10,8 +10,13 @@ import { z } from 'astro/zod';
  * - `employment`: done as an employee; employer and customers stay anonymous
  * - `personal`: the owner's own project
  * - `sample`: fictional work made to demonstrate a skill; always noindexed
+ * - `demo`: fictional, operable admin screen; same disclosure rules as `sample`
+ * - `case`: fictional rebuild or operations record; same disclosure rules as `sample`
  */
-export const workKinds = ['client', 'employment', 'personal', 'sample'] as const;
+export const workKinds = ['client', 'employment', 'personal', 'sample', 'demo', 'case'] as const;
+
+/** Fictional works are never given a live/completed status. */
+export const fictionalKinds = ['sample', 'demo', 'case'] as const;
 
 /**
  * Lifecycle of a real work. Samples have no status: their badge always says
@@ -32,6 +37,8 @@ const works = defineCollection({
     tech: z.array(z.string().min(1)).min(1),
     kind: z.enum(workKinds),
     status: z.enum(workStatuses).optional(),
+    /** True when the work shows AI-generated images. Adds the AI生成画像 badge. */
+    aiImages: z.boolean().default(false),
     links: z
       .array(
         z.object({
@@ -46,10 +53,14 @@ const works = defineCollection({
     order: z.number().int().default(100),
   })
     // Real works must say whether they are running; samples must not.
-    .refine((data) => (data.kind === 'sample') === (data.status === undefined), {
-      message: '`status` is required for real works and must be omitted for `kind: sample`',
-      path: ['status'],
-    }),
+    .refine(
+      (data) =>
+        (fictionalKinds as readonly string[]).includes(data.kind) === (data.status === undefined),
+      {
+        message: '`status` is required for real works and must be omitted for fictional kinds',
+        path: ['status'],
+      },
+    ),
 });
 
 export const collections = { works };

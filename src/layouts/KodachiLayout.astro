@@ -1,0 +1,102 @@
+---
+/**
+ * Standalone pages for the fictional landscaper. No team-site stylesheet.
+ */
+interface Props {
+  title: string;
+  description: string;
+  current: 'top' | 'care' | 'build' | 'examples' | 'about' | 'contact';
+}
+
+const { title, description, current } = Astro.props;
+const nav = [
+  { id: 'top', href: '/lp/kodachi/', label: 'トップ' },
+  { id: 'care', href: '/lp/kodachi/care/', label: '手入れ・剪定' },
+  { id: 'build', href: '/lp/kodachi/build/', label: '庭づくり' },
+  { id: 'examples', href: '/lp/kodachi/examples/', label: '施工の例' },
+  { id: 'about', href: '/lp/kodachi/about/', label: '会社案内' },
+  { id: 'contact', href: '/lp/kodachi/contact/', label: '問い合わせ' },
+] as const;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}｜木立造園（架空のサンプル）</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#243028" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <p class="return"><a href="/">michixsa のトップへ戻る</a></p>
+    <p class="bar">
+      これは架空のサンプルです。「木立造園」は実在しません。写真は仮置きで、あとで差し替えます。
+      <a href="/works/sample-kodachi/">解説を見る</a>
+    </p>
+    <header class="head">
+      <a class="logo" href="/lp/kodachi/">木立造園</a>
+      <nav aria-label="サイト">
+        {
+          nav.map((item) => (
+            <a href={item.href} aria-current={item.id === current ? 'page' : undefined}>{item.label}</a>
+          ))
+        }
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="foot">
+      <p>木立造園</p>
+      <p>〒000-0000 架空県サンプル市こだち2-8</p>
+      <p>電話 000-0000-0000</p>
+      <p>メール info@example.com</p>
+      <p><a href="/lp/kodachi/legacy/">作り直す前のページ（再現）</a></p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f7f6f1; color: #1c2b24; font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Yu Gothic", YuGothic, Meiryo, sans-serif; font-size: 16px; line-height: 1.8; }
+  img { max-width: 100%; height: auto; display: block; }
+  a:focus-visible, button:focus-visible { outline: 3px solid #3d6b45; outline-offset: 3px; }
+  .return { margin: 0; background: #1e3a5f; }
+  .return a, .bar a, .foot a { color: #fff; display: inline-flex; align-items: center; min-height: 48px; font-weight: 700; }
+  .return a { padding: 0 20px; }
+  .bar { margin: 0; padding: 8px 20px; background: #3d6b45; color: #fff; font-size: 14px; }
+  .head, .foot { background: #243028; color: #fff; }
+  .head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 20px; }
+  .logo { color: #fff; font-weight: 800; text-decoration: none; min-height: 48px; display: inline-flex; align-items: center; }
+  nav { display: flex; flex-wrap: wrap; }
+  nav a { color: #d5e6c8; text-decoration: none; display: inline-flex; align-items: center; min-height: 48px; padding: 0 12px; font-weight: 700; }
+  nav a[aria-current='page'] { color: #fff; box-shadow: inset 0 -3px 0 #d5e6c8; }
+  main { width: min(960px, calc(100% - 40px)); margin: 0 auto; padding: 32px 0 64px; }
+  h1 { margin: 8px 0 16px; font-size: clamp(30px, 5vw, 44px); line-height: 1.3; }
+  h2 { margin: 28px 0 8px; font-size: 24px; line-height: 1.4; }
+  h2::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 8px; background: #3d6b45; }
+  .lead { font-size: 18px; }
+  .ph { aspect-ratio: 16/9; border-radius: 12px; background: linear-gradient(135deg, #5f7d5a, #c8d6b4); position: relative; margin: 16px 0; }
+  .ph span { position: absolute; left: 12px; top: 12px; color: #fff; background: rgba(20, 32, 24, .75); font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
+  .grid { display: grid; gap: 16px; }
+  .card { border: 1px solid #e0e6d4; border-radius: 12px; padding: 16px; background: #fff; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 12px 8px; border-bottom: 1px solid #e0e6d4; vertical-align: top; }
+  th { width: 8rem; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; background: #243028; color: #fff; font-weight: 800; text-decoration: none; border: 0; border-radius: 8px; }
+  label { display: block; font-weight: 800; margin-top: 12px; }
+  input, textarea { width: 100%; font: inherit; padding: 12px; border: 1px solid #c9d2bc; border-radius: 8px; background: #fff; }
+  input:focus-visible, textarea:focus-visible { outline: 3px solid #3d6b45; outline-offset: 2px; }
+  .foot { padding: 32px 20px; }
+  .foot p { margin: 4px 0; }
+  .foot a { color: #d5e6c8; }
+  ol.steps { padding-left: 1.2em; }
+  ol.steps li { margin: 8px 0; }
+  @media (min-width: 800px) {
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

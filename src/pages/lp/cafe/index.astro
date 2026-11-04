@@ -4,7 +4,9 @@
  * It owns its whole document on purpose: no portfolio layout, header,
  * theme or View Transitions, so it reads like a real client's site.
  * The shop does not exist; every page view says so and it is noindexed.
- * The illustrations are AI-generated, and the page says that too.
+ * The photo-style images are AI-generated, and the page says that too.
+ * They are not photographs of a real shop, person, or dish.
+ * Hero and banner sources are 1152px wide, so that is the largest generated width.
  */
 import { Picture } from 'astro:assets';
 import hero from '../../../assets/lp/cafe/hero.webp';
@@ -46,7 +48,7 @@ const points = [
     title: ['朝に挽いて、', '一杯ずつ', 'ハンドドリップ'],
     body: '豆はその日の朝に挽き、注文を受けてから一杯ずつ淹れます。浅煎りから深煎りまで、季節ごとに入れ替える4種類からお選びください。',
     image: pointDrip,
-    alt: 'ケトルからドリッパーにお湯を注ぎ、コーヒーを淹れている手元のイラスト',
+    alt: 'ケトルからペーパーフィルターのドリッパーへ、細くお湯を注いでいる手元（AIで生成した画像です）',
     tags: ['季節の4種類', '注文ごとに抽出', '浅煎り〜深煎り'],
   },
   {
@@ -54,7 +56,7 @@ const points = [
     title: ['毎朝焼き上げる、', '自家製', 'バスクチーズケーキ'],
     body: '表面をしっかり焦がした、ほろ苦くて濃厚なチーズケーキです。朝に焼いて、夕方には売り切れることも多い定番です。',
     image: pointCake,
-    alt: '焦げ目のついたバスクチーズケーキとブラックコーヒーのイラスト',
+    alt: '表面がこんがり焦げたバスクチーズケーキと、ブラックコーヒー（AIで生成した画像です）',
     tags: ['毎朝焼き上げ', 'コーヒーと好相性', '数量限定'],
   },
   {
@@ -62,7 +64,7 @@ const points = [
     title: ['豆は100gから、', '好みに合わせて', '量り売り'],
     body: '店頭の豆はすべて100gから買えます。味の好みや、ご自宅の器具を教えていただければ、合う豆と挽き方を一緒に選びます。',
     image: pointBeans,
-    alt: '焙煎度の違うコーヒー豆が入ったガラス瓶と、紙袋に豆を移すスコップのイラスト',
+    alt: '焙煎度の違うコーヒー豆が入ったガラス瓶と、スコップから紙袋へ落ちる豆（AIで生成した画像です）',
     tags: ['100gから', '挽き方を選べる', '試飲できます'],
   },
 ];
@@ -99,18 +101,19 @@ const hours = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ゆくり珈琲（架空のサンプル）| 朝の一杯を、ゆっくりと。</title>
+    <title>珈琲 ゆうまど（架空のサンプル）｜朝の一杯を、ゆっくりと。</title>
     <meta
       name="description"
-      content="架空の喫茶店「ゆくり珈琲」のランディングページ。実在しない店舗を題材にした Web 制作のサンプルです。"
+      content="架空の喫茶店「珈琲 ゆうまど」のランディングページ。実在しない店舗を題材にした Web 制作のサンプルです。"
     />
     <meta name="robots" content="noindex" />
-    <meta name="theme-color" content="#2b1d14" />
+    <meta name="theme-color" content="#3a2a1f" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
+    <p class="return-bar"><a href="/">michixsa のトップへ戻る</a></p>
     <p class="sample-bar" role="note">
-      これは制作サンプルです。「ゆくり珈琲」は<strong>架空の店舗</strong>で、実在しません。
+      これは架空のサンプルです。「珈琲 ゆうまど」は<strong>架空の店舗</strong>で、実在しません。
       <a href="/works/sample-cafe-lp/">制作の解説を見る</a>
     </p>
 
@@ -120,7 +123,7 @@ const hours = [
           <svg viewBox="0 0 24 24" aria-hidden="true"
             ><ellipse cx="12" cy="12" rx="7" ry="10" transform="rotate(30 12 12)"></ellipse><path
               d="M8 5c4 3 4 11 8 14"></path></svg
-          >ゆくり珈琲
+          >珈琲 ゆうまど
         </a>
         <nav aria-label="ページ内">
           <ul>
@@ -158,9 +161,9 @@ const hours = [
             src={hero}
             formats={['avif']}
             fallbackFormat="webp"
-            widths={[480, 800, 1200]}
+            widths={[480, 800, 1152]}
             sizes="(min-width: 860px) 58vw, 100vw"
-            alt="朝の光が入る店内で、店主がハンドドリップでコーヒーを淹れているイラスト"
+            alt="朝の光が入る店内のカウンターで、ケトルからドリッパーにお湯を注いでいる手元（AIで生成した画像です）"
             loading="eager"
             fetchpriority="high"
           />
@@ -171,7 +174,7 @@ const hours = [
         <div class="wrap cta-band__inner">
           <div class="cta">
             <p class="cta__bubble">モーニングは<b>11時</b>まで</p>
-            <a class="pill pill--yellow" href="#menu">メニューを見る</a>
+            <a class="pill pill--accent" href="#menu">メニューを見る</a>
           </div>
           <div class="cta">
             <p class="cta__bubble">駅の東口からまっすぐ</p>
@@ -185,7 +188,7 @@ const hours = [
         <div class="wrap">
           <div class="section-head">
             <p class="label">こんな時に</p>
-            <h2 id="cases-title">ゆくり珈琲が、<br class="sp" />ちょうどいい理由</h2>
+            <h2 id="cases-title">珈琲 ゆうまどが、<br class="sp" />ちょうどいい理由</h2>
           </div>
           <ol class="case-list">
             {
@@ -213,7 +216,7 @@ const hours = [
       <section class="points" id="points" aria-labelledby="points-title">
         <div class="wrap section-head">
           <p class="lead-bar">小さなお店だから、できること</p>
-          <h2 id="points-title">ゆくり珈琲の<br class="sp" /><span class="big">3</span>つのこだわり</h2>
+          <h2 id="points-title">珈琲 ゆうまどの<br class="sp" /><span class="big">3</span>つのこだわり</h2>
         </div>
         {
           points.map((p, i) => (
@@ -279,9 +282,9 @@ const hours = [
             src={banner}
             formats={['avif']}
             fallbackFormat="webp"
-            widths={[480, 800, 1200]}
+            widths={[480, 800, 1152]}
             sizes="(min-width: 860px) 50vw, 100vw"
-            alt="窓際の席で、本を読みながらコーヒーとトーストを楽しむお客さんのイラスト"
+            alt="朝日が差し込む窓際の席に置かれた、コーヒーとバタートースト、開いた本（AIで生成した画像です）"
           />
         </div>
         <div class="banner__text">
@@ -294,7 +297,7 @@ const hours = [
         <div class="wrap cta-band__inner">
           <div class="cta">
             <p class="cta__bubble">予約なしで、そのままどうぞ</p>
-            <a class="pill pill--yellow" href="#access">お店の場所を見る</a>
+            <a class="pill pill--accent" href="#access">お店の場所を見る</a>
           </div>
         </div>
       </section>
@@ -355,27 +358,31 @@ const hours = [
           <div class="access__grid">
             <svg class="map" viewBox="0 0 320 220" role="img" aria-labelledby="map-title">
               <title id="map-title">サンプル駅の東口から、まっすぐ歩いて3分の角にお店がある案内図</title>
-              <rect width="320" height="220" rx="16" fill="#f6ecd9"></rect>
+              <rect width="320" height="220" rx="16" fill="#f1e7d8"></rect>
               <path d="M0 150h320M200 0v220M0 60h200" stroke="#fff" stroke-width="18"></path>
-              <rect x="16" y="168" width="120" height="36" rx="8" fill="#2b1d14"></rect>
+              <rect x="16" y="168" width="120" height="36" rx="8" fill="#3a2a1f"></rect>
               <text x="76" y="192" text-anchor="middle" fill="#fff" font-size="14" font-weight="700"
                 >サンプル駅</text
               >
-              <rect x="226" y="80" width="70" height="50" rx="8" fill="#e8d6b8"></rect>
-              <rect x="226" y="166" width="78" height="40" rx="8" fill="#e8d6b8"></rect>
-              <rect x="40" y="82" width="130" height="50" rx="8" fill="#e8d6b8"></rect>
+              <rect x="226" y="80" width="70" height="50" rx="8" fill="#dcc4a0"></rect>
+              <rect x="226" y="166" width="78" height="40" rx="8" fill="#dcc4a0"></rect>
+              <rect x="40" y="82" width="130" height="50" rx="8" fill="#dcc4a0"></rect>
               <path
                 d="M120 168V150h80V70"
                 fill="none"
-                stroke="#a0521d"
+                stroke="#a35a2a"
                 stroke-width="4"
                 stroke-dasharray="2 8"
                 stroke-linecap="round"></path>
-              <path d="M200 66c-12-14-18-22-18-30a18 18 0 0 1 36 0c0 8-6 16-18 30z" fill="#f5b800"
-              ></path>
-              <circle cx="200" cy="36" r="7" fill="#2b1d14"></circle>
-              <text x="226" y="34" fill="#2b1d14" font-size="14" font-weight="700">ゆくり珈琲</text>
-              <text x="146" y="184" fill="#6b4a33" font-size="11">東口から徒歩3分</text>
+              <path
+                d="M200 66c-12-14-18-22-18-30a18 18 0 0 1 36 0c0 8-6 16-18 30z"
+                fill="#f5b800"
+                stroke="#2b1d14"
+                stroke-width="2"
+                stroke-linejoin="round"></path>
+              <circle cx="200" cy="36" r="7" fill="#3a2a1f"></circle>
+              <text x="304" y="26" text-anchor="end" fill="#2b1d14" font-size="12" font-weight="700">珈琲 ゆうまど</text>
+              <text x="146" y="184" fill="#5e4a3b" font-size="11">東口から徒歩3分</text>
             </svg>
             <div>
               <dl class="hours">
@@ -392,7 +399,6 @@ const hours = [
                 〒000-0000架空県サンプル市みどり町1-2-3<br />
                 サンプル駅 東口から徒歩3分
               </p>
-              <p class="note">※ 店名・住所を含め、すべて架空の情報です。</p>
             </div>
           </div>
         </div>
@@ -401,11 +407,8 @@ const hours = [
 
     <footer class="footer">
       <div class="wrap">
-        <p class="footer__brand">ゆくり珈琲（架空のサンプル）</p>
-        <p class="note">
-          このページは Web 制作のサンプルとして作成したもので、実在の店舗とは関係ありません。イラストは AI で生成したものです。
-          <a href="/works/sample-cafe-lp/">制作の解説</a>
-        </p>
+        <p class="footer__brand">珈琲 ゆうまど</p>
+        <p class="note">写真はAIで生成した画像です。</p>
       </div>
     </footer>
   </body>
@@ -414,15 +417,18 @@ const hours = [
 <style is:global>
   /* Scoped to this document only; the portfolio stylesheet is never loaded here. */
   :root {
-    --cream: #fdf8ef;
+    /* Light palette matched to the photo-style images. Mustard is decoration only. */
+    --bg: #faf6ef;
     --paper: #ffffff;
-    --tint: #f6ecd9;
+    --surface: #f1e7d8;
     --ink: #2b1d14;
     --muted: #5e4a3b;
-    --brown: #8a4416;
-    --yellow: #f5b800;
-    --yellow-soft: #fff4cc;
-    --leaf-soft: #eef3dc;
+    --main: #3a2a1f;
+    --accent: #4f6b3a;
+    --wood: #a35a2a;
+    --mustard: #f5b800;
+    --mustard-soft: #fff4cc;
+    --leaf-soft: #e7f0e0;
     --sans: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic', 'Meiryo',
       sans-serif;
     color-scheme: light;
@@ -446,7 +452,7 @@ const hours = [
 
   body {
     margin: 0;
-    background: var(--cream);
+    background: var(--bg);
     color: var(--ink);
     font-family: var(--sans);
     line-height: 1.85;
@@ -474,14 +480,20 @@ const hours = [
   }
 
   a {
-    color: var(--brown);
+    color: var(--accent);
     text-underline-offset: 0.2em;
   }
 
   a:focus-visible,
   summary:focus-visible {
-    outline: 3px solid var(--brown);
+    outline: 3px solid var(--ink);
     outline-offset: 3px;
+  }
+
+  /* The ring sits on the dark band, so it has to be light to stay visible. */
+  .sample-bar a:focus-visible,
+  .cta-band a:focus-visible {
+    outline-color: var(--bg);
   }
 
   ul,
@@ -515,30 +527,46 @@ const hours = [
   }
 
   .marker {
-    background: linear-gradient(transparent 62%, var(--yellow) 62%);
+    background: linear-gradient(transparent 62%, var(--mustard) 62%);
   }
 
   /* ---------- sample notice and header ---------- */
 
+  .return-bar {
+    margin: 0;
+    background: #1e3a5f;
+  }
+
+  .return-bar a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 1.25rem;
+    color: #fff;
+    font-weight: 700;
+  }
+
   .sample-bar {
     padding: 0.5rem 1.25rem;
-    background: var(--ink);
-    color: var(--cream);
+    background: var(--main);
+    color: var(--bg);
     font-size: 0.8rem;
     text-align: center;
   }
 
   .sample-bar a {
-    display: inline-block;
-    padding-block: 0.3rem;
-    color: var(--yellow);
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    color: var(--paper);
+    text-decoration: underline;
   }
 
   .site-header {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: rgb(253 248 239 / 0.94);
+    background: rgb(250 246 239 / 0.94);
     border-bottom: 2px solid var(--ink);
   }
 
@@ -565,8 +593,8 @@ const hours = [
   .brand svg {
     width: 1.4rem;
     height: 1.4rem;
-    fill: var(--brown);
-    stroke: var(--cream);
+    fill: var(--accent);
+    stroke: var(--bg);
     stroke-width: 1.6;
   }
 
@@ -630,19 +658,21 @@ const hours = [
     box-shadow: 0 2px 0 var(--ink);
   }
 
-  .pill--yellow {
-    background: var(--yellow);
+  .pill--accent {
+    background: var(--accent);
+    color: var(--paper);
   }
 
   .pill--small {
-    min-height: 44px;
+    min-height: 48px;
     min-width: 0;
     padding: 0.3rem 1rem;
     border-width: 2px;
     border-radius: 999px;
     box-shadow: 0 3px 0 var(--ink);
     font-size: 0.9rem;
-    background: var(--yellow);
+    background: var(--accent);
+    color: var(--paper);
   }
 
   .pill--small::after {
@@ -653,7 +683,7 @@ const hours = [
 
   .hero {
     display: grid;
-    background: var(--tint);
+    background: var(--surface);
   }
 
   @media (min-width: 860px) {
@@ -704,7 +734,7 @@ const hours = [
   .hero__tags li {
     padding: 0.1rem 0.9rem;
     border-radius: 6px;
-    background: var(--brown);
+    background: var(--main);
     color: var(--paper);
     font-weight: 700;
     font-size: 0.9rem;
@@ -717,7 +747,7 @@ const hours = [
   }
 
   .hero__lead span {
-    color: var(--brown);
+    color: var(--accent);
   }
 
   .hero h1 {
@@ -758,7 +788,7 @@ const hours = [
   }
 
   .hero__badges strong {
-    color: var(--yellow);
+    color: var(--paper);
     font-size: 1.8rem;
     font-weight: 800;
     letter-spacing: 0;
@@ -772,8 +802,23 @@ const hours = [
   /* ---------- CTA band ---------- */
 
   .cta-band {
-    background: linear-gradient(100deg, #f9d65c, var(--yellow));
+    background: var(--main);
+    color: var(--bg);
     padding-block: 2rem 2.4rem;
+  }
+
+  /* Ink borders disappear on the dark band, so the offset uses the page background. */
+  .cta-band .pill,
+  .cta-band .pill:hover {
+    border-color: var(--bg);
+  }
+
+  .cta-band .pill {
+    box-shadow: 0 5px 0 var(--bg);
+  }
+
+  .cta-band .pill:hover {
+    box-shadow: 0 2px 0 var(--bg);
   }
 
   .cta-band__inner {
@@ -800,6 +845,7 @@ const hours = [
     border: 2px solid var(--ink);
     border-radius: 999px;
     background: var(--paper);
+    color: var(--ink);
     font-weight: 700;
     font-size: 0.85rem;
   }
@@ -840,14 +886,14 @@ const hours = [
     padding: 0.15rem 1.1rem;
     border: 2px solid var(--ink);
     border-radius: 999px;
-    background: var(--yellow);
+    background: var(--mustard);
     font-weight: 800;
     font-size: 0.9rem;
     letter-spacing: 0.1em;
   }
 
   .label--dark {
-    background: var(--ink);
+    background: var(--main);
     color: var(--paper);
   }
 
@@ -862,7 +908,7 @@ const hours = [
 
   .big {
     font-size: 1.6em;
-    color: var(--brown);
+    color: var(--accent);
     line-height: 1;
   }
 
@@ -874,14 +920,14 @@ const hours = [
     text-align: center;
     background: repeating-linear-gradient(
       -45deg,
-      var(--yellow) 0 10px,
+      var(--mustard) 0 10px,
       transparent 10px 20px
     );
   }
 
   .stripe-title span {
     padding: 0.2rem 1rem;
-    background: var(--cream);
+    background: var(--bg);
     font-weight: 800;
   }
 
@@ -919,10 +965,10 @@ const hours = [
     width: 3.6rem;
     aspect-ratio: 1;
     margin-bottom: -1.8rem;
-    border: 2px solid var(--brown);
+    border: 2px solid var(--accent);
     border-radius: 50%;
     background: var(--paper);
-    color: var(--brown);
+    color: var(--accent);
     font-weight: 800;
     font-size: 0.65rem;
     line-height: 1.1;
@@ -936,7 +982,7 @@ const hours = [
     width: 100%;
     padding: 2.2rem 1rem 1.1rem;
     border-radius: 12px;
-    background: #ece5da;
+    background: var(--surface);
     font-weight: 700;
     font-size: 0.95rem;
   }
@@ -972,8 +1018,8 @@ const hours = [
 
   .case__title em {
     font-style: normal;
-    color: var(--brown);
-    background: linear-gradient(transparent 65%, var(--yellow-soft) 65%);
+    color: var(--accent);
+    background: linear-gradient(transparent 65%, var(--mustard-soft) 65%);
   }
 
   .case__detail {
@@ -1007,11 +1053,11 @@ const hours = [
   }
 
   .point--2 {
-    background: var(--yellow-soft);
+    background: var(--bg);
   }
 
   .point--3 {
-    background: var(--tint);
+    background: var(--surface);
   }
 
   .point__inner {
@@ -1107,11 +1153,12 @@ const hours = [
   }
 
   .menu-card__price {
-    color: var(--brown);
+    color: var(--ink);
     font-weight: 800;
   }
 
   .menu-card__price b {
+    color: var(--wood);
     font-size: 2rem;
     letter-spacing: 0;
   }
@@ -1130,7 +1177,7 @@ const hours = [
 
   .banner {
     display: grid;
-    background: var(--tint);
+    background: var(--surface);
   }
 
   @media (min-width: 860px) {
@@ -1189,7 +1236,7 @@ const hours = [
     gap: 0.5rem;
     padding: 0 1.2rem 1.5rem;
     border-radius: 12px;
-    background: #f4efe7;
+    background: var(--surface);
     text-align: center;
   }
 
@@ -1201,7 +1248,7 @@ const hours = [
     margin-top: -1.5rem;
     border: 3px solid var(--ink);
     border-radius: 50%;
-    background: var(--yellow);
+    background: var(--mustard);
     font-weight: 800;
     font-size: 0.7rem;
     line-height: 1.1;
@@ -1268,8 +1315,15 @@ const hours = [
 
   .faq__q,
   .faq__a {
+    flex: none;
     font-weight: 800;
-    color: var(--brown);
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* Sit beside the first line. Stretching would make the label as tall as a wrapped answer. */
+  .faq__a {
+    align-self: flex-start;
   }
 
   details p {
@@ -1281,8 +1335,8 @@ const hours = [
   /* ---------- access ---------- */
 
   .access {
-    background: var(--ink);
-    color: var(--cream);
+    background: var(--main);
+    color: var(--bg);
   }
 
   .access .label {
@@ -1315,7 +1369,7 @@ const hours = [
     display: grid;
     grid-template-columns: 7rem 1fr;
     padding-block: 0.5rem;
-    border-bottom: 1px solid #5a4536;
+    border-bottom: 1px solid #a08c7a;
   }
 
   .hours dt {
@@ -1351,7 +1405,8 @@ const hours = [
   }
 
   .footer a {
-    display: inline-block;
-    padding-block: 0.3rem;
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
   }
 </style>

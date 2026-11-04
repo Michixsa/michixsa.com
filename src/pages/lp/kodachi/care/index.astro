@@ -1,0 +1,28 @@
+---
+import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
+
+const rows = [
+  ['低木（高さ2mまで）', '1本 3,300円（架空・税込）'],
+  ['中木', '1本 6,600円（架空・税込）'],
+  ['高木', '1本 11,000円（架空・税込）'],
+  ['生垣', '1m 2,200円（架空・税込）'],
+];
+---
+
+<KodachiLayout
+  title="手入れ・剪定"
+  description="架空の造園会社「木立造園」の手入れと剪定の目安です。"
+  current="care"
+>
+  <h1>高さと本数で、料金の目安がわかります。</h1>
+  <p>金額は架空です。写真と本数を見てから、改めてお伝えする前提です。</p>
+  <div class="ph" role="img" aria-label="写真の仮置き。剪定用具を並べた静物の予定です。"><span>写真の仮置き</span></div>
+  <table>
+    <caption>料金の目安（架空・税込）</caption>
+    <tbody>
+      {rows.map(([name, price]) => (
+        <tr><th scope="row">{name}</th><td>{price}</td></tr>
+      ))}
+    </tbody>
+  </table>
+</KodachiLayout>

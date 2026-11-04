@@ -1,38 +1,45 @@
 ---
 /**
- * Portfolio layout: header, footer, theme and View Transitions.
- * Sample LPs under /lp/ deliberately do not use this layout.
+ * Team site layout. Sample LPs and the clinic demo do not use this file.
  */
-import { ClientRouter } from 'astro:transitions';
-// Latin-only web fonts: a Japanese web font costs hundreds of KB per page,
-// so Japanese text uses the visitor's system font instead.
-import '@fontsource/ibm-plex-sans/latin-400.css';
-import '@fontsource/ibm-plex-sans/latin-700.css';
-import '@fontsource/ibm-plex-mono/latin-400.css';
-import '@fontsource/ibm-plex-mono/latin-700.css';
 import '../styles/global.css';
-// Body text starts in this face, so fetching it early keeps the font swap
-// from pushing back the largest paint.
-import bodyFont from '@fontsource/ibm-plex-sans/files/ibm-plex-sans-latin-400-normal.woff2?url';
 import { site } from '../data/site';
 
 interface Props {
-  /** Page title; the site name is appended unless this is the top page. */
   title?: string;
   description?: string;
-  /** Keeps fictional samples out of search results. */
   noindex?: boolean;
+  /** Home hero sits under a transparent header. */
+  overlayHeader?: boolean;
 }
 
-const { title, description = site.description, noindex = false } = Astro.props;
-const pageTitle = title ? `${title} | ${site.name}` : site.title;
+const { title, description = site.description, noindex = false, overlayHeader = false } = Astro.props;
+const pageTitle = title ? `${title}｜${site.name}` : site.title;
 const path = Astro.url.pathname;
+const canonical = new URL(path, site.url).href;
 
 const nav = [
-  { href: '/works/', label: '実績' },
-  { href: '/about/', label: 'プロフィール' },
-  { href: '/contact/', label: 'お問い合わせ' },
+  { href: '/#services', label: 'できること' },
+  { href: '/#samples', label: 'サンプル' },
+  { href: '/#flow', label: '進め方' },
+  { href: '/pricing/', label: '料金' },
+  { href: '/faq/', label: 'よくある質問' },
 ];
+
+const footer = [
+  { href: '/#services', label: 'できること' },
+  { href: '/works/', label: 'サンプル' },
+  { href: '/pricing/', label: '料金' },
+  { href: '/partners/', label: '同業者さまへ' },
+  { href: '/faq/', label: 'よくある質問' },
+  { href: '/pricing/#terms', label: '取引条件' },
+  { href: '/privacy/', label: 'プライバシーポリシー' },
+];
+
+function current(href: string) {
+  if (href.startsWith('/#')) return false;
+  return path === href || path.startsWith(href);
+}
 ---
 
 <!doctype html>
@@ -42,272 +49,65 @@ const nav = [
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    {!noindex && <link rel="canonical" href={canonical} />}
     {noindex && <meta name="robots" content="noindex" />}
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#121812" media="(prefers-color-scheme: dark)" />
-    <link rel="preload" href={bodyFont} as="font" type="font/woff2" crossorigin />
+    <meta property="og:image" content={`${site.url}/og-default.webp`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="michixsa。途中からでも、はじめからでも。" />
+    <meta name="theme-color" content="#F6F8F7" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <script is:inline>
-      // Runs before first paint (and again after each View Transition swap,
-      // which replaces <html> attributes) so a saved theme never flashes.
-      (() => {
-        const apply = () => {
-          let saved = null;
-          try {
-            saved = localStorage.getItem('theme');
-          } catch {}
-          if (saved === 'light' || saved === 'dark') {
-            document.documentElement.dataset.theme = saved;
-          }
-        };
-        apply();
-        document.addEventListener('astro:after-swap', apply);
-      })();
-    </script>
-    <ClientRouter />
+    {
+      path === '/' && (
+        <link
+          rel="preload"
+          as="image"
+          type="image/avif"
+          imagesrcset="/hero/hero-sp-640.avif 640w, /hero/hero-sp-960.avif 960w, /hero/hero-sp-1122.avif 1122w"
+          imagesizes="100vw"
+          media="not all and ((orientation: landscape) and (min-width: 768px), (min-width: 1024px))"
+          fetchpriority="high"
+        />
+      )
+    }
   </head>
-  <body>
-    <a class="skip-link" href="#main">本文へ移動</a>
-    <header class="site-header">
-      <div class="container site-header__inner">
-        <a class="brand" href="/" aria-current={path === '/' ? 'page' : undefined}>
-          <span aria-hidden="true">~/</span>{site.name}<span class="cursor" aria-hidden="true"
-          ></span>
+  <body class:list={{ home: overlayHeader }}>
+    <a class="skip" href="#main">本文へ移動</a>
+    <header class:list={['site-header', { 'is-overlay': overlayHeader }]}>
+      <div class="wrap header-in">
+        <a class="logo" href="/" aria-current={path === '/' ? 'page' : undefined}>
+          <span class="logo-mark" aria-hidden="true"></span>{site.name}
         </a>
-        <div class="site-header__end">
-          <nav aria-label="メイン">
-            <ul>
-              {
-                nav.map((item) => (
-                  <li>
-                    <a
-                      href={item.href}
-                      aria-current={path.startsWith(item.href) ? 'page' : undefined}
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))
-              }
-            </ul>
-          </nav>
-          <button class="theme-toggle" type="button" aria-label="ライト／ダークを切り替える">
-            <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path>
-            </svg>
-            <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="4"></circle>
-              <path
-                d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
-              ></path>
-            </svg>
-          </button>
-        </div>
+        <nav class="gnav" aria-label="メインメニュー">
+          {
+            nav.map((item) => (
+              <a href={item.href} aria-current={current(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+        <a class="btn btn-sm btn-primary header-cta" href="/contact/">相談する</a>
       </div>
     </header>
-    <main id="main" transition:animate="fade">
+    <main id="main">
       <slot />
     </main>
     <footer class="site-footer">
-      <div class="container">
-        <p>
-          掲載している「架空のサンプル」は制作力を示すための作例で、実在の店舗・企業・案件ではありません。
-        </p>
-        <p>&copy; {new Date().getFullYear()} {site.name}</p>
+      <div class="wrap footer-in">
+        <p class="logo logo-foot"><span class="logo-mark" aria-hidden="true"></span>{site.name}</p>
+        <nav aria-label="フッターメニュー">
+          {footer.map((item) => <a href={item.href}>{item.label}</a>)}
+        </nav>
+        <p class="copy">© {new Date().getFullYear()} {site.name}</p>
       </div>
     </footer>
   </body>
 </html>
-
-<script>
-  /** Which theme is showing now, whether it came from the OS or the toggle. */
-  function currentTheme(): 'light' | 'dark' {
-    const forced = document.documentElement.dataset.theme;
-    if (forced === 'light' || forced === 'dark') return forced;
-    return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
-
-  // `astro:page-load` fires on the first load and after every navigation,
-  // because View Transitions replace the header and its button each time.
-  document.addEventListener('astro:page-load', () => {
-    const button = document.querySelector<HTMLButtonElement>('.theme-toggle');
-    button?.addEventListener('click', () => {
-      const next = currentTheme() === 'dark' ? 'light' : 'dark';
-      document.documentElement.dataset.theme = next;
-      try {
-        localStorage.setItem('theme', next);
-      } catch {
-        // Private browsing can block storage; the switch still works for this page.
-      }
-    });
-  });
-</script>
-
-<style>
-  .skip-link {
-    position: absolute;
-    left: 0.5rem;
-    top: -3rem;
-    padding: 0.5rem 1rem;
-    background: var(--surface);
-    border-radius: 6px;
-    z-index: 10;
-  }
-
-  .skip-link:focus {
-    top: 0.5rem;
-  }
-
-  .site-header {
-    border-bottom: 1px solid var(--line);
-    background: var(--surface);
-  }
-
-  .site-header__inner {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.25rem 1rem;
-    padding-block: 0.6rem;
-  }
-
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    font-family: var(--mono);
-    font-weight: 700;
-    font-size: 1.05rem;
-    color: var(--text);
-    text-decoration: none;
-    /* Keeps the tap target at least 48px tall on phones. */
-    padding-block: 0.6rem;
-  }
-
-  .brand span:first-child {
-    color: var(--green);
-  }
-
-  /* Terminal block cursor after the name. */
-  .cursor {
-    display: inline-block;
-    width: 0.55em;
-    height: 1.1em;
-    margin-left: 0.15em;
-    background: var(--green);
-    /*
-     * On/off like a real terminal cursor, at a terminal-like pace. The owner
-     * wants it for every visitor, so `!important` keeps the global
-     * reduced-motion rule from cancelling it; it stays well under three
-     * flashes per second.
-     */
-    animation: blink 1.1s steps(1) infinite !important;
-  }
-
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
-  }
-
-  .site-header__end {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-  }
-
-  nav ul {
-    display: flex;
-    gap: 0.25rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  nav a {
-    display: block;
-    padding: 0.6rem 0.5rem;
-    color: var(--text);
-    text-decoration: none;
-    font-size: 0.95rem;
-  }
-
-  nav a[aria-current='page'] {
-    color: var(--green);
-    font-weight: 700;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-  }
-
-  .theme-toggle {
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-  }
-
-  .theme-toggle svg {
-    width: 34px;
-    height: 34px;
-    padding: 8px;
-    border: 1px solid var(--line);
-    border-radius: 50%;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .theme-toggle:hover svg {
-    border-color: var(--green);
-    color: var(--green);
-  }
-
-  /* Show the moon in light mode (switch to dark) and the sun in dark mode. */
-  .icon-sun {
-    display: none;
-  }
-
-  :global(:root[data-theme='dark']) .icon-sun {
-    display: block;
-  }
-
-  :global(:root[data-theme='dark']) .icon-moon {
-    display: none;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :global(:root:not([data-theme='light'])) .icon-sun {
-      display: block;
-    }
-
-    :global(:root:not([data-theme='light'])) .icon-moon {
-      display: none;
-    }
-  }
-
-  main {
-    padding-block: 2rem 4rem;
-  }
-
-  .site-footer {
-    border-top: 1px solid var(--line);
-    padding-block: 1.5rem;
-    color: var(--muted);
-    font-size: 0.85rem;
-  }
-
-  .site-footer p {
-    margin: 0.25rem 0;
-  }
-</style>

@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="プライバシーポリシー"
+  description="michixsa がメールで受け取る内容の扱いです。"
+>
+  <div class="page-hero">
+    <div class="wrap wrap-narrow">
+      <h1 class="sec-title">プライバシーポリシー</h1>
+    </div>
+  </div>
+  <section class="page-section">
+    <div class="wrap wrap-narrow prose">
+      <p>michixsa は、お問い合わせのメールで受け取った内容を、次のように扱います。</p>
+      <h2>受け取るもの</h2>
+      <p>メールの差出人、件名、本文、添付ファイルです。サイトに入力フォームはありません。</p>
+      <h2>使う目的</h2>
+      <p>ご相談への返信と、お見積もり、ご依頼のやりとりのためだけに使います。販売や広告のために第三者へ渡しません。</p>
+      <h2>保管</h2>
+      <p>やりとりが終わるまで、返信に必要な範囲で保管します。不要になったメールは消します。</p>
+      <h2>連絡先</h2>
+      <p>ご自身のメールの開示や削除のご希望は、<a class="text-link" href={`mailto:${site.email}`}>{site.email}</a> までご連絡ください。</p>
+    </div>
+  </section>
+</BaseLayout>
