@@ -104,14 +104,14 @@ function rng(seed: number) {
 
 const surnames = ['佐藤', '鈴木', '高橋', '田中', '伊藤', '渡辺', '山本', '中村', '小林', '加藤', '吉田', '山田', '佐々木', '山口', '松本', '井上', '木村', '林', '斎藤', '清水', '山崎', '森', '池田', '橋本', '阿部', '石川', '山下', '中島', '石井', '小川', '前田', '岡田', '長谷川', '藤田', '近藤', '後藤', '村上', '遠藤', '青木', '坂本'];
 const orgs = [
-  '月読ポンプ同好会（架空）',
-  '紺青どぶろっく管理室（架空）',
-  '銀河湯たんぽ会館（架空）',
-  'ねむのき観測小屋（架空）',
-  '紙飛行機倉庫組合（架空）',
-  '三毛猫水道クラブ（架空）',
-  '星屑ボイラー室（架空）',
-  '亀甲配管友の会（架空）',
+  '白樫ヶ丘レジデンス管理組合',
+  'つくし野第二テラス',
+  '青葉台東パーク管理組合',
+  'みどり坂ガーデンコート',
+  '浜風通り商店会',
+  '桜ヶ丘北テラス管理組合',
+  'ひかり町三丁目会館',
+  'かわべ西レジデンス管理組合',
 ];
 const towns = ['みどり', 'さくら', 'かわべ', 'ひかり', 'みなみ', 'きた', 'まつ', 'うみ'];
 const topics: Record<Kind, string[]> = {
@@ -145,28 +145,51 @@ function addDays(iso: string, days: number): string {
 }
 
 export function buildJobs(): Job[] {
-  const rand = rng(42);
-  const flow: Status[] = ['inquiry', 'estimate', 'won', 'working', 'done', 'hold'];
-  return Array.from({ length: 150 }, (_, i) => {
-    const n = String(i + 1).padStart(3, '0');
-    const status = flow[Math.floor(rand() * flow.length)];
-    const dueOffset = Math.floor(rand() * 21) - 7;
-    const kind = kinds[Math.floor(rand() * kinds.length)];
-    const topic = topics[kind][Math.floor(rand() * topics[kind].length)];
-    return {
-      id: `K-${n}`,
-      customerId: `C-${String((i % 80) + 1).padStart(3, '0')}`,
+  const jobs: Job[] = [];
+  const add = (status: Status, due: string, time: string, kind: Kind = kinds[jobs.length % kinds.length]) => {
+    const index = jobs.length + 1;
+    jobs.push({
+      id: `K-${String(index).padStart(3, '0')}`,
+      customerId: `C-${String(((index - 1) % 80) + 1).padStart(3, '0')}`,
       kind,
       status,
-      ownerId: users[Math.floor(rand() * users.length)].id,
-      due: addDays(TODAY, dueOffset),
-      yen: (2 + Math.floor(rand() * 18)) * 10000,
+      ownerId: users[index % users.length].id,
+      due,
+      yen: (3 + (index % 12)) * 10000,
       memo: '架空のメモです。',
-      time: times[i % times.length],
-      topic,
+      time,
+      topic: topics[kind][index % topics[kind].length],
       heldFrom: status === 'hold' ? 'estimate' : undefined,
-    };
-  });
+    });
+  };
+
+  add('working', '2026-10-28', '9:00', 'water');
+  add('estimate', '2026-10-30', '10:30', 'air');
+  add('won', '2026-11-01', '13:00', 'check');
+  add('working', TODAY, '9:00', 'water');
+  add('estimate', TODAY, '10:30', 'check');
+  add('won', TODAY, '16:00', 'air');
+
+  for (const due of ['2026-11-06', '2026-11-09', '2026-11-11', '2026-11-13', '2026-11-16', '2026-11-18']) {
+    add('inquiry', due, '10:30');
+  }
+  for (const [due, time] of [
+    ['2026-11-05', '9:00'],
+    ['2026-11-05', '13:00'],
+    ['2026-11-06', '10:30'],
+    ['2026-11-06', '16:00'],
+    ['2026-11-07', '9:00'],
+    ['2026-11-07', '14:30'],
+    ['2026-11-08', '11:00'],
+  ] as const) {
+    add('working', due, time);
+  }
+  for (const due of ['2026-11-05', '2026-11-06', '2026-11-08']) add('estimate', due, '11:00');
+  for (const due of ['2026-11-10', '2026-11-12']) add('estimate', due, '14:30');
+  for (const due of ['2026-11-09', '2026-11-12', '2026-11-13', '2026-11-19']) add('won', due, '13:00');
+  for (let extra = 0; extra < 3; extra += 1) add('hold', '2026-11-20', '13:00');
+  while (jobs.length < 150) add('done', addDays(TODAY, -((jobs.length % 40) + 10)), times[jobs.length % times.length]);
+  return jobs;
 }
 
 export function buildLog(jobs: Job[]): LogItem[] {

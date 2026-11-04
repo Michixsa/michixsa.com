@@ -33,6 +33,14 @@ export function jobPlace(job: Job): string {
   return address.replace('〒000-0000 ', '');
 }
 
+function byTime(a: { time: string }, b: { time: string }): number {
+  const minutes = (value: string) => {
+    const [hour, minute] = value.split(':').map(Number);
+    return hour * 60 + minute;
+  };
+  return minutes(a.time) - minutes(b.time);
+}
+
 export function fmt(iso: string): string {
   const date = new Date(`${iso}T00:00:00Z`);
   const holiday = iso === '2026-11-03' ? '・祝' : '';
@@ -131,7 +139,7 @@ function dash(state: DemoState, error: boolean): string {
   const { late, inquiry, weekWork, quotes, days } = counts(state);
   const sites = state.jobs
     .filter((job) => job.due === TODAY && job.status !== 'inquiry' && job.status !== 'done' && job.status !== 'hold')
-    .sort((a, b) => a.time.localeCompare(b.time))
+    .sort(byTime)
     .slice(0, 6);
   const waiting = state.jobs.filter((job) => job.status === 'inquiry').slice(0, 6);
   const alert = error
@@ -166,7 +174,7 @@ function listJobs(state: DemoState, params: URLSearchParams): Job[] {
     return true;
   });
   const sort = params.get('sort') ?? 'due';
-  jobs = [...jobs].sort((a, b) => (sort === 'new' ? b.id.localeCompare(a.id) : a.due.localeCompare(b.due) || a.time.localeCompare(b.time)));
+  jobs = [...jobs].sort((a, b) => (sort === 'new' ? b.id.localeCompare(a.id) : a.due.localeCompare(b.due) || byTime(a, b)));
   return jobs;
 }
 
@@ -275,7 +283,7 @@ function week(state: DemoState, anchor: string, day: string, mode: 'week' | 'day
       const user = userById(id);
       const cells = days
         .map((iso) => {
-          const items = state.jobs.filter((job) => job.ownerId === id && job.due === iso && job.status !== 'hold');
+          const items = state.jobs.filter((job) => job.ownerId === id && job.due === iso && job.status !== 'hold').sort(byTime);
           return `<div class="wk-c${iso === TODAY ? ' td' : ''}${holiday(iso) ? ' ho' : ''}">${items
             .slice(0, 3)
             .map(
@@ -288,7 +296,7 @@ function week(state: DemoState, anchor: string, day: string, mode: 'week' | 'day
       return `<div class="wk-u"><b>${esc(user.name)}</b><small>${esc(user.roleLabel)}</small></div>${cells}`;
     })
     .join('');
-  const dayJobs = state.jobs.filter((job) => job.due === selected && job.status !== 'hold').sort((a, b) => a.time.localeCompare(b.time));
+  const dayJobs = state.jobs.filter((job) => job.due === selected && job.status !== 'hold').sort(byTime);
   const prev = shift(anchor, -7);
   const next = shift(anchor, 7);
   return `${top('予定', '', '')}<main class="content"><div class="wk-bar"><div class="seg" role="group" aria-label="表示"><button type="button" data-act="mode" data-mode="day" aria-pressed="${mode === 'day' ? 'true' : 'false'}">日</button><button type="button" data-act="mode" data-mode="week" aria-pressed="${mode === 'week' ? 'true' : 'false'}">週</button></div><div class="wk-nav"><a class="btn sm" href="#week?anchor=${prev}" aria-label="前の週">‹</a><b>${fmt(days[0])}〜${fmt(days[6])}</b><a class="btn sm" href="#week?anchor=${next}" aria-label="次の週">›</a><a class="btn sm" href="#week">今週</a><label class="sel-f">日付<input type="date" data-act="pick" value="${selected}"></label></div><p class="legend">${badge('inquiry')}${badge('estimate')}${badge('won')}${badge('working')}${badge('done')}</p></div><div class="wk" role="table" aria-label="担当者ごとの週の予定"><div class="wk-h"></div>${head}${rows}</div><div class="wk-sp"><div class="days" role="tablist">${days.map((iso) => `<button type="button" role="tab" data-act="day" data-day="${iso}" aria-selected="${iso === selected ? 'true' : 'false'}"><b>${iso.slice(5).replace('-', '/')}</b><small>${weekdays[new Date(`${iso}T00:00:00Z`).getUTCDay()]}</small></button>`).join('')}</div><ol class="sched">${dayJobs

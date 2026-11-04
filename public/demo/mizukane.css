@@ -30,6 +30,7 @@ h1,h2{font-weight:800;font-feature-settings:"palt";margin:0;letter-spacing:.01em
 .main{min-width:0}
 .top{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s4);padding:var(--s5) var(--s6) var(--s4);flex-wrap:wrap}
 .top h1{font-size:var(--fs-xl);line-height:1.3}.date,.crumb{margin:0 0 2px;font-size:var(--fs-s);color:var(--muted)}
+.date,.due,.wk-h,.wk-nav b{letter-spacing:0;word-spacing:0;font-feature-settings:normal;font-variant-numeric:normal}
 .top-r{display:flex;gap:var(--s3);align-items:center}
 .search{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #738394;border-radius:var(--r);padding:0 12px;height:40px;width:320px}
 .search svg{width:18px;height:18px;color:var(--muted)}.search input{border:0;outline:0;font:inherit;flex:1;min-width:0;background:transparent;color:var(--ink)}
@@ -178,3 +179,4 @@ select,input,textarea{font:inherit;color:var(--ink)}
   .filters .csv{display:none}
   .band-act a.home{display:inline-flex;align-items:center;min-height:48px;color:#fff}
 }
+.date,.due,.wk-h,.wk-nav b{letter-spacing:0;word-spacing:0;font-feature-settings:normal;font-variant-numeric:normal}
