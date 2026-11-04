@@ -1,6 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
-import HoshinamiLayout from '../../../layouts/HoshinamiLayout.astro';
+import MizukaneLayout from '../../../layouts/MizukaneLayout.astro';
 import hero from '../../../assets/lp/corp/corp-hero.webp';
 
 const services = [
@@ -9,22 +9,22 @@ const services = [
   { title: '保守点検', body: '動いている設備を、定期的に見る仕事の例です。' },
 ];
 const news = [
-  { date: '2026年10月1日', title: '秋の点検を受け付けます（架空）', href: '/corp/hoshinami/news/inspection/' },
-  { date: '2026年9月1日', title: '受付時間のお知らせ（架空）', href: '/corp/hoshinami/news/hours/' },
-  { date: '2026年8月1日', title: '対応エリアのお知らせ（架空）', href: '/corp/hoshinami/news/area/' },
+  { date: '2026年10月1日', title: '秋の点検を受け付けます（架空）', href: '/corp/mizukane/news/inspection/' },
+  { date: '2026年9月1日', title: '受付時間のお知らせ（架空）', href: '/corp/mizukane/news/hours/' },
+  { date: '2026年8月1日', title: '対応エリアのお知らせ（架空）', href: '/corp/mizukane/news/area/' },
 ];
 ---
 
-<HoshinamiLayout
+<MizukaneLayout
   title="給排水と空調"
-  description="架空の設備工事会社「ほしなみ設備」のトップページです。実在の会社ではありません。"
+  description="架空の設備工事会社「みずかね設備」のトップページです。実在の会社ではありません。"
   current="top"
 >
   <section class="hero">
     <div>
       <h1>水と空気の設備を、<br />地域で引き受ける。</h1>
       <p class="lead">給排水と空調の工事、点検を行う会社、という設定です。</p>
-      <p><a class="btn" href="/corp/hoshinami/contact/">お問い合わせ</a></p>
+      <p><a class="btn" href="/corp/mizukane/contact/">お問い合わせ</a></p>
     </div>
     <Picture
       src={hero}
@@ -46,7 +46,7 @@ const news = [
       </article>
     ))}
   </div>
-  <p><a class="more" href="/corp/hoshinami/service/">事業内容を見る</a></p>
+  <p><a class="more" href="/corp/mizukane/service/">事業内容を見る</a></p>
   <h2>対応エリア</h2>
   <p>架空県サンプル市ほか（架空）</p>
   <h2>お知らせ</h2>
@@ -55,7 +55,7 @@ const news = [
       <li>{item.date}　<a href={item.href}>{item.title}</a></li>
     ))}
   </ul>
-</HoshinamiLayout>
+</MizukaneLayout>
 
 <style>
   h3 { margin: 0 0 8px; }

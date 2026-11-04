@@ -1,0 +1,32 @@
+---
+import MizukaneLayout from '../../../layouts/MizukaneLayout.astro';
+
+const items = [
+  { date: '2026年10月1日', title: '秋の点検を受け付けます（架空）', href: '/corp/mizukane/news/inspection/' },
+  { date: '2026年9月1日', title: '受付時間のお知らせ（架空）', href: '/corp/mizukane/news/hours/' },
+  { date: '2026年8月1日', title: '対応エリアのお知らせ（架空）', href: '/corp/mizukane/news/area/' },
+];
+---
+
+<MizukaneLayout
+  title="お知らせ"
+  description="架空の設備工事会社「みずかね設備」のお知らせです。"
+  current="news"
+>
+  <h1>お知らせ</h1>
+  <ul>
+    {
+      items.map((item) => (
+        <li>
+          <a href={item.href}>{item.title}</a>
+          <span class="muted">{item.date}</span>
+        </li>
+      ))
+    }
+  </ul>
+</MizukaneLayout>
+
+<style>
+  li { display: grid; gap: 2px; margin: 8px 0; }
+  a { display: inline-flex; align-items: center; min-height: 48px; color: #7e5f17; font-weight: 700; }
+</style>

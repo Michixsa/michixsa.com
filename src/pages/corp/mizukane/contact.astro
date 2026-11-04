@@ -1,12 +1,12 @@
 ---
 import { Picture } from 'astro:assets';
-import HoshinamiLayout from '../../../layouts/HoshinamiLayout.astro';
+import MizukaneLayout from '../../../layouts/MizukaneLayout.astro';
 import office from '../../../assets/lp/corp/corp-office.webp';
 ---
 
-<HoshinamiLayout
+<MizukaneLayout
   title="お問い合わせ"
-  description="架空の設備工事会社「ほしなみ設備」のお問い合わせページです。送信はされません。"
+  description="架空の設備工事会社「みずかね設備」のお問い合わせページです。送信はされません。"
   current="contact"
 >
   <h1>お問い合わせ</h1>
@@ -39,4 +39,4 @@ import office from '../../../assets/lp/corp/corp-office.webp';
       if (note) note.textContent = 'この見本では、内容は送信されません。';
     });
   </script>
-</HoshinamiLayout>
+</MizukaneLayout>
