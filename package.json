@@ -17,8 +17,6 @@
     "verify": "bun run check && bun run build && bun run lint:typos && bun run lint:links && bun run lighthouse"
   },
   "dependencies": {
-    "@fontsource/ibm-plex-mono": "^5.3.0",
-    "@fontsource/ibm-plex-sans": "^5.3.0",
     "astro": "^7.4.4"
   },
   "devDependencies": {

@@ -26,6 +26,8 @@ const nav = [
   { href: '/faq/', label: 'よくある質問' },
 ];
 
+const mobileNav = [...nav, { href: '/about/', label: 'チーム' }];
+
 const footer = [
   { href: '/#services', label: 'できること' },
   { href: '/works/', label: 'サンプル' },
@@ -33,6 +35,8 @@ const footer = [
   { href: '/partners/', label: '同業者さまへ' },
   { href: '/faq/', label: 'よくある質問' },
   { href: '/pricing/#terms', label: '取引条件' },
+  { href: '/about/', label: 'チーム' },
+  { href: '/contact/', label: 'お問い合わせ' },
   { href: '/privacy/', label: 'プライバシーポリシー' },
 ];
 
@@ -95,6 +99,18 @@ function current(href: string) {
           }
         </nav>
         <a class="btn btn-sm btn-primary header-cta" href="/contact/">相談する</a>
+        <details class="mnav">
+          <summary>メニュー</summary>
+          <nav aria-label="スマートフォン用メニュー">
+            {
+              mobileNav.map((item) => (
+                <a href={item.href} aria-current={current(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+        </details>
       </div>
     </header>
     <main id="main">
@@ -109,5 +125,12 @@ function current(href: string) {
         <p class="copy">© {new Date().getFullYear()} {site.name}</p>
       </div>
     </footer>
+    <script>
+      // Same-page anchors do not reload, so close the menu by hand.
+      const menu = document.querySelector<HTMLDetailsElement>('.mnav');
+      menu?.addEventListener('click', (event) => {
+        if ((event.target as Element).closest('a')) menu.open = false;
+      });
+    </script>
   </body>
 </html>

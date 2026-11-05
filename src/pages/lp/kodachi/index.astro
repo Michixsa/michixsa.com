@@ -1,5 +1,7 @@
 ---
+import { Picture } from 'astro:assets';
 import KodachiLayout from '../../../layouts/KodachiLayout.astro';
+import garden from '../../../assets/lp/kodachi/garden.webp';
 
 const services = [
   { title: '手入れ・剪定', body: '年に一度の剪定から、伸びすぎた木の相談まで。', href: '/lp/kodachi/care/' },
@@ -15,7 +17,18 @@ const services = [
 >
   <h1>庭木の手入れから、<br />庭づくりまで。</h1>
   <p class="lead">年に一度の剪定も、伸びすぎた木の相談も。写真を送っていただければ、おおよその目安をお返しします。</p>
-  <div class="ph" role="img" aria-label="写真の仮置き。手入れを終えた庭の予定です。"><span>写真の仮置き</span></div>
+  <div class="photo">
+    <Picture
+      src={garden}
+      formats={['avif']}
+      fallbackFormat="webp"
+      widths={[480, 800, 1200]}
+      sizes="(min-width: 1000px) 960px, calc(100vw - 40px)"
+      alt="手入れを終えた住宅の小さな庭。枝を整えた松とツツジ、ブロック塀が見える（AIで生成した画像です）"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
   <p><a class="btn" href="/lp/kodachi/contact/">写真を添えて相談する</a></p>
   <h2>仕事</h2>
   <div class="grid cols-3">

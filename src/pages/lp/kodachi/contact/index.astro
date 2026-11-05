@@ -11,7 +11,7 @@ import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
   <p>電話 000-0000-0000</p>
   <p>メール info@example.com</p>
   <p>下の欄は見本です。写真も文章も送られません。</p>
-  <form>
+  <div>
     <label for="name">お名前</label>
     <input id="name" name="name" type="text" autocomplete="name" />
     <label for="photo">庭の写真</label>
@@ -20,7 +20,7 @@ import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
     <textarea id="body" name="body" rows="5"></textarea>
     <p><button class="btn" type="button" id="send-demo">送信する</button></p>
     <p id="send-note" aria-live="polite"></p>
-  </form>
+  </div>
   <script>
     const button = document.getElementById('send-demo');
     const note = document.getElementById('send-note');
