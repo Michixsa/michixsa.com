@@ -2,7 +2,10 @@
 /**
  * Fictional print shop: a written record of a server move and later care.
  * No claim of zero downtime or round-the-clock support.
+ * The photo is AI-generated, and the page says that too.
  */
+import { Picture } from 'astro:assets';
+import bench from '../../../assets/lp/hinata/bench.webp';
 ---
 
 <!doctype html>
@@ -17,12 +20,23 @@
   </head>
   <body>
     <p class="return"><a href="/">michixsa のトップへ戻る</a></p>
-    <p class="bar">これは架空のサンプルです。「ひなた堂印刷」は実在しません。<a href="/works/sample-hinata/">解説を見る</a></p>
+    <p class="bar">これは架空のサンプルです。「ひなた堂印刷」は実在しません。写真は AI で生成した画像です。<a href="/works/sample-hinata/">解説を見る</a></p>
     <main>
       <p class="kicker">サーバー移転の記録</p>
       <h1>注文フォームとメールを止めないための、引っ越しの段取り。</h1>
       <p class="lead">架空の印刷会社を想定して、サーバー移転の調査から、移転後の毎月の報告までを1冊の記録にした見本です。</p>
-      <div class="ph" role="img" aria-label="写真の仮置き。小さな印刷所の作業台の予定です。"><span>写真の仮置き</span></div>
+      <div class="photo">
+        <Picture
+          src={bench}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 840px) 800px, calc(100vw - 40px)"
+          alt="白と生成りの紙の束、色見本、裁断機、定規、へらが並ぶ、小さな印刷所の作業台（AIで生成した画像です）"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
 
       <h2>きっかけ</h2>
       <p>Web での注文受付と入稿、メールが、契約の切れる古いサーバーにまとめて載っている、という設定です。前の担当と連絡が取れず、ログインできる情報も一部しか残っていません。</p>
@@ -150,8 +164,8 @@
   h2 { margin: 36px 0 8px; font-size: 24px; }
   .kicker { margin: 0; font-weight: 800; color: #7a3b00; }
   .lead { font-size: 18px; }
-  .ph { aspect-ratio: 16/9; margin: 16px 0; border-radius: 12px; background: linear-gradient(135deg, #d8d2c4, #a49c8c); position: relative; }
-  .ph span { position: absolute; left: 12px; top: 12px; color: #fff; background: rgba(20, 32, 24, .75); font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
+  .photo { margin: 16px 0; }
+  .photo :global(img) { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; border-radius: 12px; }
   table { width: 100%; border-collapse: collapse; background: #fff; }
   th, td { text-align: left; padding: 12px 8px; border-bottom: 1px solid #e4dccb; vertical-align: top; }
   caption { text-align: left; font-weight: 800; padding: 8px 0; }

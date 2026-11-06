@@ -3,6 +3,9 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SampleCard from '../components/SampleCard.astro';
 import cafeCard from '../assets/lp/cafe/banner.webp';
+import kodachiCard from '../assets/lp/kodachi/garden.webp';
+import hinataCard from '../assets/lp/hinata/bench.webp';
+import mizukaneCard from '../assets/site/mizukane-card.webp';
 import desk from '../assets/site/team-desk.webp';
 import { mailHref } from '../data/site';
 import {
@@ -142,15 +145,19 @@ const partnerHref = mailHref(
         <SampleCard
           href="/lp/kodachi/"
           moreHref="/works/sample-kodachi/"
+          image={kodachiCard}
+          alt="手入れを終えた住宅の小さな庭。枝を整えた松とツツジ（AIで生成した画像です）"
           tone="kodachi"
           kind="古いサイトの作り直し"
           title="木立造園"
           body="PC向けの古いサイトを、スマートフォンで電話しやすい形に。旧ページと見比べられます。"
-          note="写真は仮置き"
+          note="画像はAI生成"
         />
         <SampleCard
           href="/demo/mizukane/"
           moreHref="/works/sample-mizukane/"
+          image={mizukaneCard}
+          alt="架空の案件管理画面。今日の対応件数、今日の現場、返事待ちの問い合わせが並ぶ"
           tone="mizukane"
           kind="案件管理画面のデモ"
           title="みずかね設備"
@@ -160,11 +167,13 @@ const partnerHref = mailHref(
         <SampleCard
           href="/lp/hinata/"
           moreHref="/works/sample-hinata/"
+          image={hinataCard}
+          alt="紙の束、色見本、裁断機が並ぶ、小さな印刷所の作業台（AIで生成した画像です）"
           tone="hinata"
           kind="サーバー移転の記録"
           title="ひなた堂印刷"
           body="注文フォームとメールを載せたサーバーの引っ越しを、調査から毎月の報告まで記録しました。"
-          note="写真は仮置き"
+          note="画像はAI生成"
         />
       </ul>
     </div>

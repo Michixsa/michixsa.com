@@ -1,5 +1,4 @@
 import type { CollectionEntry } from 'astro:content';
-import { getCollection } from 'astro:content';
 
 /** Site-wide strings for the michixsa team site. */
 export const site = {
@@ -15,18 +14,6 @@ export const site = {
 export function mailHref(subject: string, body: string): string {
   return `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
-
-export const mainNav = [
-  { href: '/works/', label: 'サンプル' },
-  { href: '/about/', label: 'チーム' },
-  { href: '/contact/', label: 'お問い合わせ' },
-] as const;
-
-export const footerNav = [
-  { href: '/works/', label: 'サンプル' },
-  { href: '/#terms', label: '料金の目安' },
-  { href: '/contact/', label: 'お問い合わせ' },
-] as const;
 
 /** Japanese labels for each `kind`, shown as group headings. */
 export const fictionalKinds = ['sample', 'demo', 'case'] as const;
@@ -81,23 +68,4 @@ export function badgesFor(
   const badges: WorkBadge[] = [badgeFor(data)];
   if (data.aiImages) badges.push({ label: 'AI生成画像', tone: 'sample' });
   return badges;
-}
-
-/** Order of the groups on the works page: real work first, samples last. */
-export const workKindOrder = ['client', 'employment', 'personal', 'sample', 'demo', 'case'] as const satisfies readonly CollectionEntry<'works'>['data']['kind'][];
-
-/**
- * Returns every published work in display order.
- * Employment and personal infra notes are not in the collection: they are not
- * the team's web-production portfolio.
- *
- * @returns Works sorted by `order`, then by title.
- * @example
- * const works = await getSortedWorks();
- */
-export async function getSortedWorks(): Promise<CollectionEntry<'works'>[]> {
-  const works = await getCollection('works');
-  return works.sort(
-    (a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, 'ja'),
-  );
 }

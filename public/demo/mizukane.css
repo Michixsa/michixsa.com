@@ -180,3 +180,7 @@ select,input,textarea{font:inherit;color:var(--ink)}
   .band-act a.home{display:inline-flex;align-items:center;min-height:48px;color:#fff}
 }
 .date,.due,.wk-h,.wk-nav b{letter-spacing:0;word-spacing:0;font-feature-settings:normal;font-variant-numeric:normal}
+.sched li,.inq li{position:relative}
+.row1 a::after{content:"";position:absolute;inset:0}
+.inq a.btn{position:relative;z-index:1}
+@media (min-width:768px){.band-act a{display:inline-flex;align-items:center;min-height:48px}}

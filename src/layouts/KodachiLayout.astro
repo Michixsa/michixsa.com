@@ -33,7 +33,7 @@ const nav = [
   <body>
     <p class="return"><a href="/">michixsa のトップへ戻る</a></p>
     <p class="bar">
-      これは架空のサンプルです。「木立造園」は実在しません。写真は仮置きで、あとで差し替えます。
+      これは架空のサンプルです。「木立造園」は実在しません。写真は AI で生成した画像です。
       <a href="/works/sample-kodachi/">解説を見る</a>
     </p>
     <header class="head">
@@ -80,8 +80,8 @@ const nav = [
   h2 { margin: 28px 0 8px; font-size: 24px; line-height: 1.4; }
   h2::before { content: ""; display: inline-block; width: 12px; height: 12px; margin-right: 8px; background: #3d6b45; }
   .lead { font-size: 18px; }
-  .ph { aspect-ratio: 16/9; border-radius: 12px; background: linear-gradient(135deg, #5f7d5a, #c8d6b4); position: relative; margin: 16px 0; }
-  .ph span { position: absolute; left: 12px; top: 12px; color: #fff; background: rgba(20, 32, 24, .75); font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
+  .photo { margin: 16px 0; }
+  .photo img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 12px; }
   .grid { display: grid; gap: 16px; }
   .card { border: 1px solid #e0e6d4; border-radius: 12px; padding: 16px; background: #fff; }
   table { width: 100%; border-collapse: collapse; }

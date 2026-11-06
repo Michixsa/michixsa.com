@@ -1,5 +1,7 @@
 ---
+import { Picture } from 'astro:assets';
 import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
+import tools from '../../../../assets/lp/kodachi/tools.webp';
 
 const rows = [
   ['低木（高さ2mまで）', '1本 3,300円（架空・税込）'],
@@ -16,7 +18,18 @@ const rows = [
 >
   <h1>高さと本数で、料金の目安がわかります。</h1>
   <p>金額は架空です。写真と本数を見てから、改めてお伝えする前提です。</p>
-  <div class="ph" role="img" aria-label="写真の仮置き。剪定用具を並べた静物の予定です。"><span>写真の仮置き</span></div>
+  <div class="photo">
+    <Picture
+      src={tools}
+      formats={['avif']}
+      fallbackFormat="webp"
+      widths={[480, 800, 1200]}
+      sizes="(min-width: 1000px) 960px, calc(100vw - 40px)"
+      alt="木の台に並べた、使い込んだ剪定ばさみ、刈り込みばさみ、折りたたみのこぎり、麻縄と麻袋（AIで生成した画像です）"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
   <table>
     <caption>料金の目安（架空・税込）</caption>
     <tbody>
