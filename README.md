@@ -2,7 +2,7 @@
 
 小さな Web 制作チーム **michixsa** のサイトです。LP や小規模サイトの制作、ドメインと公開の設定、インフラ・自動化の相談、公開後の保守・運用を受けます。
 
-公開予定のドメインは <https://michixsa.com> です。ホスティングは Cloudflare Pages のままです。ドメインの接続と本番の切り替えは、オーナーが行います。
+サイトは <https://michixsa.com> で公開しています。ホスティングは Cloudflare Pages です。ドメインと DNS の構成は、[docs/hosting.md](docs/hosting.md) にまとめています。
 
 サイトは [Astro](https://astro.build/) で作った静的サイトです。制作サンプルは Markdown で書き、変更はすべて PR を通します。CI で型チェック・ビルド・誤字チェック・リンクチェック・Lighthouse による採点に合格するまで、本番には反映しません。
 
@@ -101,4 +101,6 @@ bun run verify       # 型チェック・ビルド・typos・リンク・Lightho
 
 ## ホスティング
 
-Cloudflare Pages の GitHub 連携で、このリポジトリとつないでいます。ビルドコマンドは `bun run build`、出力ディレクトリは `dist` です。レスポンスヘッダーは `public/_headers` で設定しており、`/lp/*` には `X-Robots-Tag: noindex` を付けています。
+Cloudflare Pages の GitHub 連携で、このリポジトリから公開しています。ドメインの登録は Squarespace、DNS は Cloudflare、メールは Google Workspace です。
+
+設定の中身、DNS のレコード、転送は [docs/hosting.md](docs/hosting.md) にまとめています。DNS やドメインを触る前に読んでください。
