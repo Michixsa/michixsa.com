@@ -1,26 +1,68 @@
 ---
 import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
+import PageHero from '../_components/PageHero.astro';
+import ContactCta from '../_components/ContactCta.astro';
+import azalea from '../../../../assets/lp/kodachi/strip-azalea.webp';
+
+const heroWidths = [640, 960, 1280];
 ---
 
 <KodachiLayout
-  title="問い合わせ"
+  title="お問い合わせ"
   description="架空の造園会社「木立造園」の問い合わせです。送信はされません。"
   current="contact"
 >
-  <h1>写真を添えて相談する</h1>
-  <p>電話 000-0000-0000</p>
-  <p>メール info@example.com</p>
-  <p>下の欄は見本です。写真も文章も送られません。</p>
-  <div>
-    <label for="name">お名前</label>
-    <input id="name" name="name" type="text" autocomplete="name" />
-    <label for="photo">庭の写真</label>
-    <input id="photo" name="photo" type="file" accept="image/*" />
-    <label for="body">ご相談</label>
-    <textarea id="body" name="body" rows="5"></textarea>
-    <p><button class="btn" type="button" id="send-demo">送信する</button></p>
-    <p id="send-note" aria-live="polite"></p>
-  </div>
+  <PageHero
+    en="CONTACT"
+    title="お問い合わせ"
+    image={azalea}
+    alt="軒先のツツジと、家の壁（AIで生成した画像です）"
+    widths={heroWidths}
+    objectPosition="center 55%"
+  />
+
+  <section class="section" data-reveal aria-labelledby="contact-desk">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="en">INFO</p>
+        <h2 id="contact-desk">お電話とメール</h2>
+      </header>
+      <ul class="channels">
+        <li>
+          <h3>お電話</h3>
+          <p><a href="tel:000-0000-0000">000-0000-0000</a></p>
+          <p>受付の時間は、ご相談のうえ決めます。</p>
+        </li>
+        <li>
+          <h3>メール</h3>
+          <p><a href="mailto:info@example.com">info@example.com</a></p>
+          <p>庭全体と、気になる木が写った写真を添えてください。</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-mist" id="contact-form" data-reveal aria-labelledby="contact-form-heading">
+    <div class="form-card">
+      <header class="section-head">
+        <p class="en">FORM</p>
+        <h2 id="contact-form-heading">ご相談の内容</h2>
+      </header>
+      <p>打ち合わせはメールで進めます。対面はしていません。</p>
+      <div>
+        <label for="name">お名前</label>
+        <input id="name" name="name" type="text" autocomplete="name" />
+        <label for="photo">庭の写真</label>
+        <input id="photo" name="photo" type="file" accept="image/*" />
+        <label for="body">ご相談</label>
+        <textarea id="body" name="body" rows="5"></textarea>
+        <p><button class="btn" type="button" id="send-demo">送信する</button></p>
+        <p id="send-note" aria-live="polite"></p>
+        <p class="note">入力しても送信されません。</p>
+      </div>
+    </div>
+  </section>
+  <ContactCta headingId="contact-cta" href="#contact-form" label="フォームへ戻る" />
   <script>
     const button = document.getElementById('send-demo');
     const note = document.getElementById('send-note');

@@ -1,5 +1,29 @@
 ---
 import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
+import PageHero from '../_components/PageHero.astro';
+import ContactCta from '../_components/ContactCta.astro';
+import yard from '../../../../assets/lp/kodachi/about-yard.webp';
+
+const heroWidths = [640, 960, 1280, 1600];
+const values = [
+  {
+    title: '残す枝を先に決める',
+    body: '形を見てから、はさみを入れます。',
+  },
+  {
+    title: '通りと隣地を見る',
+    body: '道路と、隣の家に出た枝から確認します。',
+  },
+  {
+    title: '目安を先にお伝えする',
+    body: '作業に入る前に、料金の目安をご連絡します。',
+  },
+];
+const areas = [
+  { name: 'サンプル市', body: '店のある市です。' },
+  { name: 'みどり町', body: '市の東に隣り合う町です。' },
+  { name: 'はなの町', body: '市の西に隣り合う町です。' },
+];
 ---
 
 <KodachiLayout
@@ -7,15 +31,87 @@ import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
   description="架空の造園会社「木立造園」の会社案内です。"
   current="about"
 >
-  <h1>町の植木屋として、近くの庭をていねいに。</h1>
-  <p>会社の情報は、すべて架空です。</p>
-  <table>
-    <tbody>
-      <tr><th scope="row">名称</th><td>木立造園（架空）</td></tr>
-      <tr><th scope="row">所在地</th><td>〒000-0000 架空県サンプル市こだち2-8</td></tr>
-      <tr><th scope="row">電話</th><td>000-0000-0000</td></tr>
-      <tr><th scope="row">メール</th><td>info@example.com</td></tr>
-      <tr><th scope="row">仕事</th><td>庭木の手入れ、剪定、庭づくり（架空）</td></tr>
-    </tbody>
-  </table>
+  <PageHero
+    en="ABOUT"
+    title="会社案内"
+    image={yard}
+    alt="茶色の塀の前に立つ、枝を整えた松（AIで生成した画像です）"
+    widths={heroWidths}
+    objectPosition="center 42%"
+  />
+
+  <section class="section" data-reveal aria-labelledby="about-greet">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="en">MESSAGE</p>
+        <h2 id="about-greet">ご挨拶</h2>
+      </header>
+      <div class="letter">
+        <p>
+          庭の木は、年ごとに伸びます。木立造園では、剪定と刈り込み、小さな庭の手入れをしています。気になる木の写真を見ながら、どこを切るかを決めてご案内します。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-mist" data-reveal aria-labelledby="about-values">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="en">VALUE</p>
+        <h2 id="about-values">大切にしていること</h2>
+      </header>
+      <div class="points">
+        {
+          values.map((item) => (
+            <article>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-reveal aria-labelledby="about-facts">
+    <div class="wrap-narrow">
+      <header class="section-head">
+        <p class="en">COMPANY</p>
+        <h2 id="about-facts">会社概要</h2>
+      </header>
+      <table class="facts">
+        <tbody>
+          <tr><th scope="row">名称</th><td>木立造園</td></tr>
+          <tr><th scope="row">所在地</th><td>〒000-0000 架空県サンプル市こだち2-8</td></tr>
+          <tr><th scope="row">電話</th><td>000-0000-0000</td></tr>
+          <tr><th scope="row">メール</th><td>info@example.com</td></tr>
+          <tr><th scope="row">仕事</th><td>庭木の手入れ、剪定、庭づくり</td></tr>
+        </tbody>
+      </table>
+      <p class="note">記載している情報は見本です。実在の会社ではありません。</p>
+    </div>
+  </section>
+
+  <section class="section section-mist" data-reveal aria-labelledby="about-area">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="en">AREA</p>
+        <h2 id="about-area">対応エリア</h2>
+        <p class="lead">サンプル市と、その隣町で庭の作業をしています。これ以外の場所は、ご相談のうえでお返事します。</p>
+      </header>
+      <div class="areas">
+        {
+          areas.map((area) => (
+            <article>
+              <h3>{area.name}</h3>
+              <p>{area.body}</p>
+            </article>
+          ))
+        }
+      </div>
+      <p class="note">町名は見本です。実在の地名ではありません。</p>
+    </div>
+  </section>
+
+  <ContactCta headingId="about-cta" />
 </KodachiLayout>

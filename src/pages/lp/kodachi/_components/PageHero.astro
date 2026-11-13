@@ -1,0 +1,42 @@
+---
+/**
+ * Full-bleed title band. Text sits on a dark scrim over one photo.
+ */
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  en: string;
+  title: string;
+  image: ImageMetadata;
+  alt: string;
+  widths: number[];
+  objectPosition?: string;
+}
+
+const { en, title, image, alt, widths, objectPosition = 'center' } = Astro.props;
+---
+
+<header class="page-hero" style={`--hero-pos: ${objectPosition}`}>
+  <Picture
+    src={image}
+    formats={['avif']}
+    fallbackFormat="webp"
+    widths={widths}
+    sizes="100vw"
+    alt={alt}
+    loading="eager"
+    fetchpriority="high"
+  />
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-copy">
+    <p class="en en-light">{en}</p>
+    <h1>{title}</h1>
+    <nav aria-label="パンくず">
+      <ol class="crumbs">
+        <li><a href="/lp/kodachi/">トップ</a></li>
+        <li aria-current="page">{title}</li>
+      </ol>
+    </nav>
+  </div>
+</header>
