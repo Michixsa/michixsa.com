@@ -1,14 +1,42 @@
 ---
 import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
 import FramePhoto from '../_components/FramePhoto.astro';
-import workCare from '../../../../assets/lp/kodachi/work-care.webp';
+import PageHero from '../_components/PageHero.astro';
+import ContactCta from '../_components/ContactCta.astro';
 import tools from '../../../../assets/lp/kodachi/care-tools.webp';
+import pine from '../../../../assets/lp/kodachi/examples-pine.webp';
+import hedge from '../../../../assets/lp/kodachi/examples-hedge.webp';
+import yard from '../../../../assets/lp/kodachi/garden.webp';
 
-const rows = [
-  ['低木（高さ2mまで）', '1本 3,300円（税込）'],
-  ['中木', '1本 6,600円（税込）'],
-  ['高木', '1本 11,000円（税込）'],
-  ['生垣', '1m 2,200円（税込）'],
+const heroWidths = [640, 960, 1280, 1600];
+const services = [
+  {
+    title: '庭木の剪定',
+    body: '松など、高くなった木の枝を整えます。隣の家にかかった枝もご相談ください。',
+    image: pine,
+    alt: '住宅の塀の手前で、枝を短く整えた松（AIで生成した画像です）',
+    widths: [480, 800, 1200],
+  },
+  {
+    title: '生垣の刈り込み',
+    body: '道路に面した生垣を、通りから見て高さが揃うように刈ります。',
+    image: hedge,
+    alt: '道路沿いに、上面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）',
+    widths: [480, 800, 1200],
+  },
+  {
+    title: '草取り・清掃',
+    body: '植込みの周りの草や落ち葉を集め、麻袋にまとめて運び出します。',
+    image: yard,
+    alt: '住宅の小さな庭。整えられた松とツツジ、ブロック塀が見える（AIで生成した画像です）',
+    widths: [480, 960, 1280],
+  },
+];
+const prices = [
+  { name: '低木', cond: '高さ2mまで', unit: '1本', value: '3,300円' },
+  { name: '中木', cond: '低木より高い木', unit: '1本', value: '6,600円' },
+  { name: '高木', cond: 'さらに高い木', unit: '1本', value: '11,000円' },
+  { name: '生垣', cond: '長さで見ます', unit: '1m', value: '2,200円' },
 ];
 const flow = [
   { title: '写真を送る', body: '庭の様子が分かる写真を、メールでお送りください。' },
@@ -22,72 +50,125 @@ const flow = [
   description="架空の造園会社「木立造園」の手入れと剪定の目安です。"
   current="care"
 >
-  <div class="page-intro">
-    <p class="en">CARE</p>
-    <h1>手入れ・剪定</h1>
-    <p>木の高さと本数で、料金の目安が変わります。</p>
-  </div>
-  <div class="care-photos">
-    <FramePhoto
-      src={workCare}
-      alt="道路沿いに、上面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）"
-      ratio="4-3"
-      widths={[480, 768, 1066]}
-      sizes="(min-width: 800px) 42vw, calc(100vw - 32px)"
-      loading="eager"
-      fetchpriority="high"
-    />
-    <FramePhoto
-      src={tools}
-      alt="木の台に置いた、使い込んだ刈り込みばさみ、剪定ばさみ、折りたたみのこぎり、麻縄と麻袋（AIで生成した画像です）"
-      ratio="16-9"
-      widths={[480, 800, 1200]}
-      sizes="(min-width: 800px) 32vw, calc(100vw - 32px)"
-    />
-  </div>
-  <div class="narrow block">
-    <h2>ご案内の手順</h2>
-    <ol class="flow">
-      {
-        flow.map((step, index) => (
-          <li>
-            <span class="n" aria-hidden="true">{index + 1}</span>
-            <h3>{step.title}</h3>
-            <p>{step.body}</p>
-          </li>
-        ))
-      }
-    </ol>
-  </div>
-  <div class="narrow block">
-    <h2>木の高さの目安</h2>
-    <figure class="heights">
-      <div class="bars" aria-hidden="true">
-        <div><span class="h-low"></span></div>
-        <div><span class="h-mid"></span></div>
-        <div><span class="h-high"></span></div>
-      </div>
-      <ul class="bar-names">
-        <li>低木<small>2mまで</small></li>
-        <li>中木</li>
-        <li>高木</li>
-      </ul>
-      <figcaption>低木は高さ2mまでです。中木と高木はそれより高い木です。どこで分けるかは、写真を見てお伝えします。</figcaption>
-    </figure>
-    <table class="prices">
-      <caption>料金の目安（税込・見本）</caption>
-      <tbody>
+  <PageHero
+    en="CARE"
+    title="手入れ・剪定"
+    image={tools}
+    alt="木の台に置いた、使い込んだ刈り込みばさみ、剪定ばさみ、折りたたみのこぎり、麻縄と麻袋（AIで生成した画像です）"
+    widths={heroWidths}
+    objectPosition="center 42%"
+  />
+
+  <section class="section" data-reveal aria-labelledby="care-services">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="en">CONSULT</p>
+        <h2 id="care-services">こんなご相談に対応します</h2>
+      </header>
+      <div class="cards">
         {
-          rows.map(([name, price]) => (
-            <tr>
-              <th scope="row">{name}</th>
-              <td>{price}</td>
-            </tr>
+          services.map((item) => (
+            <article class="card">
+              <FramePhoto
+                src={item.image}
+                alt={item.alt}
+                ratio="16-10"
+                widths={item.widths}
+                sizes="(min-width: 800px) 30vw, calc(100vw - 32px)"
+              />
+              <div class="card-body">
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </div>
+            </article>
           ))
         }
-      </tbody>
-    </table>
-    <p class="note">表の金額は見本です。ご自宅の木に合わせた目安は、写真を見てからご連絡します。</p>
-    <p><a class="btn" href="/lp/kodachi/contact/">写真を添えて相談する</a></p>
-  </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-mist" data-reveal aria-labelledby="care-price">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="en">PRICE</p>
+        <h2 id="care-price">料金の目安</h2>
+        <p class="lead">木の高さと本数で、1本あたりの目安が変わります。</p>
+      </header>
+      <figure class="scale">
+        <div class="scale-art" aria-hidden="true">
+          <svg viewBox="0 0 760 280">
+            <line x1="24" y1="236" x2="736" y2="236" stroke="#d9d3c8" stroke-width="2"></line>
+            <g fill="#1c2820">
+              <circle cx="95" cy="154" r="13"></circle>
+              <rect x="82" y="170" width="26" height="30" rx="8"></rect>
+              <rect x="84" y="196" width="9" height="40" rx="3"></rect>
+              <rect x="97" y="196" width="9" height="40" rx="3"></rect>
+            </g>
+            <g>
+              <rect x="280" y="196" width="10" height="40" rx="2" fill="#6a5344"></rect>
+              <path d="M285 112 L246 196 H324 Z" fill="#3d6b4f"></path>
+              <path d="M285 132 L258 188 H312 Z" fill="#2c4a38"></path>
+            </g>
+            <g>
+              <rect x="469" y="156" width="12" height="80" rx="2" fill="#6a5344"></rect>
+              <path d="M475 62 L424 168 H526 Z" fill="#3d6b4f"></path>
+              <path d="M475 92 L438 160 H512 Z" fill="#2c4a38"></path>
+            </g>
+            <g>
+              <rect x="658" y="108" width="14" height="128" rx="2" fill="#6a5344"></rect>
+              <path d="M665 16 L600 132 H730 Z" fill="#3d6b4f"></path>
+              <path d="M665 52 L618 124 H712 Z" fill="#2c4a38"></path>
+            </g>
+          </svg>
+        </div>
+        <ul class="scale-names">
+          <li>人の背丈<small>比べるための形</small></li>
+          <li>低木<small>2mまで</small></li>
+          <li>中木<small>低木より高い</small></li>
+          <li>高木<small>さらに高い</small></li>
+        </ul>
+        <figcaption>
+          人の形は、木の高さを見るための目安です。低木は高さ2mまでです。中木と高木の境目は、写真を見てお伝えします。
+        </figcaption>
+      </figure>
+      <ul class="price-cards">
+        {
+          prices.map((row) => (
+            <li>
+              <h3>{row.name}</h3>
+              <p class="price-cond">{row.cond}</p>
+              <p class="price-value">
+                <span class="price-unit">{row.unit}</span>
+                {row.value}
+              </p>
+              <p class="price-tax">税込</p>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="note">金額は見本です。ご自宅の木に合わせた目安は、写真を見てからご連絡します。</p>
+    </div>
+  </section>
+
+  <section class="section" data-reveal aria-labelledby="care-flow">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="en">FLOW</p>
+        <h2 id="care-flow">ご依頼の流れ</h2>
+      </header>
+      <ol class="steps steps-3">
+        {
+          flow.map((step, index) => (
+            <li>
+              <span class="num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <ContactCta headingId="care-cta" />
 </KodachiLayout>

@@ -1,0 +1,18 @@
+---
+interface Props {
+  headingId: string;
+  href?: string;
+  label?: string;
+}
+const { headingId, href = '/lp/kodachi/contact/', label = '問い合わせフォームへ' } = Astro.props;
+---
+
+<section class="cta-section section-mist" aria-labelledby={headingId}>
+  <div class="cta-card">
+    <p class="en">CONTACT</p>
+    <h2 id={headingId}>お問い合わせ</h2>
+    <p class="lead">お電話 000-0000-0000<br />メール info@example.com</p>
+    <p><a class="btn" href={href}>{label}</a></p>
+    <p class="note">この見本では、入力しても送信されません。</p>
+  </div>
+</section>

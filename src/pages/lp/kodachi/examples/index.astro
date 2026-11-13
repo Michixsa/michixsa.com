@@ -1,63 +1,93 @@
 ---
 import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
 import FramePhoto from '../_components/FramePhoto.astro';
+import PageHero from '../_components/PageHero.astro';
+import ContactCta from '../_components/ContactCta.astro';
+import yard from '../../../../assets/lp/kodachi/garden.webp';
 import hedge from '../../../../assets/lp/kodachi/examples-hedge.webp';
 import pine from '../../../../assets/lp/kodachi/examples-pine.webp';
 import gravel from '../../../../assets/lp/kodachi/examples-gravel.webp';
 
+const heroWidths = [640, 960, 1280, 1600];
 const items = [
   {
-    id: 'hedge',
     title: '生垣の刈り込み',
+    place: '道路に面した生垣',
+    tags: ['刈り込み', '生垣'],
     body: '道路に面した生垣を、高さ1.5mに揃えた例です。',
     image: hedge,
     alt: '道路沿いに、上の面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）',
+    widths: [480, 800, 1200],
   },
   {
-    id: 'pine',
     title: '伸びた松の手入れ',
+    place: '住宅の庭',
+    tags: ['剪定', '松'],
     body: '隣の家にかかっていた枝を、残しながら短くした例です。',
     image: pine,
     alt: '住宅の塀の手前で、枝を短く整えた松（AIで生成した画像です）',
+    widths: [480, 800, 1200],
   },
   {
-    id: 'gravel',
     title: '砂利と飛び石',
+    place: '家の脇の通路',
+    tags: ['砂利', '飛び石'],
     body: '通り道だけ、砂利を足した例です。',
     image: gravel,
     alt: '家の脇の細い通路に敷いた、明るい灰色の砂利と飛び石（AIで生成した画像です）',
+    widths: [480, 800, 1200],
   },
 ];
 ---
 
 <KodachiLayout
-  title="施工の例"
+  title="施工事例"
   description="架空の造園会社「木立造園」の施工例です。実在の庭ではありません。"
   current="examples"
 >
-  <div class="page-intro">
-    <p class="en">WORKS</p>
-    <h1>施工事例</h1>
-    <p>生垣、松、砂利の作業例です。</p>
-  </div>
-  <div class="wide examples">
-    {
-      items.map((item, index) => (
-        <article class="example" id={item.id}>
-          <FramePhoto
-            src={item.image}
-            alt={item.alt}
-            ratio="16-9"
-            widths={[480, 800, 1200]}
-            sizes="(min-width: 1120px) calc(100vw - 80px), calc(100vw - 32px)"
-            loading={index === 0 ? 'eager' : 'lazy'}
-            fetchpriority={index === 0 ? 'high' : undefined}
-          />
-          <h2>{item.title}</h2>
-          <p>{item.body}</p>
-        </article>
-      ))
-    }
-  </div>
-  <p class="note wrap">見本です。実在の庭ではありません。</p>
+  <PageHero
+    en="WORKS"
+    title="施工事例"
+    image={yard}
+    alt="住宅の小さな庭。整えられた松とツツジ、ブロック塀が見える（AIで生成した画像です）"
+    widths={heroWidths}
+    objectPosition="center 62%"
+  />
+
+  <section class="section" data-reveal aria-labelledby="examples-list">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="en">CASE</p>
+        <h2 id="examples-list">仕上がりの見本</h2>
+      </header>
+      <div class="cards">
+        {
+          items.map((item) => (
+            <article class="card">
+              <FramePhoto
+                src={item.image}
+                alt={item.alt}
+                ratio="16-10"
+                widths={item.widths}
+                sizes="(min-width: 800px) 30vw, calc(100vw - 32px)"
+              />
+              <div class="card-body">
+                <p class="place">{item.place}</p>
+                <h3>{item.title}</h3>
+                <ul class="tags">
+                  {item.tags.map((tag) => (
+                    <li>{tag}</li>
+                  ))}
+                </ul>
+                <p>{item.body}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+      <p class="note">見本です。実在の庭ではありません。</p>
+    </div>
+  </section>
+
+  <ContactCta headingId="examples-cta" />
 </KodachiLayout>

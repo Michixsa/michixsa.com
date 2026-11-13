@@ -1,8 +1,37 @@
 ---
 import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
 import FramePhoto from '../_components/FramePhoto.astro';
-import plan from '../../../../assets/lp/kodachi/build-plan.webp';
+import PageHero from '../_components/PageHero.astro';
+import ContactCta from '../_components/ContactCta.astro';
+import path from '../../../../assets/lp/kodachi/work-build.webp';
+import azalea from '../../../../assets/lp/kodachi/strip-azalea.webp';
+import pine from '../../../../assets/lp/kodachi/examples-pine.webp';
+import hedge from '../../../../assets/lp/kodachi/examples-hedge.webp';
 
+const heroWidths = [640, 960, 1280, 1600];
+const services = [
+  {
+    title: '植え替え',
+    body: '弱った低木を、別の木に植え替えます。残す木は先に分けます。',
+    image: azalea,
+    alt: '軒先のツツジと、家の壁（AIで生成した画像です）',
+    widths: [360, 520, 800],
+  },
+  {
+    title: '小さな庭の作り直し',
+    body: '庭全体を一度に変えず、残す木と、手を入れる範囲を決めてから進めます。',
+    image: pine,
+    alt: '住宅の塀の手前で、枝を短く整えた松（AIで生成した画像です）',
+    widths: [480, 800, 1200],
+  },
+  {
+    title: '庭の一部の直し',
+    body: '生垣の高さや、通りに面したところだけ直すこともできます。',
+    image: hedge,
+    alt: '道路沿いに、上面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）',
+    widths: [480, 800, 1200],
+  },
+];
 const steps = [
   { title: '庭を見る', body: '木の高さや、人が通る場所を確認します。' },
   { title: '残す木を決める', body: '残す木と、手を入れる場所を分けます。' },
@@ -17,34 +46,74 @@ const steps = [
   description="架空の造園会社「木立造園」の庭づくりの段取りです。"
   current="build"
 >
-  <div class="page-intro">
-    <p class="en">GARDEN</p>
-    <h1>庭づくり</h1>
-    <p>残す木と、新しくする場所を先に決めてから進めます。</p>
-  </div>
-  <div class="photo-lead">
-    <FramePhoto
-      src={plan}
-      alt="木の台の上の、使い込んだ刈り込みばさみと麻袋、麻縄（AIで生成した画像です）"
-      ratio="4-3"
-      widths={[480, 768, 1066]}
-      sizes="(min-width: 1120px) min(56rem, calc(100vw - 80px)), calc(100vw - 32px)"
-      loading="eager"
-      fetchpriority="high"
-    />
-  </div>
-  <div class="wide block">
-    <ol class="phases">
-      {
-        steps.map((step, index) => (
-          <li>
-            <span class="n" aria-hidden="true">{index + 1}</span>
-            <h3>{step.title}</h3>
-            <p>{step.body}</p>
-          </li>
-        ))
-      }
-    </ol>
-    <p><a class="btn" href="/lp/kodachi/contact/">相談する</a></p>
-  </div>
+  <PageHero
+    en="GARDEN"
+    title="庭づくり"
+    image={path}
+    alt="家の脇の通路に敷いた、明るい灰色の砂利と飛び石（AIで生成した画像です）"
+    widths={heroWidths}
+    objectPosition="center 70%"
+  />
+
+  <section class="section" data-reveal aria-labelledby="build-services">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="en">WORK</p>
+        <h2 id="build-services">庭づくりでできること</h2>
+        <p class="lead">人が歩くところには、砂利と飛び石を足せます。上の写真は、その仕上がりの見本です。</p>
+      </header>
+      <div class="cards">
+        {
+          services.map((item) => (
+            <article class="card">
+              <FramePhoto
+                src={item.image}
+                alt={item.alt}
+                ratio="16-10"
+                widths={item.widths}
+                sizes="(min-width: 800px) 30vw, calc(100vw - 32px)"
+              />
+              <div class="card-body">
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-mist" data-reveal aria-labelledby="build-flow">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="en">FLOW</p>
+        <h2 id="build-flow">進め方</h2>
+      </header>
+      <ol class="steps">
+        {
+          steps.map((step, index) => (
+            <li>
+              <span class="num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" data-reveal aria-labelledby="build-works">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="en">WORKS</p>
+        <h2 id="build-works">施工事例</h2>
+        <p class="lead">生垣、松、砂利の仕上がりをまとめています。</p>
+      </header>
+      <p class="center-action"><a class="btn" href="/lp/kodachi/examples/">施工事例を見る</a></p>
+    </div>
+  </section>
+
+  <ContactCta headingId="build-cta" />
 </KodachiLayout>
