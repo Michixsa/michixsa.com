@@ -10,7 +10,11 @@ const rows = [
   ['高木', '1本 11,000円（税込）'],
   ['生垣', '1m 2,200円（税込）'],
 ];
-const flow = ['写真を送る', '本数と高さを見る', '目安を返す'];
+const flow = [
+  { title: '写真を送る', body: '庭の様子が分かる写真を、メールでお送りください。' },
+  { title: '高さと本数を確認', body: '写っている木の高さと本数を見ます。' },
+  { title: '目安をご連絡', body: '確認した内容をもとに、料金の目安をお返しします。' },
+];
 ---
 
 <KodachiLayout
@@ -19,9 +23,9 @@ const flow = ['写真を送る', '本数と高さを見る', '目安を返す'];
   current="care"
 >
   <div class="page-intro">
-    <p class="eyebrow">手入れ・剪定</p>
-    <h1>高さと本数で、料金の目安が分かります</h1>
-    <p>金額は見本です。写真と本数を見てから、改めてお伝えします。</p>
+    <p class="en">CARE</p>
+    <h1>手入れ・剪定</h1>
+    <p>木の高さと本数で、料金の目安が変わります。</p>
   </div>
   <div class="care-photos">
     <FramePhoto
@@ -42,13 +46,14 @@ const flow = ['写真を送る', '本数と高さを見る', '目安を返す'];
     />
   </div>
   <div class="narrow block">
-    <h2>目安をお返しするまで</h2>
+    <h2>ご案内の手順</h2>
     <ol class="flow">
       {
         flow.map((step, index) => (
           <li>
             <span class="n" aria-hidden="true">{index + 1}</span>
-            <span>{step}</span>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
           </li>
         ))
       }
@@ -82,6 +87,7 @@ const flow = ['写真を送る', '本数と高さを見る', '目安を返す'];
         }
       </tbody>
     </table>
+    <p class="note">表の金額は見本です。ご自宅の木に合わせた目安は、写真を見てからご連絡します。</p>
     <p><a class="btn" href="/lp/kodachi/contact/">写真を添えて相談する</a></p>
   </div>
 </KodachiLayout>

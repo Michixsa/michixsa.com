@@ -202,7 +202,7 @@ const phone = '000-0000-0000';
     margin: 0;
     padding: 6px 16px;
     color: var(--muted);
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.6;
     text-align: center;
   }
@@ -289,15 +289,23 @@ const phone = '000-0000-0000';
   .section-mist { background: var(--mist); }
   .section-head { margin-bottom: 48px; text-align: center; }
   .section-head p:last-child { margin-bottom: 0; }
-  .eyebrow {
-    margin: 0 0 14px;
+  .en {
+    margin: 0 0 12px;
     color: var(--moss);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
-    letter-spacing: 0.18em;
-    line-height: 1.6;
+    letter-spacing: 0.14em;
+    line-height: 1.4;
   }
-  .eyebrow-light { color: #f4f1ea; }
+  .en-light { color: #f7f4ee; }
+  .note {
+    margin: 16px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .wrap > .note,
+  p.note.wrap { text-align: center; }
   .lead { margin: 0 auto; max-width: 38rem; color: var(--muted); font-size: 16px; line-height: 1.85; }
 
   .btn {
@@ -468,6 +476,8 @@ const phone = '000-0000-0000';
     padding: 0;
   }
   .steps li { text-align: center; }
+  .steps-side { text-align: left; }
+  .steps-side li { text-align: left; }
   .num {
     display: block;
     margin-bottom: 8px;
@@ -572,7 +582,7 @@ const phone = '000-0000-0000';
     padding: 0;
     text-align: center;
   }
-  .bar-names small { display: block; color: var(--muted); font-size: 12px; font-weight: 400; }
+  .bar-names small { display: block; color: var(--muted); font-size: 13px; font-weight: 400; }
   .heights figcaption { margin-top: 12px; color: var(--muted); font-size: 14px; }
 
   .flow, .phases {
@@ -658,7 +668,7 @@ const phone = '000-0000-0000';
     .points article + article { border-top: 0; border-left: 1px solid var(--line); padding: 8px 0 0 28px; }
     .cards { grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .quotes { grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .steps { grid-template-columns: repeat(5, 1fr); gap: 16px; }
+    .steps:not(.steps-side) { grid-template-columns: repeat(5, 1fr); gap: 16px; }
     .split { grid-template-columns: 1.1fr 0.9fr; gap: 64px; }
     .gallery { grid-template-columns: repeat(4, 1fr); }
     .gallery img { height: 420px; }
@@ -709,12 +719,12 @@ const phone = '000-0000-0000';
     z-index: 1;
     background: #121a16;
     color: #f7f4ee;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.04em;
   }
   .badge-after { background: var(--moss); }
-  .compare-note { max-width: 40rem; margin: 20px auto 0; color: var(--muted); text-align: center; font-size: 14px; }
+  .compare-note { max-width: 40rem; margin: 16px auto 0; color: var(--muted); text-align: center; font-size: 13px; line-height: 1.7; }
   @media (min-width: 800px) {
     .compare { grid-template-columns: 1fr 1fr; }
     .compare-side img { height: 320px; }

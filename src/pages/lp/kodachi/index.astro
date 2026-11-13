@@ -20,7 +20,7 @@ const heroAlt = '住宅の小さな庭。整えられた松とツツジ、ブロ
 const services = [
   {
     title: '手入れ・剪定',
-    body: '年に一度の剪定から、伸びすぎた木の相談まで。',
+    body: '毎年の剪定も、伸びて困っている木も、ご相談ください。',
     href: '/lp/kodachi/care/',
     image: care,
     alt: '道路沿いに、上面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）',
@@ -28,15 +28,15 @@ const services = [
   },
   {
     title: '庭づくり',
-    body: 'ご相談から仕上がりまで、段取りを先に共有します。',
+    body: '残す木と、新しくする場所を決めてから進めます。',
     href: '/lp/kodachi/build/',
     image: build,
     alt: '家の脇の通路に敷いた、明るい灰色の砂利と飛び石（AIで生成した画像です）',
     widths: [480, 768, 1066],
   },
   {
-    title: 'その他',
-    body: '松の枝の整理や、砂利・飛び石の直しもご相談ください。',
+    title: '小さな直し',
+    body: '松の枝、砂利、飛び石など、庭の一部だけの直しもご相談ください。',
     href: '/lp/kodachi/examples/',
     image: pine,
     alt: '住宅の塀の手前で、枝を短く整えた松（AIで生成した画像です）',
@@ -54,33 +54,33 @@ const gallery = [
   { image: azalea, alt: '軒先のツツジと、家の壁（AIで生成した画像です）', widths: [360, 520] },
 ];
 const quotes = [
-  '写真を送ったら、木の高さの目安を文章で返してもらえました。',
-  '道路側の生垣を、上の面が揃うように刈ってもらいました。',
-  '残す木と、砂利を足す場所を、図で先に見られました。',
+  '写真を送ったあと、木の高さに合わせた目安をメールでもらえました。',
+  '道路に面した生垣を、通りから見て高さが揃うように刈ってもらいました。',
+  '残す木と、砂利を足す場所を、作業の前に図で見せてもらえました。',
 ];
 const steps = [
-  { title: '庭を見る', body: '木の高さや、通り道の位置を確認します。' },
-  { title: '残す木を決める', body: '残す木と、手を入れる場所を分けます。' },
-  { title: '図で共有する', body: '作業の範囲を、図にして共有します。' },
-  { title: '作業する', body: '決めた範囲を作業します。' },
-  { title: '仕上がりを確認する', body: '終わった庭を、その場で一緒に確認します。' },
+  { title: 'ご連絡', body: '気になっている木のことを、電話かメールで教えてください。' },
+  { title: '写真を送る', body: '庭全体と、気になる木が分かる写真を添えてください。' },
+  { title: '目安のご連絡', body: '高さや本数を見て、料金の目安をメールでお伝えします。' },
+  { title: '作業', body: '事前にお伝えした範囲で、剪定や庭の作業をします。' },
+  { title: '仕上がりの確認', body: '終わったところを、その場で一緒に見ます。' },
 ];
 const faqs = [
   {
-    q: '料金の目安はありますか',
-    a: '金額は見本です。手入れは、低木（高さ2mまで）1本 3,300円、中木 1本 6,600円、高木 1本 11,000円、生垣 1m 2,200円です。いずれも税込で、写真と本数を見てから改めてお伝えします。',
+    q: '木の名前が分からなくても頼めますか',
+    a: '大丈夫です。写真があれば、高さや本数からご案内します。',
   },
   {
-    q: '庭の写真はどこから送れますか',
-    a: '問い合わせのページに、見本の入力欄があります。この見本では、入力しても送信されません。',
+    q: '生垣だけ、木1本だけでも頼めますか',
+    a: 'はい。生垣の一部や、気になる木1本からご相談いただけます。',
   },
   {
-    q: '対面で打ち合わせはできますか',
-    a: '対面の打ち合わせはしません。やり取りはメールで進めます。',
+    q: '雨の日も来てもらえますか',
+    a: '強い雨や風の日は、安全のため別の日にすることがあります。',
   },
   {
-    q: '受付時間は決まっていますか',
-    a: '受付時間と範囲は、ご相談のうえ決めます。',
+    q: 'ページの料金表どおりに請求されますか',
+    a: '表の金額は見本です。ご自宅の木に合わせた目安は、別にご連絡します。',
   },
 ];
 ---
@@ -96,9 +96,9 @@ const faqs = [
       <div class="hero-overlay"></div>
     </div>
     <div class="hero-copy">
-      <p class="eyebrow eyebrow-light">町の植木屋</p>
+      <p class="en en-light">GARDEN</p>
       <h1>庭木の手入れから、<br />庭づくりまで</h1>
-      <p class="hero-lead">年に一度の剪定も、伸びすぎた木の相談も。写真を送っていただければ、おおよその目安をお返しします。</p>
+      <p class="hero-lead">毎年の剪定から、小さな庭づくりまでお手伝いします。</p>
       <p><a class="btn" href="/lp/kodachi/contact/">写真を添えて相談する</a></p>
     </div>
     <a class="scroll-down" href="#points">
@@ -112,21 +112,21 @@ const faqs = [
   <section class="section" id="points" data-reveal aria-labelledby="points-heading">
     <div class="wrap">
       <header class="section-head">
-        <p class="eyebrow">ご依頼の前に</p>
-        <h2 id="points-heading">はじめに知っておくこと</h2>
+        <p class="en">POINT</p>
+        <h2 id="points-heading">当店の強み</h2>
       </header>
       <div class="points">
         <article>
-          <h3>写真を見て目安をお返しします</h3>
-          <p>庭の写真を送ってください。本数と高さを見て、おおよその目安をお伝えします。</p>
+          <h3>写真を送るだけでお見積り</h3>
+          <p>庭の写真をメールで送ってください。高さや本数を見て、目安をお返しします。</p>
         </article>
         <article>
-          <h3>年に一度の剪定</h3>
-          <p>伸びすぎた木も、生垣を揃える仕事も、近くの庭の手入れとしてお受けします。</p>
+          <h3>年1回の剪定から承ります</h3>
+          <p>毎年の剪定も、伸びてしまった木の相談も、お受けしています。</p>
         </article>
         <article>
-          <h3>段取りを先にお伝えします</h3>
-          <p>庭づくりは、残す木と変える場所を先に決めて、図にしてから作業します。</p>
+          <h3>作業前に仕上がりをご説明</h3>
+          <p>どこを切るか、何を残すかを、図でお見せしてから作業します。</p>
         </article>
       </div>
     </div>
@@ -135,8 +135,8 @@ const faqs = [
   <section class="section section-mist" data-reveal aria-labelledby="services-heading">
     <div class="wrap">
       <header class="section-head">
-        <p class="eyebrow">仕事内容</p>
-        <h2 id="services-heading">主な仕事</h2>
+        <p class="en">SERVICE</p>
+        <h2 id="services-heading">サービス内容</h2>
       </header>
       <div class="cards">
         {
@@ -179,9 +179,8 @@ const faqs = [
   <section class="section" data-reveal aria-labelledby="compare-heading">
     <div class="wrap">
       <header class="section-head">
-        <p class="eyebrow">施工事例</p>
-        <h2 id="compare-heading">作業の前と後</h2>
-        <p class="lead">架空の見本です。同じ庭を、作業の前後で撮り比べた写真ではありません。</p>
+        <p class="en">WORKS</p>
+        <h2 id="compare-heading">施工事例</h2>
       </header>
       <div class="compare">
         <div class="compare-side">
@@ -207,37 +206,37 @@ const faqs = [
           <span class="badge badge-after">作業後</span>
         </div>
       </div>
-      <p class="compare-note">左と右は別の場所です。</p>
+      <p class="compare-note">架空の見本です。左と右は別の場所で、同じ庭の前後ではありません。</p>
     </div>
   </section>
 
   <section class="section" data-reveal aria-labelledby="voices-heading">
     <div class="wrap">
       <header class="section-head">
-        <p class="eyebrow">お客様の声</p>
+        <p class="en">VOICE</p>
         <h2 id="voices-heading">お客様の声</h2>
-        <p class="lead">架空の文章です。実在のお客様の声ではありません。</p>
       </header>
       <div class="quotes">
         {
           quotes.map((text) => (
             <figure class="quote">
               <p>「{text}」</p>
-              <figcaption>見本の文章</figcaption>
             </figure>
           ))
         }
       </div>
+      <p class="note">架空の文章です。実在のお客様の声ではありません。</p>
     </div>
   </section>
 
   <section class="section section-mist" data-reveal aria-labelledby="steps-heading">
     <div class="wrap">
       <header class="section-head">
-        <p class="eyebrow">進め方</p>
-        <h2 id="steps-heading">ご相談から仕上がりまで</h2>
+        <p class="en">FLOW</p>
+        <h2 id="steps-heading">ご依頼の流れ</h2>
       </header>
-      <ol class="steps">
+      <div class="split">
+      <ol class="steps steps-side">
         {
           steps.map((step, index) => (
             <li>
@@ -248,27 +247,6 @@ const faqs = [
           ))
         }
       </ol>
-    </div>
-  </section>
-
-  <section class="section" data-reveal aria-labelledby="reasons-heading">
-    <div class="wrap split">
-      <div>
-        <p class="eyebrow">ご相談</p>
-        <h2 id="reasons-heading">ご相談の進め方</h2>
-        <div class="reason">
-          <h3>写真を見てから目安をお返しします</h3>
-          <p>料金の目安は、お送りいただいた写真と本数を見てからお伝えします。</p>
-        </div>
-        <div class="reason">
-          <h3>残す木を先に決めます</h3>
-          <p>手を入れる場所と残す木を分けて、図にしてから作業します。</p>
-        </div>
-        <div class="reason">
-          <h3>メールで進めます</h3>
-          <p>対面の打ち合わせはしません。受付時間と範囲は、ご相談のうえ決めます。</p>
-        </div>
-      </div>
       <FramePhoto
         src={yard}
         alt="住宅の塀の前にある松と、家の壁の一部（AIで生成した画像です）"
@@ -276,15 +254,16 @@ const faqs = [
         widths={[480, 720, 1024]}
         sizes="(min-width: 800px) 40vw, calc(100vw - 32px)"
       />
+      </div>
+      <p class="note">打ち合わせはメールで進めます。対面はしていません。受付の時間は、ご相談のうえ決めます。</p>
     </div>
   </section>
 
-  <section class="section section-mist" data-reveal aria-labelledby="faq-heading">
+  <section class="section" data-reveal aria-labelledby="faq-heading">
     <div class="wrap-narrow">
       <header class="section-head">
-        <p class="eyebrow">よくある質問</p>
-        <h2 id="faq-heading">よくある質問</h2>
-        <p class="lead">答えは見本です。</p>
+        <p class="en">FAQ</p>
+        <h2 id="faq-heading">よくあるご質問</h2>
       </header>
       <div class="faq">
         {
@@ -306,11 +285,11 @@ const faqs = [
 
   <section class="cta-section section-mist" aria-labelledby="cta-heading">
     <div class="cta-card">
-      <p class="eyebrow">お問い合わせ</p>
-      <h2 id="cta-heading">写真を添えて相談する</h2>
-      <p class="lead">電話 000-0000-0000<br />メール info@example.com</p>
-      <p><a class="btn" href="/lp/kodachi/contact/">問い合わせページを見る</a></p>
-      <p>この見本では、内容は送信されません。</p>
+      <p class="en">CONTACT</p>
+      <h2 id="cta-heading">お問い合わせ</h2>
+      <p class="lead">お電話 000-0000-0000<br />メール info@example.com</p>
+      <p><a class="btn" href="/lp/kodachi/contact/">問い合わせフォームへ</a></p>
+      <p class="note">この見本では、入力しても送信されません。</p>
     </div>
   </section>
 
