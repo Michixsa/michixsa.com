@@ -1,53 +1,86 @@
 ---
+import { Picture } from 'astro:assets';
 import KodachiLayout from '../../../layouts/KodachiLayout.astro';
 import FramePhoto from './_components/FramePhoto.astro';
 import HeroPhoto from './_components/HeroPhoto.astro';
 import heroPc from '../../../assets/lp/kodachi/hero-pc.webp';
 import heroSp from '../../../assets/lp/kodachi/hero-sp.webp';
-import workCare from '../../../assets/lp/kodachi/work-care.webp';
-import workBuild from '../../../assets/lp/kodachi/work-build.webp';
-import hedge from '../../../assets/lp/kodachi/examples-hedge.webp';
+import care from '../../../assets/lp/kodachi/work-care.webp';
+import build from '../../../assets/lp/kodachi/work-build.webp';
 import pine from '../../../assets/lp/kodachi/examples-pine.webp';
-import gravel from '../../../assets/lp/kodachi/examples-gravel.webp';
+import leaf from '../../../assets/lp/kodachi/strip-leaf.webp';
+import stone from '../../../assets/lp/kodachi/strip-stone.webp';
+import tools from '../../../assets/lp/kodachi/care-tools.webp';
+import azalea from '../../../assets/lp/kodachi/strip-azalea.webp';
+import yard from '../../../assets/lp/kodachi/about-yard.webp';
 
 const heroAlt = '住宅の小さな庭。整えられた松とツツジ、ブロック塀が見える（AIで生成した画像です）';
-const works = [
+const services = [
   {
     title: '手入れ・剪定',
     body: '年に一度の剪定から、伸びすぎた木の相談まで。',
     href: '/lp/kodachi/care/',
-    image: workCare,
+    image: care,
     alt: '道路沿いに、上面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）',
+    widths: [480, 768, 1066],
   },
   {
     title: '庭づくり',
     body: 'ご相談から仕上がりまで、段取りを先に共有します。',
     href: '/lp/kodachi/build/',
-    image: workBuild,
+    image: build,
     alt: '家の脇の通路に敷いた、明るい灰色の砂利と飛び石（AIで生成した画像です）',
-  },
-];
-const examples = [
-  {
-    href: '/lp/kodachi/examples/#hedge',
-    label: '生垣の刈り込み（架空）',
-    image: hedge,
-    alt: '道路沿いに、上の面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）',
+    widths: [480, 768, 1066],
   },
   {
-    href: '/lp/kodachi/examples/#pine',
-    label: '伸びた松の手入れ（架空）',
+    title: 'その他',
+    body: '松の枝、砂利、飛び石のような小さな仕事です。施工の例は架空です。',
+    href: '/lp/kodachi/examples/',
     image: pine,
     alt: '住宅の塀の手前で、枝を短く整えた松（AIで生成した画像です）',
-  },
-  {
-    href: '/lp/kodachi/examples/#gravel',
-    label: '砂利と飛び石（架空）',
-    image: gravel,
-    alt: '家の脇の細い通路に敷いた、明るい灰色の砂利と飛び石（AIで生成した画像です）',
+    widths: [480, 800, 1200],
   },
 ];
-const steps = ['庭を見る', '残す木と変える場所を決める', '図で共有する', '作業する', '仕上がりを一緒に見る'];
+const gallery = [
+  { image: leaf, alt: '生垣の葉を寄せて見たところ（AIで生成した画像です）', widths: [360, 640, 720] },
+  { image: stone, alt: '砂利と飛び石を寄せて見たところ（AIで生成した画像です）', widths: [360, 640, 720] },
+  {
+    image: tools,
+    alt: '木の台に置いた、使い込んだ刈り込みばさみ、剪定ばさみ、折りたたみのこぎり、麻縄と麻袋（AIで生成した画像です）',
+    widths: [480, 800, 1200],
+  },
+  { image: azalea, alt: '軒先のツツジと、家の壁（AIで生成した画像です）', widths: [360, 520] },
+];
+const quotes = [
+  '写真を送ったら、木の高さの目安を文章で返してもらえました。',
+  '道路側の生垣を、上の面が揃うように刈ってもらいました。',
+  '残す木と、砂利を足す場所を、図で先に見られました。',
+];
+const steps = [
+  { title: '庭を見る', body: '木の高さや、通り道の位置を確認します。' },
+  { title: '残す木を決める', body: '残す木と、手を入れる場所を分けます。' },
+  { title: '図で共有する', body: '作業の範囲を、図にして共有します。' },
+  { title: '作業する', body: '決めた範囲を作業します。' },
+  { title: '仕上がりを見る', body: '終わった庭を、その場で一緒に見ます。' },
+];
+const faqs = [
+  {
+    q: '料金の目安はありますか',
+    a: '金額は架空です。手入れは、低木（高さ2mまで）1本 3,300円、中木 1本 6,600円、高木 1本 11,000円、生垣 1m 2,200円（税込）です。写真と本数を見てから、改めてお伝えする前提です。',
+  },
+  {
+    q: '写真はどこに送りますか',
+    a: '問い合わせのページに、見本の入力欄があります。この見本では、内容は送信されません。',
+  },
+  {
+    q: '対面で打ち合わせはできますか',
+    a: '対面の打ち合わせはしません。やり取りはメールで進めます。',
+  },
+  {
+    q: '受付時間は決まっていますか',
+    a: '受付時間と範囲は、ご相談のうえ決めます。',
+  },
+];
 ---
 
 <KodachiLayout
@@ -56,74 +89,202 @@ const steps = ['庭を見る', '残す木と変える場所を決める', '図�
   current="top"
 >
   <section class="hero">
-    <HeroPhoto desktop={heroPc} mobile={heroSp} alt={heroAlt} />
+    <div class="hero-media">
+      <HeroPhoto desktop={heroPc} mobile={heroSp} alt={heroAlt} />
+      <div class="hero-overlay"></div>
+    </div>
     <div class="hero-copy">
+      <p class="eyebrow eyebrow-light">町の植木屋</p>
       <h1>庭木の手入れから、<br />庭づくりまで。</h1>
-      <p class="lead">年に一度の剪定も、伸びすぎた木の相談も。写真を送っていただければ、おおよその目安をお返しします。</p>
-      <div class="actions">
-        <a class="btn" href="/lp/kodachi/contact/">写真を添えて相談する</a>
-        <a class="text-link" href="/lp/kodachi/examples/">施工の例を見る</a>
+      <p class="hero-lead">年に一度の剪定も、伸びすぎた木の相談も。写真を送っていただければ、おおよその目安をお返しします。</p>
+      <p><a class="btn" href="/lp/kodachi/contact/">写真を添えて相談する</a></p>
+    </div>
+    <a class="scroll-down" href="#points">
+      <span class="sr">この先の内容へ</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M6 9l6 6 6-6"></path>
+      </svg>
+    </a>
+  </section>
+
+  <section class="section" id="points" aria-labelledby="points-heading">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">仕事</p>
+        <h2 id="points-heading">先に、見えておくこと。</h2>
+      </header>
+      <div class="points">
+        <article>
+          <h3>写真で目安を返す</h3>
+          <p>庭の写真を送っていただければ、本数と高さを見て、おおよその目安をお返しします。</p>
+        </article>
+        <article>
+          <h3>年に一度の剪定</h3>
+          <p>伸びすぎた木の相談も、生垣を揃える仕事も、近くの庭の手入れとして受けます。</p>
+        </article>
+        <article>
+          <h3>段取りを先に共有</h3>
+          <p>庭づくりは、残す木と変える場所を先に決め、図にしてから作業します。</p>
+        </article>
       </div>
     </div>
   </section>
 
-  <section class="block wide" aria-labelledby="work-heading">
-    <h2 id="work-heading">仕事</h2>
-    <div class="pair">
-      {
-        works.map((item) => (
-          <article>
-            <FramePhoto
-              src={item.image}
-              alt={item.alt}
-              ratio="4-3"
-              widths={[480, 768, 1066]}
-              sizes="(min-width: 800px) 36vw, calc(100vw - 32px)"
-            />
-            <h3>{item.title}</h3>
-            <p>{item.body}</p>
-            <p><a class="text-link" href={item.href}>詳しく見る</a></p>
-          </article>
-        ))
-      }
-    </div>
-  </section>
-
-  <section class="block wide" aria-labelledby="examples-heading">
-    <h2 id="examples-heading">施工の例</h2>
-    <p>架空の庭を3件、作業のあとで置いています。</p>
-    <ul class="strip">
-      {
-        examples.map((item) => (
-          <li>
-            <a class="shot" href={item.href}>
+  <section class="section section-mist" aria-labelledby="services-heading">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">入り口</p>
+        <h2 id="services-heading">三つの仕事。</h2>
+      </header>
+      <div class="cards">
+        {
+          services.map((item) => (
+            <article class="card">
               <FramePhoto
                 src={item.image}
                 alt={item.alt}
-                ratio="16-9"
-                widths={[360, 640, 800]}
+                ratio="16-10"
+                widths={item.widths}
                 sizes="(min-width: 800px) 30vw, calc(100vw - 32px)"
               />
-              <span class="shot-label">{item.label}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+              <div class="card-body">
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+                <p><a class="text-link" href={item.href}>詳しく見る</a></p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
   </section>
 
-  <section class="block wide" aria-labelledby="steps-heading">
-    <h2 id="steps-heading">段取り</h2>
-    <ol class="summary">
-      {
-        steps.map((step, index) => (
-          <li>
-            <span class="n" aria-hidden="true">{index + 1}</span>
-            <span>{step}</span>
-          </li>
-        ))
-      }
-    </ol>
-    <p><a class="text-link" href="/lp/kodachi/build/">段取りの詳細を見る</a></p>
+  <section class="gallery" aria-label="庭の写真。すべてAIで生成した画像です">
+    {
+      gallery.map((item) => (
+        <Picture
+          src={item.image}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={item.widths}
+          sizes="(min-width: 800px) 25vw, 50vw"
+          alt={item.alt}
+        />
+      ))
+    }
   </section>
+
+  <section class="section" aria-labelledby="voices-heading">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">声</p>
+        <h2 id="voices-heading">架空の声です。</h2>
+        <p class="lead">実在のお客様の声ではありません。この見本のために書いた文章です。</p>
+      </header>
+      <div class="quotes">
+        {
+          quotes.map((text) => (
+            <figure class="quote">
+              <p>「{text}」</p>
+              <figcaption>架空の声</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-mist" aria-labelledby="steps-heading">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">段取り</p>
+        <h2 id="steps-heading">ご相談から、仕上がりまで。</h2>
+      </header>
+      <ol class="steps">
+        {
+          steps.map((step, index) => (
+            <li>
+              <span class="num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="reasons-heading">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">理由</p>
+        <h2 id="reasons-heading">頼むときに、先に分かること。</h2>
+        <div class="reason">
+          <h3>写真を見てから返す</h3>
+          <p>金額の目安は、写真と本数を見てからお伝えします。ページの数字は架空です。</p>
+        </div>
+        <div class="reason">
+          <h3>残す木を先に決める</h3>
+          <p>手を入れる場所と、残す木を分けて、図で共有してから作業します。</p>
+        </div>
+        <div class="reason">
+          <h3>メールで進める</h3>
+          <p>対面の打ち合わせはしません。受付時間と範囲は、ご相談のうえ決めます。</p>
+        </div>
+      </div>
+      <FramePhoto
+        src={yard}
+        alt="住宅の塀の前にある松と、家の壁の一部（AIで生成した画像です）"
+        ratio="4-5"
+        widths={[480, 720, 1024]}
+        sizes="(min-width: 800px) 40vw, calc(100vw - 32px)"
+      />
+    </div>
+  </section>
+
+  <section class="section section-mist" aria-labelledby="faq-heading">
+    <div class="wrap-narrow">
+      <header class="section-head">
+        <p class="eyebrow">問い</p>
+        <h2 id="faq-heading">よくある質問。</h2>
+        <p class="lead">答えも、架空のサンプルです。</p>
+      </header>
+      <div class="faq">
+        {
+          faqs.map((item, index) => (
+            <div class="faq-item">
+              <button type="button" aria-expanded="false" aria-controls={`faq-${index}`}>
+                <span>{item.q}</span>
+                <span class="faq-mark" aria-hidden="true">+</span>
+              </button>
+              <div class="faq-a" id={`faq-${index}`}>
+                <p>{item.a}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section section-mist" aria-labelledby="cta-heading">
+    <div class="cta-card">
+      <p class="eyebrow">相談</p>
+      <h2 id="cta-heading">写真を添えて相談する。</h2>
+      <p class="lead">電話 000-0000-0000<br />メール info@example.com</p>
+      <p><a class="btn" href="/lp/kodachi/contact/">問い合わせの見本を開く</a></p>
+      <p>この見本では、内容は送信されません。</p>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.faq-item button').forEach((button) => {
+      button.addEventListener('click', () => {
+        const item = button.closest('.faq-item');
+        const open = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', open ? 'false' : 'true');
+        item?.classList.toggle('is-open', !open);
+      });
+    });
+  </script>
 </KodachiLayout>
