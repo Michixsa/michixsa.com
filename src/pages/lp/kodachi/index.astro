@@ -13,6 +13,8 @@ import stone from '../../../assets/lp/kodachi/strip-stone.webp';
 import tools from '../../../assets/lp/kodachi/care-tools.webp';
 import azalea from '../../../assets/lp/kodachi/strip-azalea.webp';
 import yard from '../../../assets/lp/kodachi/about-yard.webp';
+import hedgeWide from '../../../assets/lp/kodachi/examples-hedge.webp';
+import gravelWide from '../../../assets/lp/kodachi/examples-gravel.webp';
 
 const heroAlt = '住宅の小さな庭。整えられた松とツツジ、ブロック塀が見える（AIで生成した画像です）';
 const services = [
@@ -107,7 +109,7 @@ const faqs = [
     </a>
   </section>
 
-  <section class="section" id="points" aria-labelledby="points-heading">
+  <section class="section" id="points" data-reveal aria-labelledby="points-heading">
     <div class="wrap">
       <header class="section-head">
         <p class="eyebrow">仕事</p>
@@ -130,7 +132,7 @@ const faqs = [
     </div>
   </section>
 
-  <section class="section section-mist" aria-labelledby="services-heading">
+  <section class="section section-mist" data-reveal aria-labelledby="services-heading">
     <div class="wrap">
       <header class="section-head">
         <p class="eyebrow">入り口</p>
@@ -174,7 +176,42 @@ const faqs = [
     }
   </section>
 
-  <section class="section" aria-labelledby="voices-heading">
+  <section class="section" data-reveal aria-labelledby="compare-heading">
+    <div class="wrap">
+      <header class="section-head">
+        <p class="eyebrow">施工の例</p>
+        <h2 id="compare-heading">前後に並べる見本です。</h2>
+        <p class="lead">同じ庭を、作業の前と後で撮り直したものではありません。</p>
+      </header>
+      <div class="compare">
+        <div class="compare-side">
+          <Picture
+            src={gravelWide}
+            formats={['avif']}
+            fallbackFormat="webp"
+            widths={[480, 800, 1200]}
+            sizes="(min-width: 800px) 50vw, 100vw"
+            alt="家の脇の砂利と飛び石（AIで生成した画像です）"
+          />
+          <span class="badge">作業前（架空）</span>
+        </div>
+        <div class="compare-side">
+          <Picture
+            src={hedgeWide}
+            formats={['avif']}
+            fallbackFormat="webp"
+            widths={[480, 800, 1200]}
+            sizes="(min-width: 800px) 50vw, 100vw"
+            alt="道路沿いに刈り込んだ生垣（AIで生成した画像です）"
+          />
+          <span class="badge badge-after">作業後（架空）</span>
+        </div>
+      </div>
+      <p class="compare-note">左と右は別の場所です。前後の見せ方だけを借りた、架空の見本です。</p>
+    </div>
+  </section>
+
+  <section class="section" data-reveal aria-labelledby="voices-heading">
     <div class="wrap">
       <header class="section-head">
         <p class="eyebrow">声</p>
@@ -194,7 +231,7 @@ const faqs = [
     </div>
   </section>
 
-  <section class="section section-mist" aria-labelledby="steps-heading">
+  <section class="section section-mist" data-reveal aria-labelledby="steps-heading">
     <div class="wrap">
       <header class="section-head">
         <p class="eyebrow">段取り</p>
@@ -214,7 +251,7 @@ const faqs = [
     </div>
   </section>
 
-  <section class="section" aria-labelledby="reasons-heading">
+  <section class="section" data-reveal aria-labelledby="reasons-heading">
     <div class="wrap split">
       <div>
         <p class="eyebrow">理由</p>
@@ -242,7 +279,7 @@ const faqs = [
     </div>
   </section>
 
-  <section class="section section-mist" aria-labelledby="faq-heading">
+  <section class="section section-mist" data-reveal aria-labelledby="faq-heading">
     <div class="wrap-narrow">
       <header class="section-head">
         <p class="eyebrow">問い</p>
