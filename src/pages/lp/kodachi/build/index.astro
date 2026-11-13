@@ -19,7 +19,8 @@ const steps = [
 >
   <div class="page-intro">
     <p class="eyebrow">庭づくり</p>
-    <h1>ご相談から仕上がりまで、5つの段取りで進めます。</h1>
+    <h1>ご相談から仕上がりまで</h1>
+    <p>5つの段取りで進めます。</p>
   </div>
   <div class="photo-lead">
     <FramePhoto
@@ -38,7 +39,7 @@ const steps = [
         steps.map((step, index) => (
           <li>
             <span class="n" aria-hidden="true">{index + 1}</span>
-            <h2>{step.title}</h2>
+            <h3>{step.title}</h3>
             <p>{step.body}</p>
           </li>
         ))

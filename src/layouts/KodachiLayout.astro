@@ -86,7 +86,7 @@ const phone = '000-0000-0000';
           <li><a href="/">michixsa のトップへ戻る</a></li>
         </ul>
       </div>
-      <p class="foot-note">写真は AI で生成した画像です。このサイトの文章と声は、架空のサンプルです。</p>
+      <p class="foot-note">写真は AI で生成した画像です。「木立造園」は実在せず、文章も見本です。</p>
     </footer>
     <noscript>
       <style>
@@ -169,11 +169,12 @@ const phone = '000-0000-0000';
     font-family: var(--serif);
     font-weight: 600;
     line-height: 1.35;
+    letter-spacing: 0.04em;
     font-feature-settings: "palt";
   }
-  h1 { margin: 0 0 16px; font-size: 36px; }
-  h2 { margin: 0 0 16px; font-size: 32px; }
-  h3 { margin: 0 0 8px; font-size: 22px; }
+  h1 { margin: 0 0 16px; font-size: clamp(32px, 4.6vw, 48px); }
+  h2 { margin: 0 0 16px; font-size: clamp(28px, 3.3vw, 40px); }
+  h3 { margin: 0 0 8px; font-size: clamp(20px, 1.6vw, 22px); line-height: 1.5; letter-spacing: 0.02em; }
   .sr {
     position: absolute;
     width: 1px;
@@ -201,8 +202,8 @@ const phone = '000-0000-0000';
     margin: 0;
     padding: 6px 16px;
     color: var(--muted);
-    font-size: 12px;
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.6;
     text-align: center;
   }
   .head {
@@ -291,12 +292,13 @@ const phone = '000-0000-0000';
   .eyebrow {
     margin: 0 0 14px;
     color: var(--moss);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.18em;
+    line-height: 1.6;
   }
   .eyebrow-light { color: #f4f1ea; }
-  .lead { margin: 0 auto; max-width: 38rem; color: var(--muted); font-size: 17px; }
+  .lead { margin: 0 auto; max-width: 38rem; color: var(--muted); font-size: 16px; line-height: 1.85; }
 
   .btn {
     display: inline-flex;
@@ -374,8 +376,8 @@ const phone = '000-0000-0000';
     margin: 0 auto;
     text-align: center;
   }
-  .hero h1 { color: #f7f4ee; font-size: clamp(36px, 8vw, 44px); line-height: 1.25; }
-  .hero-lead { color: #f7f4ee; font-size: 17px; }
+  .hero h1 { color: #f7f4ee; font-size: clamp(40px, 5.8vw, 60px); line-height: 1.28; letter-spacing: 0.06em; }
+  .hero-lead { color: #f7f4ee; font-size: 16px; line-height: 1.85; }
   .scroll-down {
     position: absolute;
     z-index: 1;
@@ -453,8 +455,8 @@ const phone = '000-0000-0000';
   .quote p {
     margin: 0 0 16px;
     font-family: var(--serif);
-    font-size: 18px;
-    line-height: 1.7;
+    font-size: 17px;
+    line-height: 1.85;
   }
   .quote figcaption { color: var(--moss); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; }
 
@@ -471,7 +473,7 @@ const phone = '000-0000-0000';
     margin-bottom: 8px;
     color: var(--moss);
     font-family: var(--serif);
-    font-size: 56px;
+    font-size: clamp(44px, 5vw, 64px);
     font-weight: 600;
     line-height: 1;
     font-variant-numeric: tabular-nums;
@@ -485,7 +487,7 @@ const phone = '000-0000-0000';
   }
   .split .frame { aspect-ratio: 4 / 5; min-height: 280px; }
   .reason { margin: 0 0 20px; }
-  .reason h3 { color: var(--moss); font-size: 20px; }
+  .reason h3 { color: var(--moss); }
 
   .faq { display: grid; }
   .faq-item { border-bottom: 1px solid var(--line); }
@@ -501,7 +503,9 @@ const phone = '000-0000-0000';
     background: transparent;
     color: var(--ink);
     font: inherit;
+    font-size: 17px;
     font-weight: 700;
+    line-height: 1.6;
     text-align: left;
     cursor: pointer;
   }
@@ -514,7 +518,7 @@ const phone = '000-0000-0000';
     line-height: 1;
   }
   .faq-item.is-open .faq-mark { transform: rotate(45deg); }
-  .faq-a { display: none; padding: 0 0 20px; color: var(--muted); }
+  .faq-a { display: none; padding: 0 0 20px; color: var(--muted); font-size: 16px; line-height: 1.85; }
   .faq-item.is-open .faq-a { display: block; }
 
   .cta-section { padding: 88px 0 104px; }
@@ -534,7 +538,7 @@ const phone = '000-0000-0000';
     padding: 64px 0 8px;
     text-align: center;
   }
-  .page-intro h1 { font-size: 32px; }
+  .page-intro h1 { font-size: clamp(32px, 4.6vw, 48px); }
   .photo-lead, .care-photos, .narrow, .wide {
     width: min(1120px, calc(100% - 32px));
     margin-left: auto;
@@ -546,7 +550,7 @@ const phone = '000-0000-0000';
   .block { margin-top: 56px; }
   .examples { display: grid; gap: 48px; margin-top: 36px; }
   .example { scroll-margin-top: 120px; }
-  .example h2 { margin-top: 16px; text-align: center; }
+  .example h2 { margin-top: 16px; text-align: center; font-size: clamp(22px, 2.2vw, 28px); }
 
   .heights { margin: 0 0 28px; }
   .bars {
@@ -582,8 +586,8 @@ const phone = '000-0000-0000';
     padding-top: 12px;
     border-top: 1px solid var(--moss);
   }
-  .n { color: var(--moss); font-family: var(--serif); font-size: 28px; font-weight: 600; }
-  .phases h2 { font-size: 20px; }
+  .n { color: var(--moss); font-family: var(--serif); font-size: clamp(28px, 3vw, 36px); font-weight: 600; line-height: 1; }
+  .phases h2 { font-size: clamp(20px, 1.6vw, 22px); line-height: 1.5; letter-spacing: 0.02em; }
   .phases p, .flow li { color: var(--ink); }
 
   table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
@@ -626,11 +630,13 @@ const phone = '000-0000-0000';
 
   .foot {
     padding: 64px 0 32px;
+    font-size: 15px;
+    line-height: 1.8;
     background: var(--footer);
     color: #f4f1ea;
   }
   .foot-grid { display: grid; gap: 28px; }
-  .foot-name { margin: 0 0 12px; font-size: 26px; }
+  .foot-name { margin: 0 0 12px; font-size: clamp(22px, 2vw, 26px); letter-spacing: 0.06em; }
   .foot p { margin: 0 0 6px; }
   .foot a { color: #f4f1ea; font-weight: 700; }
   .foot a:visited { color: #f4f1ea; }
@@ -643,7 +649,8 @@ const phone = '000-0000-0000';
     padding-top: 20px;
     border-top: 1px solid rgba(244, 241, 234, 0.25);
     color: #f4f1ea;
-    font-size: 14px;
+    font-size: 13px;
+    line-height: 1.7;
   }
 
   @media (min-width: 800px) {
@@ -659,10 +666,6 @@ const phone = '000-0000-0000';
     .flow { grid-template-columns: repeat(3, 1fr); }
     .foot-grid { grid-template-columns: 1.2fr 1fr; }
     .cta-card { padding: 72px 56px; }
-    h1, .page-intro h1 { font-size: 46px; }
-    h2 { font-size: 40px; }
-    .hero h1 { font-size: 64px; }
-    .num { font-size: 72px; }
     .section { padding: 140px 0; }
     .section-head { margin-bottom: 80px; }
   }

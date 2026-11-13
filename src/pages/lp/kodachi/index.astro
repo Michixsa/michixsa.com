@@ -36,7 +36,7 @@ const services = [
   },
   {
     title: 'その他',
-    body: '松の枝、砂利、飛び石のような小さな仕事です。施工の例は架空です。',
+    body: '松の枝の整理や、砂利・飛び石の直しもご相談ください。',
     href: '/lp/kodachi/examples/',
     image: pine,
     alt: '住宅の塀の手前で、枝を短く整えた松（AIで生成した画像です）',
@@ -63,16 +63,16 @@ const steps = [
   { title: '残す木を決める', body: '残す木と、手を入れる場所を分けます。' },
   { title: '図で共有する', body: '作業の範囲を、図にして共有します。' },
   { title: '作業する', body: '決めた範囲を作業します。' },
-  { title: '仕上がりを見る', body: '終わった庭を、その場で一緒に見ます。' },
+  { title: '仕上がりを確認する', body: '終わった庭を、その場で一緒に確認します。' },
 ];
 const faqs = [
   {
     q: '料金の目安はありますか',
-    a: '金額は架空です。手入れは、低木（高さ2mまで）1本 3,300円、中木 1本 6,600円、高木 1本 11,000円、生垣 1m 2,200円（税込）です。写真と本数を見てから、改めてお伝えする前提です。',
+    a: '金額は見本です。手入れは、低木（高さ2mまで）1本 3,300円、中木 1本 6,600円、高木 1本 11,000円、生垣 1m 2,200円です。いずれも税込で、写真と本数を見てから改めてお伝えします。',
   },
   {
-    q: '写真はどこに送りますか',
-    a: '問い合わせのページに、見本の入力欄があります。この見本では、内容は送信されません。',
+    q: '庭の写真はどこから送れますか',
+    a: '問い合わせのページに、見本の入力欄があります。この見本では、入力しても送信されません。',
   },
   {
     q: '対面で打ち合わせはできますか',
@@ -97,7 +97,7 @@ const faqs = [
     </div>
     <div class="hero-copy">
       <p class="eyebrow eyebrow-light">町の植木屋</p>
-      <h1>庭木の手入れから、<br />庭づくりまで。</h1>
+      <h1>庭木の手入れから、<br />庭づくりまで</h1>
       <p class="hero-lead">年に一度の剪定も、伸びすぎた木の相談も。写真を送っていただければ、おおよその目安をお返しします。</p>
       <p><a class="btn" href="/lp/kodachi/contact/">写真を添えて相談する</a></p>
     </div>
@@ -112,21 +112,21 @@ const faqs = [
   <section class="section" id="points" data-reveal aria-labelledby="points-heading">
     <div class="wrap">
       <header class="section-head">
-        <p class="eyebrow">仕事</p>
-        <h2 id="points-heading">先に、見えておくこと。</h2>
+        <p class="eyebrow">ご依頼の前に</p>
+        <h2 id="points-heading">はじめに知っておくこと</h2>
       </header>
       <div class="points">
         <article>
-          <h3>写真で目安を返す</h3>
-          <p>庭の写真を送っていただければ、本数と高さを見て、おおよその目安をお返しします。</p>
+          <h3>写真を見て目安をお返しします</h3>
+          <p>庭の写真を送ってください。本数と高さを見て、おおよその目安をお伝えします。</p>
         </article>
         <article>
           <h3>年に一度の剪定</h3>
-          <p>伸びすぎた木の相談も、生垣を揃える仕事も、近くの庭の手入れとして受けます。</p>
+          <p>伸びすぎた木も、生垣を揃える仕事も、近くの庭の手入れとしてお受けします。</p>
         </article>
         <article>
-          <h3>段取りを先に共有</h3>
-          <p>庭づくりは、残す木と変える場所を先に決め、図にしてから作業します。</p>
+          <h3>段取りを先にお伝えします</h3>
+          <p>庭づくりは、残す木と変える場所を先に決めて、図にしてから作業します。</p>
         </article>
       </div>
     </div>
@@ -135,8 +135,8 @@ const faqs = [
   <section class="section section-mist" data-reveal aria-labelledby="services-heading">
     <div class="wrap">
       <header class="section-head">
-        <p class="eyebrow">入り口</p>
-        <h2 id="services-heading">三つの仕事。</h2>
+        <p class="eyebrow">仕事内容</p>
+        <h2 id="services-heading">主な仕事</h2>
       </header>
       <div class="cards">
         {
@@ -179,9 +179,9 @@ const faqs = [
   <section class="section" data-reveal aria-labelledby="compare-heading">
     <div class="wrap">
       <header class="section-head">
-        <p class="eyebrow">施工の例</p>
-        <h2 id="compare-heading">前後に並べる見本です。</h2>
-        <p class="lead">同じ庭を、作業の前と後で撮り直したものではありません。</p>
+        <p class="eyebrow">施工事例</p>
+        <h2 id="compare-heading">作業の前と後</h2>
+        <p class="lead">架空の見本です。同じ庭を、作業の前後で撮り比べた写真ではありません。</p>
       </header>
       <div class="compare">
         <div class="compare-side">
@@ -193,7 +193,7 @@ const faqs = [
             sizes="(min-width: 800px) 50vw, 100vw"
             alt="家の脇の砂利と飛び石（AIで生成した画像です）"
           />
-          <span class="badge">作業前（架空）</span>
+          <span class="badge">作業前</span>
         </div>
         <div class="compare-side">
           <Picture
@@ -204,26 +204,26 @@ const faqs = [
             sizes="(min-width: 800px) 50vw, 100vw"
             alt="道路沿いに刈り込んだ生垣（AIで生成した画像です）"
           />
-          <span class="badge badge-after">作業後（架空）</span>
+          <span class="badge badge-after">作業後</span>
         </div>
       </div>
-      <p class="compare-note">左と右は別の場所です。前後の見せ方だけを借りた、架空の見本です。</p>
+      <p class="compare-note">左と右は別の場所です。</p>
     </div>
   </section>
 
   <section class="section" data-reveal aria-labelledby="voices-heading">
     <div class="wrap">
       <header class="section-head">
-        <p class="eyebrow">声</p>
-        <h2 id="voices-heading">架空の声です。</h2>
-        <p class="lead">実在のお客様の声ではありません。この見本のために書いた文章です。</p>
+        <p class="eyebrow">お客様の声</p>
+        <h2 id="voices-heading">お客様の声</h2>
+        <p class="lead">架空の文章です。実在のお客様の声ではありません。</p>
       </header>
       <div class="quotes">
         {
           quotes.map((text) => (
             <figure class="quote">
               <p>「{text}」</p>
-              <figcaption>架空の声</figcaption>
+              <figcaption>見本の文章</figcaption>
             </figure>
           ))
         }
@@ -234,8 +234,8 @@ const faqs = [
   <section class="section section-mist" data-reveal aria-labelledby="steps-heading">
     <div class="wrap">
       <header class="section-head">
-        <p class="eyebrow">段取り</p>
-        <h2 id="steps-heading">ご相談から、仕上がりまで。</h2>
+        <p class="eyebrow">進め方</p>
+        <h2 id="steps-heading">ご相談から仕上がりまで</h2>
       </header>
       <ol class="steps">
         {
@@ -254,18 +254,18 @@ const faqs = [
   <section class="section" data-reveal aria-labelledby="reasons-heading">
     <div class="wrap split">
       <div>
-        <p class="eyebrow">理由</p>
-        <h2 id="reasons-heading">頼むときに、先に分かること。</h2>
+        <p class="eyebrow">ご相談</p>
+        <h2 id="reasons-heading">ご相談の進め方</h2>
         <div class="reason">
-          <h3>写真を見てから返す</h3>
-          <p>金額の目安は、写真と本数を見てからお伝えします。ページの数字は架空です。</p>
+          <h3>写真を見てから目安をお返しします</h3>
+          <p>料金の目安は、お送りいただいた写真と本数を見てからお伝えします。</p>
         </div>
         <div class="reason">
-          <h3>残す木を先に決める</h3>
-          <p>手を入れる場所と、残す木を分けて、図で共有してから作業します。</p>
+          <h3>残す木を先に決めます</h3>
+          <p>手を入れる場所と残す木を分けて、図にしてから作業します。</p>
         </div>
         <div class="reason">
-          <h3>メールで進める</h3>
+          <h3>メールで進めます</h3>
           <p>対面の打ち合わせはしません。受付時間と範囲は、ご相談のうえ決めます。</p>
         </div>
       </div>
@@ -282,9 +282,9 @@ const faqs = [
   <section class="section section-mist" data-reveal aria-labelledby="faq-heading">
     <div class="wrap-narrow">
       <header class="section-head">
-        <p class="eyebrow">問い</p>
-        <h2 id="faq-heading">よくある質問。</h2>
-        <p class="lead">答えも、架空のサンプルです。</p>
+        <p class="eyebrow">よくある質問</p>
+        <h2 id="faq-heading">よくある質問</h2>
+        <p class="lead">答えは見本です。</p>
       </header>
       <div class="faq">
         {
@@ -306,10 +306,10 @@ const faqs = [
 
   <section class="cta-section section-mist" aria-labelledby="cta-heading">
     <div class="cta-card">
-      <p class="eyebrow">相談</p>
-      <h2 id="cta-heading">写真を添えて相談する。</h2>
+      <p class="eyebrow">お問い合わせ</p>
+      <h2 id="cta-heading">写真を添えて相談する</h2>
       <p class="lead">電話 000-0000-0000<br />メール info@example.com</p>
-      <p><a class="btn" href="/lp/kodachi/contact/">問い合わせの見本を開く</a></p>
+      <p><a class="btn" href="/lp/kodachi/contact/">問い合わせページを見る</a></p>
       <p>この見本では、内容は送信されません。</p>
     </div>
   </section>

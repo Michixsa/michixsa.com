@@ -5,10 +5,10 @@ import workCare from '../../../../assets/lp/kodachi/work-care.webp';
 import tools from '../../../../assets/lp/kodachi/care-tools.webp';
 
 const rows = [
-  ['低木（高さ2mまで）', '1本 3,300円（架空・税込）'],
-  ['中木', '1本 6,600円（架空・税込）'],
-  ['高木', '1本 11,000円（架空・税込）'],
-  ['生垣', '1m 2,200円（架空・税込）'],
+  ['低木（高さ2mまで）', '1本 3,300円（税込）'],
+  ['中木', '1本 6,600円（税込）'],
+  ['高木', '1本 11,000円（税込）'],
+  ['生垣', '1m 2,200円（税込）'],
 ];
 const flow = ['写真を送る', '本数と高さを見る', '目安を返す'];
 ---
@@ -19,9 +19,9 @@ const flow = ['写真を送る', '本数と高さを見る', '目安を返す'];
   current="care"
 >
   <div class="page-intro">
-    <p class="eyebrow">手入れ</p>
-    <h1>高さと本数で、料金の目安がわかります。</h1>
-    <p>金額は架空です。写真と本数を見てから、改めてお伝えする前提です。</p>
+    <p class="eyebrow">手入れ・剪定</p>
+    <h1>高さと本数で、料金の目安が分かります</h1>
+    <p>金額は見本です。写真と本数を見てから、改めてお伝えします。</p>
   </div>
   <div class="care-photos">
     <FramePhoto
@@ -42,7 +42,7 @@ const flow = ['写真を送る', '本数と高さを見る', '目安を返す'];
     />
   </div>
   <div class="narrow block">
-    <h2>写真を送って、目安を返す</h2>
+    <h2>目安をお返しするまで</h2>
     <ol class="flow">
       {
         flow.map((step, index) => (
@@ -55,7 +55,7 @@ const flow = ['写真を送る', '本数と高さを見る', '目安を返す'];
     </ol>
   </div>
   <div class="narrow block">
-    <h2>木の高さ</h2>
+    <h2>木の高さの目安</h2>
     <figure class="heights">
       <div class="bars" aria-hidden="true">
         <div><span class="h-low"></span></div>
@@ -67,10 +67,10 @@ const flow = ['写真を送る', '本数と高さを見る', '目安を返す'];
         <li>中木</li>
         <li>高木</li>
       </ul>
-      <figcaption>低木は高さ2mまでです。中木と高木はそれより高い木で、区切りの数値は図にしていません。写真を見て区分します。</figcaption>
+      <figcaption>低木は高さ2mまでです。中木と高木はそれより高い木です。どこで分けるかは、写真を見てお伝えします。</figcaption>
     </figure>
     <table class="prices">
-      <caption>料金の目安（架空・税込）</caption>
+      <caption>料金の目安（税込・見本）</caption>
       <tbody>
         {
           rows.map(([name, price]) => (
