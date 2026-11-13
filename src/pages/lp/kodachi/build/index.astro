@@ -1,7 +1,15 @@
 ---
 import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
+import FramePhoto from '../_components/FramePhoto.astro';
+import plan from '../../../../assets/lp/kodachi/build-plan.webp';
 
-const steps = ['庭を見る', '残す木と変える場所を決める', '図で共有する', '作業する', '仕上がりを一緒に見る'];
+const steps = [
+  { title: '庭を見る', body: '木の高さや、通り道の位置を確認します。' },
+  { title: '残す木と変える場所を決める', body: '残す木と、手を入れる場所を分けます。' },
+  { title: '図で共有する', body: '作業の範囲を、図にして共有します。' },
+  { title: '作業する', body: '決めた範囲を作業します。' },
+  { title: '仕上がりを一緒に見る', body: '終わった庭を、その場で一緒に見ます。' },
+];
 ---
 
 <KodachiLayout
@@ -9,9 +17,32 @@ const steps = ['庭を見る', '残す木と変える場所を決める', '図�
   description="架空の造園会社「木立造園」の庭づくりの段取りです。"
   current="build"
 >
-  <h1>ご相談から仕上がりまで、5つの段取りで進めます。</h1>
-  <ol class="steps">
-    {steps.map((step) => <li>{step}</li>)}
-  </ol>
-  <p><a class="btn" href="/lp/kodachi/contact/">相談する</a></p>
+  <div class="narrow page-intro">
+    <h1>ご相談から仕上がりまで、5つの段取りで進めます。</h1>
+  </div>
+  <div class="photo-lead">
+    <FramePhoto
+      src={plan}
+      alt="木の台の上の、使い込んだ刈り込みばさみと麻袋、麻縄（AIで生成した画像です）"
+      ratio="4-3"
+      widths={[480, 768, 1066]}
+      sizes="(min-width: 1120px) min(56rem, calc(100vw - 80px)), calc(100vw - 32px)"
+      loading="eager"
+      fetchpriority="high"
+    />
+  </div>
+  <div class="wide block">
+    <ol class="phases">
+      {
+        steps.map((step, index) => (
+          <li>
+            <span class="n" aria-hidden="true">{index + 1}</span>
+            <h2>{step.title}</h2>
+            <p>{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <p><a class="btn" href="/lp/kodachi/contact/">相談する</a></p>
+  </div>
 </KodachiLayout>

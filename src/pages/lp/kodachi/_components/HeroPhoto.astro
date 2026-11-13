@@ -1,0 +1,54 @@
+---
+/**
+ * Art-directed hero. Viewports under 1120px load the 4:5 file only.
+ * The breakpoint matches the layout's desktop hero.
+ */
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  desktop: ImageMetadata;
+  mobile: ImageMetadata;
+  alt: string;
+}
+
+const { desktop, mobile, alt } = Astro.props;
+const desktopWidths = [640, 960, 1200];
+const mobileWidths = [320, 480, 640];
+
+const [desktopAvif, desktopWebp, mobileAvif, mobileWebp] = await Promise.all([
+  getImage({ src: desktop, format: 'avif', widths: desktopWidths }),
+  getImage({ src: desktop, format: 'webp', widths: desktopWidths }),
+  getImage({ src: mobile, format: 'avif', widths: mobileWidths }),
+  getImage({ src: mobile, format: 'webp', widths: mobileWidths }),
+]);
+---
+
+<div class="frame hero-photo">
+  <picture>
+    <source
+      media="(min-width: 1120px)"
+      type="image/avif"
+      srcset={desktopAvif.srcSet.attribute}
+      sizes="60vw"
+    />
+    <source
+      media="(min-width: 1120px)"
+      type="image/webp"
+      srcset={desktopWebp.srcSet.attribute}
+      sizes="60vw"
+    />
+    <source type="image/avif" srcset={mobileAvif.srcSet.attribute} sizes="100vw" />
+    <source type="image/webp" srcset={mobileWebp.srcSet.attribute} sizes="100vw" />
+    <img
+      src={mobileWebp.src}
+      alt={alt}
+      width={mobileWebp.attributes.width}
+      height={mobileWebp.attributes.height}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+  </picture>
+</div>

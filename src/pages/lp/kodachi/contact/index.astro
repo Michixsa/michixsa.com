@@ -7,19 +7,21 @@ import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
   description="架空の造園会社「木立造園」の問い合わせです。送信はされません。"
   current="contact"
 >
-  <h1>写真を添えて相談する</h1>
-  <p>電話 000-0000-0000</p>
-  <p>メール info@example.com</p>
-  <p>下の欄は見本です。写真も文章も送られません。</p>
-  <div>
-    <label for="name">お名前</label>
-    <input id="name" name="name" type="text" autocomplete="name" />
-    <label for="photo">庭の写真</label>
-    <input id="photo" name="photo" type="file" accept="image/*" />
-    <label for="body">ご相談</label>
-    <textarea id="body" name="body" rows="5"></textarea>
-    <p><button class="btn" type="button" id="send-demo">送信する</button></p>
-    <p id="send-note" aria-live="polite"></p>
+  <div class="narrow page-intro">
+    <h1>写真を添えて相談する</h1>
+    <p>電話 000-0000-0000</p>
+    <p>メール info@example.com</p>
+    <p>下の欄は見本です。写真も文章も送られません。</p>
+    <div>
+      <label for="name">お名前</label>
+      <input id="name" name="name" type="text" autocomplete="name" />
+      <label for="photo">庭の写真</label>
+      <input id="photo" name="photo" type="file" accept="image/*" />
+      <label for="body">ご相談</label>
+      <textarea id="body" name="body" rows="5"></textarea>
+      <p><button class="btn" type="button" id="send-demo">送信する</button></p>
+      <p id="send-note" aria-live="polite"></p>
+    </div>
   </div>
   <script>
     const button = document.getElementById('send-demo');

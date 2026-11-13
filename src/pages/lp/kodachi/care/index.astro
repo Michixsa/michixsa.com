@@ -1,7 +1,8 @@
 ---
-import { Picture } from 'astro:assets';
 import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
-import tools from '../../../../assets/lp/kodachi/tools.webp';
+import FramePhoto from '../_components/FramePhoto.astro';
+import workCare from '../../../../assets/lp/kodachi/work-care.webp';
+import tools from '../../../../assets/lp/kodachi/care-tools.webp';
 
 const rows = [
   ['低木（高さ2mまで）', '1本 3,300円（架空・税込）'],
@@ -9,6 +10,7 @@ const rows = [
   ['高木', '1本 11,000円（架空・税込）'],
   ['生垣', '1m 2,200円（架空・税込）'],
 ];
+const flow = ['写真を送る', '本数と高さを見る', '目安を返す'];
 ---
 
 <KodachiLayout
@@ -16,26 +18,69 @@ const rows = [
   description="架空の造園会社「木立造園」の手入れと剪定の目安です。"
   current="care"
 >
-  <h1>高さと本数で、料金の目安がわかります。</h1>
-  <p>金額は架空です。写真と本数を見てから、改めてお伝えする前提です。</p>
-  <div class="photo">
-    <Picture
-      src={tools}
-      formats={['avif']}
-      fallbackFormat="webp"
-      widths={[480, 800, 1200]}
-      sizes="(min-width: 1000px) 960px, calc(100vw - 40px)"
-      alt="木の台に並べた、使い込んだ剪定ばさみ、刈り込みばさみ、折りたたみのこぎり、麻縄と麻袋（AIで生成した画像です）"
+  <div class="narrow page-intro">
+    <h1>高さと本数で、料金の目安がわかります。</h1>
+    <p>金額は架空です。写真と本数を見てから、改めてお伝えする前提です。</p>
+  </div>
+  <div class="care-photos">
+    <FramePhoto
+      src={workCare}
+      alt="道路沿いに、上面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）"
+      ratio="4-3"
+      widths={[480, 768, 1066]}
+      sizes="(min-width: 800px) 42vw, calc(100vw - 32px)"
       loading="eager"
       fetchpriority="high"
     />
+    <FramePhoto
+      src={tools}
+      alt="木の台に置いた、使い込んだ刈り込みばさみ、剪定ばさみ、折りたたみのこぎり、麻縄と麻袋（AIで生成した画像です）"
+      ratio="16-9"
+      widths={[480, 800, 1200]}
+      sizes="(min-width: 800px) 32vw, calc(100vw - 32px)"
+    />
   </div>
-  <table>
-    <caption>料金の目安（架空・税込）</caption>
-    <tbody>
-      {rows.map(([name, price]) => (
-        <tr><th scope="row">{name}</th><td>{price}</td></tr>
-      ))}
-    </tbody>
-  </table>
+  <div class="narrow block">
+    <h2>写真を送って、目安を返す</h2>
+    <ol class="flow">
+      {
+        flow.map((step, index) => (
+          <li>
+            <span class="n" aria-hidden="true">{index + 1}</span>
+            <span>{step}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+  <div class="narrow block">
+    <h2>木の高さ</h2>
+    <figure class="heights">
+      <div class="bars" aria-hidden="true">
+        <div><span class="h-low"></span></div>
+        <div><span class="h-mid"></span></div>
+        <div><span class="h-high"></span></div>
+      </div>
+      <ul class="bar-names">
+        <li>低木<small>2mまで</small></li>
+        <li>中木</li>
+        <li>高木</li>
+      </ul>
+      <figcaption>低木は高さ2mまでです。中木と高木はそれより高い木で、区切りの数値は図にしていません。写真を見て区分します。</figcaption>
+    </figure>
+    <table class="prices">
+      <caption>料金の目安（架空・税込）</caption>
+      <tbody>
+        {
+          rows.map(([name, price]) => (
+            <tr>
+              <th scope="row">{name}</th>
+              <td>{price}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+    <p><a class="btn" href="/lp/kodachi/contact/">写真を添えて相談する</a></p>
+  </div>
 </KodachiLayout>

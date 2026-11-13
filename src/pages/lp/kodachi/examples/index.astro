@@ -1,24 +1,27 @@
 ---
-import { Picture } from 'astro:assets';
 import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
-import hedge from '../../../../assets/lp/kodachi/hedge.webp';
-import pine from '../../../../assets/lp/kodachi/pine.webp';
-import gravel from '../../../../assets/lp/kodachi/gravel.webp';
+import FramePhoto from '../_components/FramePhoto.astro';
+import hedge from '../../../../assets/lp/kodachi/examples-hedge.webp';
+import pine from '../../../../assets/lp/kodachi/examples-pine.webp';
+import gravel from '../../../../assets/lp/kodachi/examples-gravel.webp';
 
 const items = [
   {
+    id: 'hedge',
     title: '生垣の刈り込み（架空）',
     body: '道路側の生垣を、高さ1.5mに揃えた、という設定です。',
     image: hedge,
     alt: '道路沿いに、上の面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）',
   },
   {
+    id: 'pine',
     title: '伸びた松の手入れ（架空）',
     body: '隣家にかかっていた枝を、残しながら短くした、という設定です。',
     image: pine,
     alt: '住宅の塀の手前で、枝を短く整えた松（AIで生成した画像です）',
   },
   {
+    id: 'gravel',
     title: '砂利と飛び石（架空）',
     body: '通り道だけ砂利を足した、という設定です。',
     image: gravel,
@@ -32,22 +35,23 @@ const items = [
   description="架空の造園会社「木立造園」の施工例です。実在の庭ではありません。"
   current="examples"
 >
-  <h1>施工の例（架空）</h1>
-  <p>ここに置いた庭は、すべて架空です。</p>
-  <div class="grid">
+  <div class="narrow page-intro">
+    <h1>施工の例（架空）</h1>
+    <p>ここに置いた庭は、すべて架空です。</p>
+  </div>
+  <div class="wide examples">
     {
-      items.map((item) => (
-        <article class="card">
-          <div class="photo">
-            <Picture
-              src={item.image}
-              formats={['avif']}
-              fallbackFormat="webp"
-              widths={[480, 800, 1200]}
-              sizes="(min-width: 1000px) 926px, calc(100vw - 74px)"
-              alt={item.alt}
-            />
-          </div>
+      items.map((item, index) => (
+        <article class="example" id={item.id}>
+          <FramePhoto
+            src={item.image}
+            alt={item.alt}
+            ratio="16-9"
+            widths={[480, 800, 1200]}
+            sizes="(min-width: 1120px) calc(100vw - 80px), calc(100vw - 32px)"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            fetchpriority={index === 0 ? 'high' : undefined}
+          />
           <h2>{item.title}</h2>
           <p>{item.body}</p>
         </article>
