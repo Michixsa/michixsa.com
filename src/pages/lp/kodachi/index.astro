@@ -8,22 +8,20 @@ import heroSp from '../../../assets/lp/kodachi/hero-sp.webp';
 import care from '../../../assets/lp/kodachi/work-care.webp';
 import build from '../../../assets/lp/kodachi/work-build.webp';
 import pine from '../../../assets/lp/kodachi/examples-pine.webp';
-import leaf from '../../../assets/lp/kodachi/strip-leaf.webp';
-import stone from '../../../assets/lp/kodachi/strip-stone.webp';
+import hedge from '../../../assets/lp/kodachi/examples-hedge.webp';
+import gravel from '../../../assets/lp/kodachi/examples-gravel.webp';
 import tools from '../../../assets/lp/kodachi/care-tools.webp';
-import azalea from '../../../assets/lp/kodachi/strip-azalea.webp';
+import plan from '../../../assets/lp/kodachi/build-plan.webp';
 import yard from '../../../assets/lp/kodachi/about-yard.webp';
-import hedgeWide from '../../../assets/lp/kodachi/examples-hedge.webp';
-import gravelWide from '../../../assets/lp/kodachi/examples-gravel.webp';
 
-const heroAlt = '住宅の小さな庭。整えられた松とツツジ、ブロック塀が見える（AIで生成した画像です）';
+const heroAlt = '縁側から見た住宅の小さな庭。低めの常緑樹、苔のついた飛び石、砂利（AIで生成した画像です）';
 const services = [
   {
     title: '手入れ・剪定',
     body: '毎年の剪定も、伸びて困っている木も、ご相談ください。',
     href: '/lp/kodachi/care/',
     image: care,
-    alt: '道路沿いに、上面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）',
+    alt: '刈り込んだ直後の生垣の上面と、置かれた刈り込みばさみ（AIで生成した画像です）',
     widths: [480, 768, 1066],
   },
   {
@@ -31,7 +29,7 @@ const services = [
     body: '残す木と、新しくする場所を決めてから進めます。',
     href: '/lp/kodachi/build/',
     image: build,
-    alt: '家の脇の通路に敷いた、明るい灰色の砂利と飛び石（AIで生成した画像です）',
+    alt: '庭の角。明るい灰色の砂利と飛び石、低木（AIで生成した画像です）',
     widths: [480, 768, 1066],
   },
   {
@@ -44,14 +42,14 @@ const services = [
   },
 ];
 const gallery = [
-  { image: leaf, alt: '生垣の葉を寄せて見たところ（AIで生成した画像です）', widths: [360, 640, 720] },
-  { image: stone, alt: '砂利と飛び石を寄せて見たところ（AIで生成した画像です）', widths: [360, 640, 720] },
+  { image: hedge, alt: '住宅地の歩道沿いに並ぶ、常緑の生垣（AIで生成した画像です）', widths: [360, 640, 720] },
+  { image: gravel, alt: '家の脇の細い通路。明るい灰色の砂利と飛び石（AIで生成した画像です）', widths: [360, 640, 720] },
   {
     image: tools,
-    alt: '木の台に置いた、使い込んだ刈り込みばさみ、剪定ばさみ、折りたたみのこぎり、麻縄と麻袋（AIで生成した画像です）',
+    alt: '木の板の上に置いた、使い込んだ刈り込みばさみと麻袋（AIで生成した画像です）',
     widths: [480, 800, 1200],
   },
-  { image: azalea, alt: '軒先のツツジと、家の壁（AIで生成した画像です）', widths: [360, 520] },
+  { image: plan, alt: '木の机の上の、鉛筆で描いた庭の図と石、鉛筆（AIで生成した画像です）', widths: [360, 640, 720] },
 ];
 const quotes = [
   '写真を送ったあと、木の高さに合わせた目安をメールでもらえました。',
@@ -185,23 +183,23 @@ const faqs = [
       <div class="compare">
         <div class="compare-side">
           <Picture
-            src={gravelWide}
+            src={gravel}
             formats={['avif']}
             fallbackFormat="webp"
             widths={[480, 800, 1200]}
             sizes="(min-width: 800px) 50vw, 100vw"
-            alt="家の脇の砂利と飛び石（AIで生成した画像です）"
+            alt="家の脇の細い通路。明るい灰色の砂利と飛び石（AIで生成した画像です）"
           />
           <span class="badge">作業前</span>
         </div>
         <div class="compare-side">
           <Picture
-            src={hedgeWide}
+            src={hedge}
             formats={['avif']}
             fallbackFormat="webp"
             widths={[480, 800, 1200]}
             sizes="(min-width: 800px) 50vw, 100vw"
-            alt="道路沿いに刈り込んだ生垣（AIで生成した画像です）"
+            alt="住宅地の歩道沿いに並ぶ、常緑の生垣（AIで生成した画像です）"
           />
           <span class="badge badge-after">作業後</span>
         </div>
@@ -249,7 +247,7 @@ const faqs = [
       </ol>
       <FramePhoto
         src={yard}
-        alt="住宅の塀の前にある松と、家の壁の一部（AIで生成した画像です）"
+        alt="木の小屋、竹ぼうき、鉢、白いトラックの一部が見える植木屋の作業場（AIで生成した画像です）"
         ratio="4-5"
         widths={[480, 720, 1024]}
         sizes="(min-width: 800px) 40vw, calc(100vw - 32px)"
