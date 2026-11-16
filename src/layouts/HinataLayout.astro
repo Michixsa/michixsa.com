@@ -80,8 +80,8 @@ const nav = [
         <p class="foot-name">ひなた堂印刷</p>
         <p>〒000-0000 架空県架空市ひなた1-2-3</p>
         <p>電話 <a href={`tel:${phone}`}>{phone}</a></p>
-        <p>「ひなた堂印刷」は実在しません。</p>
-        <p>写真は AI で生成した画像です。</p>
+        <p class="foot-note">「ひなた堂印刷」は実在しません。</p>
+        <p class="foot-note">写真は AI で生成した画像です。</p>
       </div>
     </footer>
     <noscript>
@@ -160,6 +160,8 @@ const nav = [
     --surface: #fffdf8;
     --ink: #1c1b18;
     --muted: #5a554c;
+    --on-ink: #f4f0e6;
+    --on-ink-muted: #c4b8a6;
     --line: #7f786c;
     --rust: #5c2e18;
     --bar: #1e3a5f;
@@ -168,10 +170,11 @@ const nav = [
     --sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Noto Sans JP", "Noto Sans CJK JP", "Yu Gothic", YuGothic, Meiryo, sans-serif;
   }
   /* Measured contrast (WCAG): ink/paper 15.13, ink/surface 16.94,
-     muted/paper 6.50, muted/surface 7.28, line/paper 3.84, line/surface 4.30,
-     white/rust 11.30, rust/paper 9.93, rust/surface 11.11, white/bar 11.50,
-     paper/ink 15.13. Focus on the bar and footer uses a light outline
-     because rust against those backgrounds is about 1:1. */
+     on-ink/ink 15.13, on-ink-muted/ink 8.82, muted/paper 6.50,
+     muted/surface 7.28, muted/ink 2.33 (not used on ink),
+     line/paper 3.84, line/surface 4.30, white/rust 11.30, rust/paper 9.93,
+     rust/ink 1.52 (not used on ink), white/bar 11.50.
+     Focus on the bar, the ink panel, and the footer uses --on-ink. */
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-padding-top: 160px; }
   body {
@@ -191,9 +194,25 @@ const nav = [
     line-height: 1.35;
     font-feature-settings: "palt";
   }
-  h1 { margin: 0 0 12px; font-size: 32px; }
-  h2 { margin: 0 0 16px; font-size: 24px; }
-  h3 { margin: 0 0 8px; font-size: 20px; line-height: 1.5; }
+  h1 {
+    margin: 0 0 12px;
+    font-size: clamp(44px, 3.5vw + 32px, 72px);
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+  }
+  h1 span { display: block; }
+  h2 {
+    margin: 0 0 16px;
+    font-size: clamp(32px, 1.5vw + 26px, 44px);
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+  }
+  h3 {
+    margin: 0 0 8px;
+    font-size: clamp(20px, 0.6vw + 18px, 24px);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+  }
   a { color: var(--rust); }
   a:visited { color: var(--rust); }
   :focus { outline: none; }
@@ -305,7 +324,8 @@ const nav = [
     align-items: center;
     min-height: 48px;
     color: var(--ink);
-    font-size: 20px;
+    font-size: clamp(20px, 0.3vw + 19px, 22px);
+    letter-spacing: 0.04em;
     text-decoration: none;
     white-space: nowrap;
   }
@@ -385,8 +405,14 @@ const nav = [
     font: inherit;
     font-size: 16px;
     font-weight: 700;
+    letter-spacing: 0.04em;
     text-decoration: none;
     cursor: pointer;
+  }
+  .btn-on-ink,
+  .btn-on-ink:visited {
+    background: var(--on-ink);
+    color: var(--ink);
   }
   .btn:visited { color: #fff; }
   .btn:hover { opacity: 0.88; }
@@ -405,37 +431,84 @@ const nav = [
   .btn, .text-link, .logo { transition: opacity 0.15s ease; }
 
   .hero {
+    position: relative;
     display: flex;
     flex-direction: column;
-    background: var(--paper);
+    min-height: calc(100svh - 146px);
+    background: var(--ink);
+    overflow: hidden;
   }
-  .hero-photo { order: -1; background: #e4dece; }
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    background: #e4dece;
+  }
+  .hero-photo picture,
   .hero-photo img {
     width: 100%;
-    aspect-ratio: 4 / 5;
+    height: 100%;
+    max-width: none;
+  }
+  .hero-photo img {
     object-fit: cover;
-    /* Bench and cutter sit in the lower half of the vertical frame. */
-    object-position: center 68%;
+    /* Wall is the top of hero-sp. Keep the bench and cutter in the lower half. */
+    object-position: center 72%;
   }
-  .hero-copy { padding: 20px 16px 8px; }
-  .kicker {
+  .hero-panel {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 16px 20px 20px;
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .hero-panel .kicker {
     margin: 0 0 8px;
-    color: var(--rust);
-    font-size: 14px;
+    color: var(--on-ink-muted);
+    font-size: clamp(14px, 0.2vw + 13px, 16px);
     font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.6;
   }
-  .lead { margin: 0 0 8px; font-size: 18px; line-height: 1.7; }
+  .hero-panel .lead {
+    margin: 0 0 12px;
+    color: var(--on-ink-muted);
+    font-size: clamp(18px, 0.3vw + 17px, 20px);
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+  }
+  .hero-panel .text-link,
+  .hero-panel .text-link:visited {
+    color: var(--on-ink);
+  }
+  .hero-panel :focus-visible { outline-color: var(--on-ink); }
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 4px 20px;
+    gap: 4px 16px;
   }
+  .swatch {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    height: 12px;
+  }
+  .swatch span { flex: 1 1 0; }
+  .swatch span:nth-child(1) { background: #f7f4ee; }
+  .swatch span:nth-child(2) { background: #e6dcc8; }
+  .swatch span:nth-child(3) { background: #c5d0d8; }
+  .swatch span:nth-child(4) { background: #d7c4c0; }
+  .swatch span:nth-child(5) { background: #c5cdc0; }
+  .swatch span:nth-child(6) { background: #5c2e18; }
 
-  .section { padding: 64px 0; }
+  .section { padding: 80px 0; }
   .section-surface { background: var(--surface); }
   .wrap {
-    width: min(1360px, calc(100% - 32px));
+    width: min(72rem, calc(100% - 32px));
     margin-inline: auto;
   }
   .narrow {
@@ -459,33 +532,48 @@ const nav = [
   }
   .work-card h3 { margin-top: 16px; }
   .work-card p { margin: 0; }
-  .stack { margin: 8px 0 0; }
+  #works { padding-bottom: 0; }
+  .stack { margin: 32px 0 0; }
   .stack img {
     width: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
+    object-position: center;
     background: #e4dece;
   }
 
+  .section-ink {
+    background: var(--ink);
+    color: var(--on-ink);
+    padding: 80px 0;
+  }
+  .section-ink :focus-visible { outline-color: var(--on-ink); }
   .flow {
     display: grid;
-    gap: 8px 24px;
+    gap: 40px;
     list-style: none;
     margin: 0;
     padding: 0;
-    counter-reset: step;
   }
-  .flow li {
-    counter-increment: step;
-    padding-top: 16px;
-    border-top: 1px solid var(--line);
-  }
-  .flow h3::before {
-    content: counter(step) ". ";
+  .flow li { margin: 0; padding: 0; }
+  .flow-num {
+    margin: 0 0 8px;
+    color: var(--on-ink);
+    font-family: var(--sans);
+    font-size: clamp(64px, 5vw + 44px, 96px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
     font-variant-numeric: tabular-nums;
-    font-size: 20px;
   }
-  .flow p { margin: 0; }
+  .flow h3 {
+    margin: 0 0 8px;
+    color: var(--on-ink);
+    font-size: clamp(22px, 0.8vw + 19px, 28px);
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+  }
+  .flow p { margin: 0; color: var(--on-ink-muted); }
 
   .table-wrap { overflow-x: auto; }
   table {
@@ -535,7 +623,12 @@ const nav = [
     margin: 16px 0 8px;
     padding-top: 16px;
     border-top: 1px solid var(--line);
-    font-weight: 700;
+    font-family: var(--serif);
+    font-size: clamp(20px, 0.6vw + 18px, 24px);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    font-feature-settings: "palt";
   }
   .faq dt:first-of-type {
     margin-top: 0;
@@ -561,28 +654,27 @@ const nav = [
 
   .foot {
     background: var(--ink);
-    color: var(--paper);
-    padding: 48px 16px 32px;
+    color: var(--on-ink);
+    padding: 64px 16px 48px;
   }
   .foot-inner { width: min(40rem, 100%); }
-  .foot-name { margin: 0 0 12px; font-size: 20px; }
+  .foot-name { margin: 0 0 12px; font-size: clamp(20px, 0.3vw + 19px, 22px); }
   .foot p { margin: 0 0 8px; }
+  .foot-note { color: var(--on-ink-muted); }
   .foot a {
     display: inline-flex;
     align-items: center;
     min-height: 48px;
-    color: var(--paper);
+    color: var(--on-ink);
     font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 3px;
   }
-  .foot a:visited { color: var(--paper); }
-  .foot a:focus-visible { outline-color: var(--paper); }
+  .foot a:visited { color: var(--on-ink); }
+  .foot a:focus-visible { outline-color: var(--on-ink); }
 
   @media (min-width: 1080px) {
     html { scroll-padding-top: 120px; }
-    h1 { font-size: 42px; }
-    h2 { font-size: 28px; }
     .bar { flex-wrap: nowrap; padding: 0 40px; }
     .bar-short { display: none; }
     .bar-long { display: inline; }
@@ -604,46 +696,32 @@ const nav = [
     .nav-phone { display: none; }
     .nav-cta { margin-top: 0; margin-left: 8px; }
     .nav-cta .btn { width: auto; }
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(18rem, 38%) minmax(0, 1fr);
-      align-items: stretch;
-      column-gap: 40px;
-      padding-left: 40px;
-    }
-    .hero-photo {
-      order: 0;
-      position: relative;
-      min-height: 70vh;
-      overflow: hidden;
-    }
-    .hero-photo picture,
+    .hero { min-height: calc(100svh - 112px); }
     .hero-photo img {
+      /* Stacks and the cutter stay on the right of the ink panel. */
+      object-position: 62% center;
+    }
+    .hero-panel {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      max-width: none;
+      z-index: 1;
+      top: 58%;
+      left: 48px;
+      width: 38rem;
+      padding: 48px;
+      translate: 0 -50%;
     }
-    .hero-photo img {
-      aspect-ratio: auto;
-      object-fit: cover;
-      /* Subject sits in the middle of hero-pc. Keep that center when the
-         frame is taller than 16:9, so the stacks stay in view beside the text. */
-      object-position: center center;
-    }
-    .hero-copy {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 70vh;
-      padding: 48px 0;
-      max-width: 40rem;
-    }
-    .section { padding: 96px 0; }
-    .wrap { width: min(1360px, calc(100% - 80px)); }
+    .section { padding: 112px 0; }
+    .section-ink { padding: 120px 0; }
+    .wrap { width: min(72rem, calc(100% - 80px)); }
     .works { grid-template-columns: repeat(3, 1fr); gap: 32px; }
-    .flow { grid-template-columns: repeat(4, 1fr); }
+    .stack img {
+      height: clamp(420px, 34vw, 520px);
+      aspect-ratio: auto;
+    }
+    .flow {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
     .about-grid {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       align-items: center;
