@@ -1,0 +1,664 @@
+---
+/**
+ * Standalone document for the fictional print shop.
+ * Does not load the team-site layout or global.css.
+ * The sample bar, header, and footer live here.
+ */
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const phone = '000-0000-0000';
+const nav = [
+  { href: '#works', label: '仕事' },
+  { href: '#flow', label: '注文の流れ' },
+  { href: '#price', label: '料金の目安' },
+  { href: '#about', label: '店の案内' },
+  { href: '#contact', label: '問い合わせ' },
+] as const;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#f4f0e6" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <a class="skip" href="#main">本文へ進む</a>
+    <div class="top">
+      <div class="bar" role="note">
+        <p class="bar-main">
+          <span class="badge">架空のサンプル</span>
+          <span class="bar-long">「ひなた堂印刷」は実在しません。写真は AI で生成した画像です。</span>
+          <span class="bar-short">実在しません。写真はAI生成です。</span>
+        </p>
+        <p class="bar-links">
+          <a href="/works/sample-hinata/">解説を見る</a>
+          <a href="/">michixsa のトップへ戻る</a>
+        </p>
+      </div>
+      <header class="head">
+        <a class="logo" href="/lp/hinata/">ひなた堂印刷</a>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span class="label-closed">メニュー</span>
+          <span class="label-open">閉じる</span>
+        </button>
+        <nav id="site-nav" class="nav" aria-label="ページ内">
+          <ul>
+            {
+              nav.map((item) => (
+                <li>
+                  <a href={item.href} data-nav>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li class="nav-phone">
+              <a href={`tel:${phone}`}>{phone}</a>
+            </li>
+            <li class="nav-cta">
+              <a class="btn" href="#contact">相談する</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+    </div>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="foot">
+      <div class="foot-inner">
+        <p class="foot-name">ひなた堂印刷</p>
+        <p>〒000-0000 架空県架空市ひなた1-2-3</p>
+        <p>電話 <a href={`tel:${phone}`}>{phone}</a></p>
+        <p>「ひなた堂印刷」は実在しません。</p>
+        <p>写真は AI で生成した画像です。</p>
+      </div>
+    </footer>
+    <noscript>
+      <style>
+        .menu-btn { display: none !important; }
+        #site-nav { display: block !important; position: static !important; }
+      </style>
+    </noscript>
+    <script>
+      const button = document.querySelector('.menu-btn');
+      const nav = document.getElementById('site-nav');
+      if (button instanceof HTMLButtonElement && nav) {
+        const setOpen = (open: boolean) => {
+          button.setAttribute('aria-expanded', open ? 'true' : 'false');
+          nav.classList.toggle('is-open', open);
+        };
+        button.addEventListener('click', () => {
+          setOpen(button.getAttribute('aria-expanded') !== 'true');
+        });
+        nav.querySelectorAll('a').forEach((anchor) => {
+          anchor.addEventListener('click', () => setOpen(false));
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key !== 'Escape') return;
+          if (button.getAttribute('aria-expanded') !== 'true') return;
+          setOpen(false);
+          button.focus();
+        });
+        const desktop = window.matchMedia('(min-width: 1080px)');
+        desktop.addEventListener('change', () => {
+          if (desktop.matches) setOpen(false);
+        });
+      }
+
+      const navLinks = Array.from(document.querySelectorAll('[data-nav]'));
+      const pairs: { link: HTMLAnchorElement; section: HTMLElement }[] = [];
+      navLinks.forEach((node) => {
+        if (!(node instanceof HTMLAnchorElement)) return;
+        const href = node.getAttribute('href');
+        if (!href) return;
+        const section = document.querySelector(href);
+        if (section instanceof HTMLElement) pairs.push({ link: node, section });
+      });
+      if (pairs.length > 0 && 'IntersectionObserver' in window) {
+        const visible = new Set<string>();
+        const mark = () => {
+          const current = pairs.find((item) => visible.has(item.section.id));
+          navLinks.forEach((node) => {
+            if (!(node instanceof HTMLAnchorElement)) return;
+            const href = node.getAttribute('href');
+            if (current && href === `#${current.section.id}`) node.setAttribute('aria-current', 'location');
+            else node.removeAttribute('aria-current');
+          });
+        };
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              const id = entry.target.id;
+              if (entry.isIntersecting) visible.add(id);
+              else visible.delete(id);
+            });
+            mark();
+          },
+          { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.2, 0.6] },
+        );
+        pairs.forEach((item) => observer.observe(item.section));
+      }
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    color-scheme: light;
+    --paper: #f4f0e6;
+    --surface: #fffdf8;
+    --ink: #1c1b18;
+    --muted: #5a554c;
+    --line: #7f786c;
+    --rust: #5c2e18;
+    --bar: #1e3a5f;
+    --focus: #5c2e18;
+    --serif: "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho", YuMincho, "Hiragino Mincho", "Noto Serif CJK JP", "Noto Serif JP", "MS PMincho", serif;
+    --sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Noto Sans JP", "Noto Sans CJK JP", "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  }
+  /* Measured contrast (WCAG): ink/paper 15.13, ink/surface 16.94,
+     muted/paper 6.50, muted/surface 7.28, line/paper 3.84, line/surface 4.30,
+     white/rust 11.30, rust/paper 9.93, rust/surface 11.11, white/bar 11.50,
+     paper/ink 15.13. Focus on the bar and footer uses a light outline
+     because rust against those backgrounds is about 1:1. */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-padding-top: 160px; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  picture { display: block; }
+  p { margin: 0 0 16px; }
+  h1, h2, h3, .logo, .foot-name {
+    font-family: var(--serif);
+    font-weight: 600;
+    line-height: 1.35;
+    font-feature-settings: "palt";
+  }
+  h1 { margin: 0 0 12px; font-size: 32px; }
+  h2 { margin: 0 0 16px; font-size: 24px; }
+  h3 { margin: 0 0 8px; font-size: 20px; line-height: 1.5; }
+  a { color: var(--rust); }
+  a:visited { color: var(--rust); }
+  :focus { outline: none; }
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+  .skip {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .skip:focus-visible {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 80;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 12px 16px;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+    min-height: 48px;
+  }
+
+  .top {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--paper);
+  }
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 16px;
+    min-height: 48px;
+    padding: 0 16px;
+    background: var(--bar);
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .bar-main, .bar-links { margin: 0; }
+  .bar-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 32px;
+    padding: 6px 0;
+  }
+  .bar-long { display: none; }
+  .bar-short { white-space: nowrap; }
+  .bar-links { flex: 1 0 100%; }
+  .badge {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    min-height: 22px;
+    padding: 0 8px;
+    background: #fff;
+    color: var(--bar);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .bar-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 12px;
+  }
+  .bar a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .bar a:visited { color: #fff; }
+  .bar a:focus-visible { outline-color: #fff; }
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 64px;
+    padding: 0 16px;
+    background: var(--paper);
+  }
+  .logo {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    min-height: 48px;
+    color: var(--ink);
+    font-size: 20px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .logo:visited { color: var(--ink); }
+  .logo:hover { opacity: 0.84; }
+  .menu-btn {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0 16px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .menu-btn .label-open { display: none; }
+  .menu-btn[aria-expanded='true'] .label-closed { display: none; }
+  .menu-btn[aria-expanded='true'] .label-open { display: inline; }
+  .nav {
+    display: none;
+    position: absolute;
+    z-index: 30;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .head { position: relative; }
+  .nav.is-open { display: block; }
+  .nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 8px 16px 16px;
+  }
+  .nav a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 8px;
+    color: var(--ink);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav a:visited { color: var(--ink); }
+  .nav a:not(.btn):hover { text-decoration: underline; text-underline-offset: 6px; }
+  .nav a[aria-current='location']:not(.btn) {
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
+  }
+  .nav-phone { display: list-item; }
+  .nav-cta { margin-top: 8px; }
+  .nav-cta .btn { width: 100%; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 20px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--rust);
+    color: #fff;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn:visited { color: #fff; }
+  .btn:hover { opacity: 0.88; }
+  .nav a.btn, .nav a.btn:visited { color: #fff; font-weight: 700; text-decoration: none; }
+  .text-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    color: var(--rust);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .text-link:visited { color: var(--rust); }
+  .text-link:hover { opacity: 0.84; }
+  .btn, .text-link, .logo { transition: opacity 0.15s ease; }
+
+  .hero {
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+  }
+  .hero-photo { order: -1; background: #e4dece; }
+  .hero-photo img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    /* Bench and cutter sit in the lower half of the vertical frame. */
+    object-position: center 68%;
+  }
+  .hero-copy { padding: 20px 16px 8px; }
+  .kicker {
+    margin: 0 0 8px;
+    color: var(--rust);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .lead { margin: 0 0 8px; font-size: 18px; line-height: 1.7; }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 20px;
+  }
+
+  .section { padding: 64px 0; }
+  .section-surface { background: var(--surface); }
+  .wrap {
+    width: min(1360px, calc(100% - 32px));
+    margin-inline: auto;
+  }
+  .narrow {
+    width: min(40rem, calc(100% - 32px));
+    margin-inline: auto;
+  }
+  .intro { max-width: 40rem; margin: 0 0 24px; }
+
+  .works {
+    display: grid;
+    gap: 32px;
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+  }
+  .work-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: #e4dece;
+  }
+  .work-card h3 { margin-top: 16px; }
+  .work-card p { margin: 0; }
+  .stack { margin: 8px 0 0; }
+  .stack img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: #e4dece;
+  }
+
+  .flow {
+    display: grid;
+    gap: 8px 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: step;
+  }
+  .flow li {
+    counter-increment: step;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .flow h3::before {
+    content: counter(step) ". ";
+    font-variant-numeric: tabular-nums;
+    font-size: 20px;
+  }
+  .flow p { margin: 0; }
+
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  caption {
+    padding: 0 0 8px;
+    text-align: left;
+    font-weight: 700;
+  }
+  th, td {
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+    font-weight: 400;
+  }
+  th { font-weight: 700; }
+  .money { text-align: right; white-space: nowrap; }
+  .notice { margin: 0 0 16px; font-weight: 700; }
+  .after { margin: 16px 0 0; }
+
+  .about-grid {
+    display: grid;
+    gap: 24px;
+  }
+  .about-photo { order: -1; }
+  .about-photo img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: #e4dece;
+  }
+  .about-copy p:last-child { margin-bottom: 0; }
+  .about-copy table { margin-top: 8px; }
+  .about-copy a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    font-weight: 700;
+  }
+
+  .faq { margin: 0; }
+  .faq dt {
+    margin: 16px 0 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-weight: 700;
+  }
+  .faq dt:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .faq dd { margin: 0 0 8px; }
+
+  .field { margin: 0 0 16px; }
+  .field label { display: block; margin: 0 0 4px; font-weight: 700; }
+  input, textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    line-height: 1.5;
+  }
+  input { min-height: 48px; padding: 0 12px; }
+  textarea { min-height: 144px; padding: 12px; resize: vertical; }
+  .live { min-height: 1.7em; margin: 16px 0 0; font-weight: 700; }
+
+  .foot {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 48px 16px 32px;
+  }
+  .foot-inner { width: min(40rem, 100%); }
+  .foot-name { margin: 0 0 12px; font-size: 20px; }
+  .foot p { margin: 0 0 8px; }
+  .foot a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    color: var(--paper);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .foot a:visited { color: var(--paper); }
+  .foot a:focus-visible { outline-color: var(--paper); }
+
+  @media (min-width: 1080px) {
+    html { scroll-padding-top: 120px; }
+    h1 { font-size: 42px; }
+    h2 { font-size: 28px; }
+    .bar { flex-wrap: nowrap; padding: 0 40px; }
+    .bar-short { display: none; }
+    .bar-long { display: inline; }
+    .bar-links { flex: 0 0 auto; }
+    .head { padding: 0 40px; gap: 24px; }
+    .menu-btn { display: none; }
+    .nav {
+      display: block;
+      position: static;
+      border: 0;
+      background: transparent;
+    }
+    .nav ul {
+      flex-direction: row;
+      align-items: center;
+      gap: 4px;
+      padding: 0;
+    }
+    .nav-phone { display: none; }
+    .nav-cta { margin-top: 0; margin-left: 8px; }
+    .nav-cta .btn { width: auto; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(18rem, 38%) minmax(0, 1fr);
+      align-items: stretch;
+      column-gap: 40px;
+      padding-left: 40px;
+    }
+    .hero-photo {
+      order: 0;
+      position: relative;
+      min-height: 70vh;
+      overflow: hidden;
+    }
+    .hero-photo picture,
+    .hero-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+    }
+    .hero-photo img {
+      aspect-ratio: auto;
+      object-fit: cover;
+      /* Subject sits in the middle of hero-pc. Keep that center when the
+         frame is taller than 16:9, so the stacks stay in view beside the text. */
+      object-position: center center;
+    }
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 70vh;
+      padding: 48px 0;
+      max-width: 40rem;
+    }
+    .section { padding: 96px 0; }
+    .wrap { width: min(1360px, calc(100% - 80px)); }
+    .works { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .flow { grid-template-columns: repeat(4, 1fr); }
+    .about-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 48px;
+    }
+    .about-photo { order: 0; }
+  }
+  @media (min-width: 1280px) {
+    .nav-phone { display: list-item; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+</style>
