@@ -11,12 +11,12 @@ interface Props {
 
 const { title, description } = Astro.props;
 const phone = '000-0000-0000';
+const phoneHref = 'tel:00000000000';
 const nav = [
   { href: '#works', label: '仕事' },
   { href: '#flow', label: '注文の流れ' },
-  { href: '#price', label: '料金の目安' },
+  { href: '#price', label: '料金' },
   { href: '#about', label: '店の案内' },
-  { href: '#contact', label: '問い合わせ' },
 ] as const;
 ---
 
@@ -46,108 +46,98 @@ const nav = [
         </p>
       </div>
       <header class="head">
-        <a class="logo" href="/lp/hinata/">ひなた堂印刷</a>
-        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
-          <span class="label-closed">メニュー</span>
-          <span class="label-open">閉じる</span>
-        </button>
-        <nav id="site-nav" class="nav" aria-label="ページ内">
-          <ul>
+        <a class="brand" href="/lp/hinata/">
+          <span class="mark" aria-hidden="true">ひ</span>
+          <span class="brand-text">
+            <span class="brand-name">ひなた堂印刷</span>
+            <span class="brand-tag">チラシ・名刺・封筒の印刷</span>
+          </span>
+        </a>
+        <div class="head-end">
+          <nav class="nav" aria-label="ページ内">
             {
               nav.map((item) => (
-                <li>
-                  <a href={item.href} data-nav>
-                    {item.label}
-                  </a>
-                </li>
+                <a href={item.href}>{item.label}</a>
               ))
             }
-            <li class="nav-phone">
-              <a href={`tel:${phone}`}>{phone}</a>
-            </li>
-            <li class="nav-cta">
-              <a class="btn" href="#contact">相談する</a>
-            </li>
-          </ul>
-        </nav>
+          </nav>
+          <a class="tel" href={phoneHref}>{phone}</a>
+          <a class="btn" href="#contact">相談する</a>
+          <details class="menu">
+            <summary>
+              <span class="menu-word">メニュー</span>
+              <span class="menu-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="menu-panel">
+              {
+                nav.map((item) => (
+                  <a href={item.href}>{item.label}</a>
+                ))
+              }
+              <a href={phoneHref}>{phone}</a>
+            </div>
+          </details>
+        </div>
       </header>
     </div>
     <main id="main">
       <slot />
     </main>
     <footer class="foot">
-      <div class="foot-inner">
-        <p class="foot-name">ひなた堂印刷</p>
-        <p>〒000-0000 架空県架空市ひなた1-2-3</p>
-        <p>電話 <a href={`tel:${phone}`}>{phone}</a></p>
-        <p class="foot-note">「ひなた堂印刷」は実在しません。</p>
-        <p class="foot-note">写真は AI で生成した画像です。</p>
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <div class="foot-name-row">
+            <span class="mark mark-on-ink" aria-hidden="true">ひ</span>
+            <p class="foot-name">ひなた堂印刷</p>
+          </div>
+          <p class="foot-tag">チラシ・名刺・封筒の印刷</p>
+          <p class="foot-invite">用紙と部数の目安は、データをもらえればお返しします。</p>
+          <a class="btn btn-on-ink" href="#contact">相談する</a>
+        </div>
+        <div class="foot-block">
+          <h2>営業時間と所在</h2>
+          <p class="foot-caption">営業時間は、見本のための架空のものです。</p>
+          <table class="hours">
+            <caption class="sr">営業時間（架空）</caption>
+            <tbody>
+              <tr><th scope="row">平日</th><td>9:00–18:00</td></tr>
+              <tr><th scope="row">土曜</th><td>9:00–15:00</td></tr>
+              <tr><th scope="row">日曜・祝日</th><td>休み</td></tr>
+            </tbody>
+          </table>
+          <p class="foot-addr">〒000-0000 架空県架空市ひなた1-2-3</p>
+          <p>電話 <a href={phoneHref}>{phone}</a></p>
+        </div>
+        <div class="foot-block">
+          <h2>店までの目印</h2>
+          <figure class="guide">
+            <figcaption>案内図（架空です。実在の場所ではありません。）</figcaption>
+            <ol class="guide-path">
+              <li>架空駅<br />北口</li>
+              <li>通りを北へ<br />徒歩約8分</li>
+              <li>交番の先を右</li>
+              <li class="here">ひなた堂</li>
+            </ol>
+            <p>架空駅の北口を出て、通りを北へ徒歩約8分。交番の先を右に折れると、紙の束が見える小さな作業場です。</p>
+          </figure>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <div class="foot-notes">
+          <p>「ひなた堂印刷」は実在しません。</p>
+          <p>写真は AI で生成した画像です。</p>
+        </div>
+        <a href="/">michixsa のトップへ戻る</a>
       </div>
     </footer>
-    <noscript>
-      <style>
-        .menu-btn { display: none !important; }
-        #site-nav { display: block !important; position: static !important; }
-      </style>
-    </noscript>
     <script>
-      const button = document.querySelector('.menu-btn');
-      const nav = document.getElementById('site-nav');
-      if (button instanceof HTMLButtonElement && nav) {
-        const setOpen = (open: boolean) => {
-          button.setAttribute('aria-expanded', open ? 'true' : 'false');
-          nav.classList.toggle('is-open', open);
-        };
-        button.addEventListener('click', () => {
-          setOpen(button.getAttribute('aria-expanded') !== 'true');
-        });
-        nav.querySelectorAll('a').forEach((anchor) => {
-          anchor.addEventListener('click', () => setOpen(false));
-        });
-        document.addEventListener('keydown', (event) => {
-          if (event.key !== 'Escape') return;
-          if (button.getAttribute('aria-expanded') !== 'true') return;
-          setOpen(false);
-          button.focus();
-        });
-        const desktop = window.matchMedia('(min-width: 1080px)');
-        desktop.addEventListener('change', () => {
-          if (desktop.matches) setOpen(false);
-        });
-      }
-
-      const navLinks = Array.from(document.querySelectorAll('[data-nav]'));
-      const pairs: { link: HTMLAnchorElement; section: HTMLElement }[] = [];
-      navLinks.forEach((node) => {
-        if (!(node instanceof HTMLAnchorElement)) return;
-        const href = node.getAttribute('href');
-        if (!href) return;
-        const section = document.querySelector(href);
-        if (section instanceof HTMLElement) pairs.push({ link: node, section });
-      });
-      if (pairs.length > 0 && 'IntersectionObserver' in window) {
-        const visible = new Set<string>();
-        const mark = () => {
-          const current = pairs.find((item) => visible.has(item.section.id));
-          navLinks.forEach((node) => {
-            if (!(node instanceof HTMLAnchorElement)) return;
-            const href = node.getAttribute('href');
-            if (current && href === `#${current.section.id}`) node.setAttribute('aria-current', 'location');
-            else node.removeAttribute('aria-current');
+      const menu = document.querySelector('.menu');
+      if (menu instanceof HTMLDetailsElement) {
+        menu.querySelectorAll('a').forEach((anchor) => {
+          anchor.addEventListener('click', () => {
+            menu.open = false;
           });
-        };
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              const id = entry.target.id;
-              if (entry.isIntersecting) visible.add(id);
-              else visible.delete(id);
-            });
-            mark();
-          },
-          { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.2, 0.6] },
-        );
-        pairs.forEach((item) => observer.observe(item.section));
+        });
       }
     </script>
   </body>
@@ -176,7 +166,7 @@ const nav = [
      rust/ink 1.52 (not used on ink), white/bar 11.50.
      Focus on the bar, the ink panel, and the footer uses --on-ink. */
   *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-padding-top: 160px; }
+  html { scroll-padding-top: 168px; }
   body {
     margin: 0;
     background: var(--paper);
@@ -188,7 +178,7 @@ const nav = [
   img { display: block; max-width: 100%; height: auto; }
   picture { display: block; }
   p { margin: 0 0 16px; }
-  h1, h2, h3, .logo, .foot-name {
+  h1, h2, h3, .brand-name, .foot-name, .mark {
     font-family: var(--serif);
     font-weight: 600;
     line-height: 1.35;
@@ -314,95 +304,159 @@ const nav = [
   }
   .bar a:visited { color: #fff; }
   .bar a:focus-visible { outline-color: #fff; }
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
   .head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    min-height: 64px;
-    padding: 0 16px;
+    gap: 8px;
+    height: 72px;
+    padding: 0 12px;
     background: var(--paper);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 45%, var(--paper));
   }
-  .logo {
-    display: inline-flex;
-    flex-shrink: 0;
+  .brand {
+    display: flex;
     align-items: center;
+    gap: 8px;
+    min-width: 0;
     min-height: 48px;
     color: var(--ink);
-    font-size: clamp(20px, 0.3vw + 19px, 22px);
+    text-decoration: none;
+  }
+  .brand:visited { color: var(--ink); }
+  .mark {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background: var(--rust);
+    color: var(--paper);
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+  .brand-text { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+  .brand-name {
+    font-size: 20px;
+    line-height: 1.35;
     letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .brand-tag { display: none; }
+  .head-end { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .nav { display: none; }
+  .nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 4px;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 500;
     text-decoration: none;
     white-space: nowrap;
   }
-  .logo:visited { color: var(--ink); }
-  .logo:hover { opacity: 0.84; }
-  .menu-btn {
+  .nav a:visited { color: var(--ink); }
+  .nav a:hover { text-decoration: underline; text-underline-offset: 6px; }
+  .nav a[aria-current='location'] {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+  .tel {
+    display: none;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 4px;
+    color: var(--ink);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .tel:visited { color: var(--ink); }
+  .menu { position: relative; }
+  .menu summary {
     display: inline-flex;
-    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     min-width: 48px;
     min-height: 48px;
-    padding: 0 16px;
+    padding: 0 12px;
     border: 1px solid var(--line);
     border-radius: 6px;
     background: var(--surface);
     color: var(--ink);
     font: inherit;
     font-weight: 700;
+    white-space: nowrap;
     cursor: pointer;
-  }
-  .menu-btn .label-open { display: none; }
-  .menu-btn[aria-expanded='true'] .label-closed { display: none; }
-  .menu-btn[aria-expanded='true'] .label-open { display: inline; }
-  .nav {
-    display: none;
-    position: absolute;
-    z-index: 30;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--paper);
-    border-bottom: 1px solid var(--line);
-  }
-  .head { position: relative; }
-  .nav.is-open { display: block; }
-  .nav ul {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
     list-style: none;
-    margin: 0;
-    padding: 8px 16px 16px;
   }
-  .nav a {
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu-icon { display: none; }
+  .menu-panel {
+    position: absolute;
+    z-index: 2;
+    top: calc(100% + 8px);
+    right: 0;
+    width: min(280px, calc(100vw - 24px));
+    padding: 8px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  .menu-panel a {
     display: flex;
     align-items: center;
     min-height: 48px;
-    padding: 0 8px;
+    padding: 0 12px;
     color: var(--ink);
-    font-weight: 500;
-    text-decoration: none;
-    white-space: nowrap;
-  }
-  .nav a:visited { color: var(--ink); }
-  .nav a:not(.btn):hover { text-decoration: underline; text-underline-offset: 6px; }
-  .nav a[aria-current='location']:not(.btn) {
     font-weight: 700;
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 6px;
+    text-decoration: none;
   }
-  .nav-phone { display: list-item; }
-  .nav-cta { margin-top: 8px; }
-  .nav-cta .btn { width: 100%; }
+  .menu-panel a:visited { color: var(--ink); }
+  @media (max-width: 359px) {
+    .menu summary { width: 48px; padding: 0; }
+    .menu-word {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .menu-icon {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--ink);
+      box-shadow: 0 -6px 0 var(--ink), 0 6px 0 var(--ink);
+    }
+  }
 
   .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-height: 48px;
-    padding: 0 20px;
+    padding: 0 14px;
     border: 0;
     border-radius: 6px;
     background: var(--rust);
@@ -412,6 +466,8 @@ const nav = [
     font-weight: 700;
     letter-spacing: 0.04em;
     text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
     cursor: pointer;
   }
   .btn-on-ink,
@@ -420,8 +476,8 @@ const nav = [
     color: var(--ink);
   }
   .btn:visited { color: #fff; }
+  .btn-on-ink:visited { color: var(--ink); }
   .btn:hover { opacity: 0.88; }
-  .nav a.btn, .nav a.btn:visited { color: #fff; font-weight: 700; text-decoration: none; }
   .text-link {
     display: inline-flex;
     align-items: center;
@@ -433,13 +489,14 @@ const nav = [
   }
   .text-link:visited { color: var(--rust); }
   .text-link:hover { opacity: 0.84; }
-  .btn, .text-link, .logo { transition: opacity 0.15s ease; }
+  .btn, .text-link, .brand:hover { transition: opacity 0.15s ease; }
+  .brand:hover { opacity: 0.84; }
 
   .hero {
     position: relative;
     display: flex;
     flex-direction: column;
-    min-height: calc(100svh - 146px);
+    min-height: calc(100svh - 154px);
     background: var(--ink);
     overflow: hidden;
   }
@@ -662,46 +719,136 @@ const nav = [
     color: var(--on-ink);
     padding: 64px 16px 48px;
   }
-  .foot-inner { width: min(40rem, 100%); }
-  .foot-name { margin: 0 0 12px; font-size: clamp(20px, 0.3vw + 19px, 22px); }
+  .foot :focus-visible { outline-color: var(--on-ink); }
+  .foot-grid { display: grid; gap: 48px; }
+  .foot-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .foot-name-row { display: flex; align-items: center; gap: 12px; }
+  .mark-on-ink {
+    width: 48px;
+    height: 48px;
+    background: var(--on-ink);
+    color: var(--ink);
+    font-size: 24px;
+  }
+  .foot-name {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+  }
+  .foot-tag, .foot-invite, .foot-caption, .guide p, .foot-notes {
+    margin: 0;
+    color: var(--on-ink-muted);
+    font-size: 16px;
+  }
+  .foot-caption, .guide figcaption { font-size: 14px; line-height: 1.6; }
+  .foot-invite { max-width: 22em; }
+  .foot-block h2 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+  }
+  .hours {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .hours th, .hours td {
+    padding: 10px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--on-ink) 28%, var(--ink));
+    text-align: left;
+    font-weight: 400;
+  }
+  .hours th { width: 8em; color: var(--on-ink-muted); }
+  .foot-addr { margin: 16px 0 0; }
   .foot p { margin: 0 0 8px; }
-  .foot-note { color: var(--on-ink-muted); }
   .foot a {
+    color: var(--on-ink);
+    font-weight: 700;
+  }
+  .foot a:visited { color: var(--on-ink); }
+  .foot a.btn-on-ink,
+  .foot a.btn-on-ink:visited {
+    background: var(--on-ink);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .foot-block > p a, .foot-bottom > a {
     display: inline-flex;
     align-items: center;
     min-height: 48px;
-    color: var(--on-ink);
-    font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 3px;
   }
-  .foot a:visited { color: var(--on-ink); }
-  .foot a:focus-visible { outline-color: var(--on-ink); }
+  .guide { margin: 0; }
+  .guide figcaption { margin: 0 0 12px; }
+  .guide-path {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+  }
+  .guide-path li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 8px 12px;
+    border: 1px solid var(--on-ink-muted);
+    color: var(--on-ink);
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .guide-path li + li::before {
+    content: "";
+    position: absolute;
+    top: -21px;
+    left: 24px;
+    width: 0;
+    height: 20px;
+    border-left: 2px solid var(--on-ink-muted);
+  }
+  .guide-path li + li::after {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 20px;
+    border: 4px solid transparent;
+    border-top-color: var(--on-ink-muted);
+  }
+  .guide-path .here {
+    background: var(--on-ink);
+    color: var(--ink);
+    border-color: var(--on-ink);
+    font-family: var(--serif);
+    font-weight: 600;
+    font-feature-settings: "palt";
+  }
+  .guide p { line-height: 1.7; }
+  .foot-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid color-mix(in srgb, var(--on-ink) 28%, var(--ink));
+    font-size: 14px;
+  }
+  .foot-notes p { margin: 0; color: var(--on-ink-muted); font-size: 14px; line-height: 1.6; }
 
   @media (min-width: 1080px) {
-    html { scroll-padding-top: 120px; }
+    html { scroll-padding-top: 140px; }
     .bar { flex-wrap: nowrap; padding: 0 40px; }
     .bar-short { display: none; }
     .bar-long { display: inline; }
     .bar-links { flex: 0 0 auto; }
-    .head { padding: 0 40px; gap: 24px; }
-    .menu-btn { display: none; }
-    .nav {
-      display: block;
-      position: static;
-      border: 0;
-      background: transparent;
-    }
-    .nav ul {
-      flex-direction: row;
-      align-items: center;
-      gap: 4px;
-      padding: 0;
-    }
-    .nav-phone { display: none; }
-    .nav-cta { margin-top: 0; margin-left: 8px; }
-    .nav-cta .btn { width: auto; }
-    .hero { min-height: calc(100svh - 112px); }
+    .hero { min-height: calc(100svh - 128px); }
     .hero-photo img {
       /* Stacks and the cutter stay on the right of the ink panel. */
       object-position: 62% center;
@@ -735,8 +882,44 @@ const nav = [
     }
     .about-photo { order: 0; }
   }
-  @media (min-width: 1280px) {
-    .nav-phone { display: list-item; }
+  @media (min-width: 960px) {
+    .head { height: 80px; padding: 0 40px; gap: 16px; }
+    .mark { width: 36px; height: 36px; font-size: 18px; }
+    .brand { gap: 10px; }
+    .brand-name { font-size: 28px; }
+    .brand-tag {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .nav { display: flex; align-items: center; gap: 4px 12px; }
+    .tel { display: inline-flex; }
+    .menu { display: none; }
+    .btn { padding: 0 20px; }
+    .foot { padding: 96px 40px 64px; }
+    .foot-grid { grid-template-columns: 1.15fr 0.9fr 1.15fr; gap: 40px 48px; align-items: start; }
+    .foot-name { font-size: 44px; }
+    .foot-block h2 { font-size: 24px; }
+    .guide-path { flex-direction: row; align-items: stretch; gap: 0; }
+    .guide-path li { flex: 1 1 0; min-width: 0; }
+    .guide-path li + li { margin-left: 20px; }
+    .guide-path li + li::before {
+      top: 50%;
+      left: -21px;
+      width: 20px;
+      height: 0;
+      border-left: 0;
+      border-top: 2px solid var(--on-ink-muted);
+    }
+    .guide-path li + li::after {
+      top: calc(50% - 4px);
+      left: -8px;
+      border: 4px solid transparent;
+      border-left-color: var(--on-ink-muted);
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
