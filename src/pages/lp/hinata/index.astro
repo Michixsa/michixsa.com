@@ -147,12 +147,12 @@ const faqs = [
 
   <section class="section section-surface" id="works" aria-labelledby="works-heading">
     <div class="wrap">
-      <h2 id="works-heading">仕事</h2>
+      <h2 id="works-heading" data-reveal="ink"><span class="ink-wipe">仕事</span></h2>
       <p class="intro">よく受けている印刷です。これ以外の大きさや部数も、内容を見てお返事します。</p>
       <ul class="works">
         {
           works.map((item) => (
-            <li>
+            <li data-reveal="paper">
               <article class="work-card">
                 <Picture
                   src={item.image}
@@ -172,7 +172,7 @@ const faqs = [
       </ul>
       <p class="intro">短い冊子やプログラムも、ページ数を見てお返事します。</p>
     </div>
-    <div class="stack">
+    <div class="stack" data-reveal="up">
       <Picture
         src={stack}
         formats={['avif']}
@@ -187,12 +187,12 @@ const faqs = [
 
   <section class="section section-ink" id="flow" aria-labelledby="flow-heading">
     <div class="wrap">
-      <h2 id="flow-heading">注文の流れ</h2>
+      <h2 id="flow-heading" data-reveal="ink"><span class="ink-wipe">注文の流れ</span></h2>
       <ol class="flow">
         {
           steps.map((step, index) => (
             <li>
-              <p class="flow-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>
+              <p class="flow-num" data-reveal="stamp" aria-hidden="true">{String(index + 1).padStart(2, '0')}</p>
               <h3>{step.title}</h3>
               <p>{step.body}</p>
             </li>
@@ -204,9 +204,9 @@ const faqs = [
 
   <section class="section section-surface" id="price" aria-labelledby="price-heading">
     <div class="narrow">
-      <h2 id="price-heading">料金の目安</h2>
+      <h2 id="price-heading" data-reveal="ink"><span class="ink-wipe">料金の目安</span></h2>
       <p class="notice">次の金額は、見本のための架空・税込の目安です。実在の料金ではありません。</p>
-      <div class="table-wrap">
+      <div class="table-wrap" data-reveal="up">
         <table>
           <caption>架空・税込の目安</caption>
           <thead>
@@ -236,7 +236,7 @@ const faqs = [
   <section class="section" id="about" aria-labelledby="about-heading">
     <div class="wrap about-grid">
       <div class="about-copy">
-        <h2 id="about-heading">お店について</h2>
+        <h2 id="about-heading" data-reveal="ink"><span class="ink-wipe">お店について</span></h2>
         <p>町のなかにある、小さな印刷屋です。作業場の隣で、用紙の見本を見ながら相談できます。</p>
         <table>
           <caption>お店について（架空）</caption>
@@ -260,7 +260,7 @@ const faqs = [
           </tbody>
         </table>
       </div>
-      <div class="about-photo">
+      <div class="about-photo" data-reveal="up">
         <Picture
           src={shop}
           formats={['avif']}
@@ -276,7 +276,7 @@ const faqs = [
 
   <section class="section section-surface" id="faq" aria-labelledby="faq-heading">
     <div class="narrow">
-      <h2 id="faq-heading">よくある質問</h2>
+      <h2 id="faq-heading" data-reveal="ink"><span class="ink-wipe">よくある質問</span></h2>
       <p class="notice">この質問と回答は、見本のための架空の内容です。</p>
       <dl class="faq">
         {
@@ -293,7 +293,7 @@ const faqs = [
 
   <section class="section" id="contact" aria-labelledby="contact-heading">
     <div class="narrow">
-      <h2 id="contact-heading">問い合わせ</h2>
+      <h2 id="contact-heading" data-reveal="ink"><span class="ink-wipe">問い合わせ</span></h2>
       <p>相談の内容を書いて送る見本です。この見本では、内容は送信されません。</p>
       <form id="contact-form" method="post" action="/lp/hinata/">
         <div class="field">

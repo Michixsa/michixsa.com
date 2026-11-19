@@ -25,6 +25,7 @@ const nav = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="noindex" />
@@ -139,6 +140,24 @@ const nav = [
         });
       }
     </script>
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll('[data-reveal]');
+        if (!('IntersectionObserver' in window) ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          els.forEach(function (el) { el.classList.add('is-visible'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+        els.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
   </body>
 </html>
 
@@ -155,6 +174,8 @@ const nav = [
     --rust: #5c2e18;
     --bar: #1e3a5f;
     --focus: #5c2e18;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-move: cubic-bezier(0.25, 0.8, 0.25, 1);
     --serif: "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho", YuMincho, "Hiragino Mincho", "Noto Serif CJK JP", "Noto Serif JP", "MS PMincho", serif;
     --sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Noto Sans JP", "Noto Sans CJK JP", "Yu Gothic", YuGothic, Meiryo, sans-serif;
   }
@@ -347,6 +368,7 @@ const nav = [
     line-height: 1;
     letter-spacing: 0;
   }
+  .head .mark { transform-origin: 50% 55%; }
   .brand-text { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
   .brand-name {
     font-size: 20px;
@@ -476,7 +498,22 @@ const nav = [
   }
   .btn:visited { color: #fff; }
   .btn-on-ink:visited { color: var(--ink); }
-  .btn:hover { opacity: 0.88; }
+  .btn {
+    transition:
+      background-color 200ms var(--ease-move),
+      color 200ms var(--ease-move),
+      transform 120ms var(--ease-out);
+  }
+  .btn:hover,
+  .btn:focus-visible { background: #4a2413; }
+  .btn-on-ink:hover,
+  .btn-on-ink:focus-visible,
+  .foot a.btn-on-ink:hover,
+  .foot a.btn-on-ink:focus-visible {
+    background: #fff;
+    color: var(--ink);
+  }
+  .btn:active { transform: scale(0.98); }
   .text-link {
     display: inline-flex;
     align-items: center;
@@ -487,9 +524,8 @@ const nav = [
     text-underline-offset: 4px;
   }
   .text-link:visited { color: var(--rust); }
-  .text-link:hover { opacity: 0.84; }
-  .btn, .text-link, .brand:hover { transition: opacity 0.15s ease; }
-  .brand:hover { opacity: 0.84; }
+  .text-link, .brand { transition: opacity 150ms var(--ease-move); }
+  .text-link:hover, .brand:hover { opacity: 0.84; }
 
   .hero {
     position: relative;
@@ -558,7 +594,7 @@ const nav = [
     display: flex;
     height: 12px;
   }
-  .swatch span { flex: 1 1 0; }
+  .swatch span { flex: 1 1 0; transform-origin: 50% 100%; }
   .swatch span:nth-child(1) { background: #f7f4ee; }
   .swatch span:nth-child(2) { background: #e6dcc8; }
   .swatch span:nth-child(3) { background: #c5d0d8; }
@@ -584,7 +620,12 @@ const nav = [
     list-style: none;
     margin: 0 0 24px;
     padding: 0;
+    overflow: visible;
   }
+  .works > li { transform-origin: 50% 80%; }
+  .works > li:nth-child(1) { --rest-rot: -1.2deg; }
+  .works > li:nth-child(2) { --rest-rot: 0.7deg; }
+  .works > li:nth-child(3) { --rest-rot: 1.2deg; }
   .work-card img {
     width: 100%;
     aspect-ratio: 4 / 3;
@@ -593,7 +634,8 @@ const nav = [
   }
   .work-card h3 { margin-top: 16px; }
   .work-card p { margin: 0; }
-  #works { padding-bottom: 0; }
+  /* Clip the off-screen paper tilt so a hidden card cannot widen the page. */
+  #works { padding-bottom: 0; overflow-x: clip; }
   .stack { margin: 32px 0 0; }
   .stack img {
     width: 100%;
@@ -626,6 +668,8 @@ const nav = [
     line-height: 1;
     letter-spacing: -0.02em;
     font-variant-numeric: tabular-nums;
+    width: fit-content;
+    transform-origin: 30% 70%;
   }
   .flow h3 {
     margin: 0 0 8px;
@@ -920,11 +964,89 @@ const nav = [
       border-left-color: var(--on-ink-muted);
     }
   }
+  /* Entrance motion only. The hero photo stays still. The footer seal is not a stamp. */
+  .js .head .mark { animation: hinata-stamp 480ms var(--ease-out) 0ms both; }
+  .js .hero-panel h1 { animation: hinata-rise 500ms var(--ease-move) 0ms both; }
+  .js .hero-panel .kicker { animation: hinata-fade-up 420ms var(--ease-move) 80ms both; }
+  .js .hero-panel .lead { animation: hinata-fade-up 500ms var(--ease-move) 180ms both; }
+  .js .hero-actions { animation: hinata-fade-up 500ms var(--ease-move) 280ms both; }
+  .js .swatch span { animation: hinata-chip 480ms var(--ease-move) both; }
+  .js .swatch span:nth-child(1) { animation-delay: 320ms; }
+  .js .swatch span:nth-child(2) { animation-delay: 360ms; }
+  .js .swatch span:nth-child(3) { animation-delay: 400ms; }
+  .js .swatch span:nth-child(4) { animation-delay: 440ms; }
+  .js .swatch span:nth-child(5) { animation-delay: 480ms; }
+  .js .swatch span:nth-child(6) { animation-delay: 520ms; }
+
+  @keyframes hinata-stamp {
+    from { opacity: 0; transform: scale(1.15); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes hinata-rise {
+    from { transform: translateY(8px); }
+    to { transform: translateY(0); }
+  }
+  @keyframes hinata-fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes hinata-chip {
+    from { opacity: 0; transform: translateY(8px) rotate(-4deg); }
+    to { opacity: 1; transform: translateY(0) rotate(0deg); }
+  }
+
+  .js [data-reveal] { opacity: 0; }
+  /* Clip lives on the inner text so the heading box stays observable. */
+  .js [data-reveal="ink"] { transition: opacity 600ms var(--ease-move); }
+  .js [data-reveal="ink"] .ink-wipe {
+    display: block;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 600ms var(--ease-move);
+  }
+  .js [data-reveal="ink"].is-visible .ink-wipe { clip-path: inset(0); }
+  .js [data-reveal="paper"] {
+    transform: translateY(20px) rotate(-5deg);
+    transition: transform 600ms var(--ease-move), opacity 600ms var(--ease-move);
+  }
+  .js [data-reveal="stamp"] {
+    transform: scale(1.15);
+    transition: transform 500ms var(--ease-out), opacity 500ms var(--ease-out);
+  }
+  .js [data-reveal="up"] {
+    transform: translateY(16px);
+    transition: transform 500ms var(--ease-move), opacity 500ms var(--ease-move);
+  }
+  .js [data-reveal].is-visible {
+    opacity: 1;
+    clip-path: inset(0);
+    transform: none;
+  }
+  .js [data-reveal="paper"].is-visible { transform: rotate(var(--rest-rot, 0deg)); }
+  .js [data-reveal="stamp"].is-visible { transform: scale(1); }
+
+  .works > li:nth-child(1) { transition-delay: 0ms; }
+  .works > li:nth-child(2) { transition-delay: 80ms; }
+  .works > li:nth-child(3) { transition-delay: 160ms; }
+  .flow > li:nth-child(1) [data-reveal="stamp"] { transition-delay: 0ms; }
+  .flow > li:nth-child(2) [data-reveal="stamp"] { transition-delay: 80ms; }
+  .flow > li:nth-child(3) [data-reveal="stamp"] { transition-delay: 160ms; }
+  .flow > li:nth-child(4) [data-reveal="stamp"] { transition-delay: 240ms; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation: none !important;
       transition: none !important;
       scroll-behavior: auto !important;
     }
+    .js [data-reveal],
+    .js [data-reveal].is-visible,
+    .js [data-reveal="ink"] .ink-wipe,
+    .js [data-reveal="ink"].is-visible .ink-wipe {
+      opacity: 1;
+      transform: none;
+      clip-path: none;
+      transition: none;
+    }
+    .btn:active { transform: none; }
   }
 </style>
