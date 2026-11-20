@@ -1,0 +1,1052 @@
+---
+/**
+ * Standalone document for the fictional print shop.
+ * Does not load the team-site layout or global.css.
+ * The sample bar, header, and footer live here.
+ */
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const phone = '000-0000-0000';
+const phoneHref = 'tel:00000000000';
+const nav = [
+  { href: '#works', label: '仕事' },
+  { href: '#flow', label: '注文の流れ' },
+  { href: '#price', label: '料金' },
+  { href: '#about', label: 'お店について' },
+] as const;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#f4f0e6" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <a class="skip" href="#main">本文へ進む</a>
+    <div class="top">
+      <div class="bar" role="note">
+        <p class="bar-main">
+          <span class="badge">架空のサンプル</span>
+          <span class="bar-long">「ひなた堂印刷」は実在しません。写真は AI で生成した画像です。</span>
+          <span class="bar-short">実在しません。写真はAI生成です。</span>
+        </p>
+        <p class="bar-links">
+          <a href="/">michixsa のトップへ戻る</a>
+        </p>
+      </div>
+      <header class="head">
+        <a class="brand" href="/lp/hinata/">
+          <span class="mark" aria-hidden="true">ひ</span>
+          <span class="brand-text">
+            <span class="brand-name">ひなた堂印刷</span>
+            <span class="brand-tag">チラシ・名刺・封筒の印刷</span>
+          </span>
+        </a>
+        <div class="head-end">
+          <nav class="nav" aria-label="ページ内">
+            {
+              nav.map((item) => (
+                <a href={item.href}>{item.label}</a>
+              ))
+            }
+          </nav>
+          <a class="tel" href={phoneHref}>{phone}</a>
+          <a class="btn" href="#contact">相談する</a>
+          <details class="menu">
+            <summary>
+              <span class="menu-word">メニュー</span>
+              <span class="menu-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="menu-panel">
+              {
+                nav.map((item) => (
+                  <a href={item.href}>{item.label}</a>
+                ))
+              }
+              <a href={phoneHref}>{phone}</a>
+            </div>
+          </details>
+        </div>
+      </header>
+    </div>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="foot">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <div class="foot-name-row">
+            <span class="mark mark-on-ink" aria-hidden="true">ひ</span>
+            <p class="foot-name">ひなた堂印刷</p>
+          </div>
+          <p class="foot-tag">チラシ・名刺・封筒の印刷</p>
+          <p class="foot-invite">用紙と部数の目安は、データをもらえればお返しします。</p>
+          <a class="btn btn-on-ink" href="#contact">相談する</a>
+        </div>
+        <div class="foot-block">
+          <h2>営業時間と所在</h2>
+          <p class="foot-caption">営業時間は、見本のための架空のものです。</p>
+          <table class="hours">
+            <caption class="sr">営業時間（架空）</caption>
+            <tbody>
+              <tr><th scope="row">平日</th><td>9:00–18:00</td></tr>
+              <tr><th scope="row">土曜</th><td>9:00–15:00</td></tr>
+              <tr><th scope="row">日曜・祝日</th><td>休み</td></tr>
+            </tbody>
+          </table>
+          <p class="foot-addr">〒000-0000 架空県架空市ひなた1-2-3</p>
+          <p>電話 <a href={phoneHref}>{phone}</a></p>
+        </div>
+        <div class="foot-block">
+          <h2>店までの目印</h2>
+          <figure class="guide">
+            <figcaption>案内図（架空です。実在の場所ではありません。）</figcaption>
+            <ol class="guide-path">
+              <li>架空駅<br />北口</li>
+              <li>通りを北へ<br />徒歩約8分</li>
+              <li>交番の先を右</li>
+              <li class="here">ひなた堂</li>
+            </ol>
+            <p>架空駅の北口を出て、通りを北へ徒歩約8分。交番の先を右に折れると、紙の束が見える小さな作業場です。</p>
+          </figure>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <div class="foot-notes">
+          <p>「ひなた堂印刷」は実在しません。</p>
+          <p>写真は AI で生成した画像です。</p>
+        </div>
+        <a href="/">michixsa のトップへ戻る</a>
+      </div>
+    </footer>
+    <script>
+      const menu = document.querySelector('.menu');
+      if (menu instanceof HTMLDetailsElement) {
+        menu.querySelectorAll('a').forEach((anchor) => {
+          anchor.addEventListener('click', () => {
+            menu.open = false;
+          });
+        });
+      }
+    </script>
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll('[data-reveal]');
+        if (!('IntersectionObserver' in window) ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          els.forEach(function (el) { el.classList.add('is-visible'); });
+          return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+        els.forEach(function (el) { io.observe(el); });
+      })();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    color-scheme: light;
+    --paper: #f4f0e6;
+    --surface: #fffdf8;
+    --ink: #1c1b18;
+    --muted: #5a554c;
+    --on-ink: #f4f0e6;
+    --on-ink-muted: #c4b8a6;
+    --line: #7f786c;
+    --rust: #5c2e18;
+    --bar: #1e3a5f;
+    --focus: #5c2e18;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-move: cubic-bezier(0.25, 0.8, 0.25, 1);
+    --serif: "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho", YuMincho, "Hiragino Mincho", "Noto Serif CJK JP", "Noto Serif JP", "MS PMincho", serif;
+    --sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Noto Sans JP", "Noto Sans CJK JP", "Yu Gothic", YuGothic, Meiryo, sans-serif;
+  }
+  /* Measured contrast (WCAG): ink/paper 15.13, ink/surface 16.94,
+     on-ink/ink 15.13, on-ink-muted/ink 8.82, muted/paper 6.50,
+     muted/surface 7.28, muted/ink 2.33 (not used on ink),
+     line/paper 3.84, line/surface 4.30, white/rust 11.30, rust/paper 9.93,
+     rust/ink 1.52 (not used on ink), white/bar 11.50.
+     Focus on the bar, the ink panel, and the footer uses --on-ink. */
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-padding-top: 168px; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  picture { display: block; }
+  p { margin: 0 0 16px; }
+  h1, h2, h3, .brand-name, .foot-name, .mark {
+    font-family: var(--serif);
+    font-weight: 600;
+    line-height: 1.35;
+    font-feature-settings: "palt";
+  }
+  h1 {
+    margin: 0 0 12px;
+    font-size: clamp(44px, 3.5vw + 32px, 72px);
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+  }
+  /* Each phrase stays on one line. The only break is between the two spans. */
+  h1 span {
+    display: block;
+    white-space: nowrap;
+    word-break: keep-all;
+  }
+  h2 {
+    margin: 0 0 16px;
+    font-size: clamp(32px, 1.5vw + 26px, 44px);
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+  }
+  h3 {
+    margin: 0 0 8px;
+    font-size: clamp(20px, 0.6vw + 18px, 24px);
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+  }
+  a { color: var(--rust); }
+  a:visited { color: var(--rust); }
+  :focus { outline: none; }
+  :focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+  }
+  .skip {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .skip:focus-visible {
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 80;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 12px 16px;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    background: var(--surface);
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+    min-height: 48px;
+  }
+
+  .top {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: var(--paper);
+  }
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0 16px;
+    min-height: 48px;
+    padding: 0 16px;
+    background: var(--bar);
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .bar-main, .bar-links { margin: 0; }
+  .bar-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 32px;
+    padding: 6px 0;
+  }
+  .bar-long { display: none; }
+  .bar-short { white-space: nowrap; }
+  .bar-links { flex: 1 0 100%; }
+  .badge {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    min-height: 22px;
+    padding: 0 8px;
+    background: #fff;
+    color: var(--bar);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .bar-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 12px;
+  }
+  .bar a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .bar a:visited { color: #fff; }
+  .bar a:focus-visible { outline-color: #fff; }
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    height: 72px;
+    padding: 0 12px;
+    background: var(--paper);
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 45%, var(--paper));
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    min-height: 48px;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .brand:visited { color: var(--ink); }
+  .mark {
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background: var(--rust);
+    color: var(--paper);
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+  .head .mark { transform-origin: 50% 55%; }
+  .brand-text { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+  .brand-name {
+    font-size: 20px;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+  .brand-tag { display: none; }
+  .head-end { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .nav { display: none; }
+  .nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 4px;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .nav a:visited { color: var(--ink); }
+  .nav a:hover { text-decoration: underline; text-underline-offset: 6px; }
+  .nav a[aria-current='location'] {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+  }
+  .tel {
+    display: none;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 4px;
+    color: var(--ink);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .tel:visited { color: var(--ink); }
+  .menu { position: relative; }
+  .menu summary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    min-height: 48px;
+    padding: 0 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    list-style: none;
+  }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu-icon { display: none; }
+  .menu-panel {
+    position: absolute;
+    z-index: 2;
+    top: calc(100% + 8px);
+    right: 0;
+    width: min(280px, calc(100vw - 24px));
+    padding: 8px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  .menu-panel a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 12px;
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .menu-panel a:visited { color: var(--ink); }
+  @media (max-width: 359px) {
+    .menu summary { width: 48px; padding: 0; }
+    .menu-word {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .menu-icon {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: var(--ink);
+      box-shadow: 0 -6px 0 var(--ink), 0 6px 0 var(--ink);
+    }
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--rust);
+    color: #fff;
+    font: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .btn-on-ink,
+  .btn-on-ink:visited {
+    background: var(--on-ink);
+    color: var(--ink);
+  }
+  .btn:visited { color: #fff; }
+  .btn-on-ink:visited { color: var(--ink); }
+  .btn {
+    transition:
+      background-color 200ms var(--ease-move),
+      color 200ms var(--ease-move),
+      transform 120ms var(--ease-out);
+  }
+  .btn:hover,
+  .btn:focus-visible { background: #4a2413; }
+  .btn-on-ink:hover,
+  .btn-on-ink:focus-visible,
+  .foot a.btn-on-ink:hover,
+  .foot a.btn-on-ink:focus-visible {
+    background: #fff;
+    color: var(--ink);
+  }
+  .btn:active { transform: scale(0.98); }
+  .text-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    color: var(--rust);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .text-link:visited { color: var(--rust); }
+  .text-link, .brand { transition: opacity 150ms var(--ease-move); }
+  .text-link:hover, .brand:hover { opacity: 0.84; }
+
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100svh - 154px);
+    background: var(--ink);
+    overflow: hidden;
+  }
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    background: #e4dece;
+  }
+  .hero-photo picture,
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+  }
+  .hero-photo img {
+    object-fit: cover;
+    /* Wall is the top of hero-sp. Keep the bench and cutter in the lower half. */
+    object-position: center 72%;
+  }
+  .hero-panel {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 16px 16px 20px;
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .hero-panel .kicker {
+    margin: 0 0 8px;
+    color: var(--on-ink-muted);
+    font-size: clamp(14px, 0.2vw + 13px, 16px);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    line-height: 1.6;
+  }
+  .hero-panel .lead {
+    margin: 0 0 12px;
+    color: var(--on-ink-muted);
+    font-size: clamp(18px, 0.3vw + 17px, 20px);
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+  }
+  .hero-panel .text-link,
+  .hero-panel .text-link:visited {
+    color: var(--on-ink);
+  }
+  .hero-panel :focus-visible { outline-color: var(--on-ink); }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 16px;
+  }
+  .swatch {
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    height: 12px;
+  }
+  .swatch span { flex: 1 1 0; transform-origin: 50% 100%; }
+  .swatch span:nth-child(1) { background: #f7f4ee; }
+  .swatch span:nth-child(2) { background: #e6dcc8; }
+  .swatch span:nth-child(3) { background: #c5d0d8; }
+  .swatch span:nth-child(4) { background: #d7c4c0; }
+  .swatch span:nth-child(5) { background: #c5cdc0; }
+  .swatch span:nth-child(6) { background: #5c2e18; }
+
+  .section { padding: 80px 0; }
+  .section-surface { background: var(--surface); }
+  .wrap {
+    width: min(72rem, calc(100% - 32px));
+    margin-inline: auto;
+  }
+  .narrow {
+    width: min(40rem, calc(100% - 32px));
+    margin-inline: auto;
+  }
+  .intro { max-width: 40rem; margin: 0 0 24px; }
+
+  .works {
+    display: grid;
+    gap: 32px;
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+    overflow: visible;
+  }
+  .works > li { transform-origin: 50% 80%; }
+  .works > li:nth-child(1) { --rest-rot: -1.2deg; }
+  .works > li:nth-child(2) { --rest-rot: 0.7deg; }
+  .works > li:nth-child(3) { --rest-rot: 1.2deg; }
+  .work-card img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: #e4dece;
+  }
+  .work-card h3 { margin-top: 16px; }
+  .work-card p { margin: 0; }
+  /* Clip the off-screen paper tilt so a hidden card cannot widen the page. */
+  #works { padding-bottom: 0; overflow-x: clip; }
+  .stack { margin: 32px 0 0; }
+  .stack img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center;
+    background: #e4dece;
+  }
+
+  .section-ink {
+    background: var(--ink);
+    color: var(--on-ink);
+    padding: 80px 0;
+  }
+  .section-ink :focus-visible { outline-color: var(--on-ink); }
+  .flow {
+    display: grid;
+    gap: 40px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .flow li { margin: 0; padding: 0; }
+  .flow-num {
+    margin: 0 0 8px;
+    color: var(--on-ink);
+    font-family: var(--sans);
+    font-size: clamp(64px, 5vw + 44px, 96px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    width: fit-content;
+    transform-origin: 30% 70%;
+  }
+  .flow h3 {
+    margin: 0 0 8px;
+    color: var(--on-ink);
+    font-size: clamp(22px, 0.8vw + 19px, 28px);
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+  }
+  .flow p { margin: 0; color: var(--on-ink-muted); }
+
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  caption {
+    padding: 0 0 8px;
+    text-align: left;
+    font-weight: 700;
+  }
+  th, td {
+    padding: 12px 8px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+    font-weight: 400;
+  }
+  th { font-weight: 700; }
+  .money { text-align: right; white-space: nowrap; }
+  .notice { margin: 0 0 16px; font-weight: 700; }
+  .after { margin: 16px 0 0; }
+
+  .about-grid {
+    display: grid;
+    gap: 24px;
+  }
+  .about-photo { order: -1; }
+  .about-photo img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: #e4dece;
+  }
+  .about-copy p:last-child { margin-bottom: 0; }
+  .about-copy table { margin-top: 8px; }
+  .about-copy a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    font-weight: 700;
+  }
+
+  .faq { margin: 0; }
+  .faq dt {
+    margin: 16px 0 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-family: var(--serif);
+    font-size: clamp(20px, 0.6vw + 18px, 24px);
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    font-feature-settings: "palt";
+  }
+  .faq dt:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+  .faq dd { margin: 0 0 8px; }
+
+  .field { margin: 0 0 16px; }
+  .field label { display: block; margin: 0 0 4px; font-weight: 700; }
+  input, textarea {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--ink);
+    font: inherit;
+    line-height: 1.5;
+  }
+  input { min-height: 48px; padding: 0 12px; }
+  textarea { min-height: 144px; padding: 12px; resize: vertical; }
+  .live { min-height: 1.7em; margin: 16px 0 0; font-weight: 700; }
+
+  .foot {
+    background: var(--ink);
+    color: var(--on-ink);
+    padding: 64px 16px 48px;
+  }
+  .foot :focus-visible { outline-color: var(--on-ink); }
+  .foot-grid { display: grid; gap: 48px; }
+  .foot-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .foot-name-row { display: flex; align-items: center; gap: 12px; }
+  .mark-on-ink {
+    width: 48px;
+    height: 48px;
+    background: var(--on-ink);
+    color: var(--ink);
+    font-size: 24px;
+  }
+  .foot-name {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+  }
+  .foot-tag, .foot-invite, .foot-caption, .guide p, .foot-notes {
+    margin: 0;
+    color: var(--on-ink-muted);
+    font-size: 16px;
+  }
+  .foot-caption, .guide figcaption { font-size: 14px; line-height: 1.6; }
+  .foot-invite { max-width: 22em; }
+  .foot-block h2 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+  }
+  .hours {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+  }
+  .hours th, .hours td {
+    padding: 10px 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--on-ink) 28%, var(--ink));
+    text-align: left;
+    font-weight: 400;
+  }
+  .hours th { width: 8em; color: var(--on-ink-muted); }
+  .foot-addr { margin: 16px 0 0; }
+  .foot p { margin: 0 0 8px; }
+  .foot a {
+    color: var(--on-ink);
+    font-weight: 700;
+  }
+  .foot a:visited { color: var(--on-ink); }
+  .foot a.btn-on-ink,
+  .foot a.btn-on-ink:visited {
+    background: var(--on-ink);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .foot-block > p a, .foot-bottom > a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .guide { margin: 0; }
+  .guide figcaption { margin: 0 0 12px; }
+  .guide-path {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+  }
+  .guide-path li {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 8px 12px;
+    border: 1px solid var(--on-ink-muted);
+    color: var(--on-ink);
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .guide-path li + li::before {
+    content: "";
+    position: absolute;
+    top: -21px;
+    left: 24px;
+    width: 0;
+    height: 20px;
+    border-left: 2px solid var(--on-ink-muted);
+  }
+  .guide-path li + li::after {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 20px;
+    border: 4px solid transparent;
+    border-top-color: var(--on-ink-muted);
+  }
+  .guide-path .here {
+    background: var(--on-ink);
+    color: var(--ink);
+    border-color: var(--on-ink);
+    font-family: var(--serif);
+    font-weight: 600;
+    font-feature-settings: "palt";
+  }
+  .guide p { line-height: 1.7; }
+  .foot-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid color-mix(in srgb, var(--on-ink) 28%, var(--ink));
+    font-size: 14px;
+  }
+  .foot-notes p { margin: 0; color: var(--on-ink-muted); font-size: 14px; line-height: 1.6; }
+
+  @media (min-width: 1080px) {
+    html { scroll-padding-top: 140px; }
+    .bar { flex-wrap: nowrap; padding: 0 40px; }
+    .bar-short { display: none; }
+    .bar-long { display: inline; }
+    .bar-links { flex: 0 0 auto; }
+    .hero { min-height: calc(100svh - 128px); }
+    .hero-photo img {
+      /* Stacks and the cutter stay on the right of the ink panel. */
+      object-position: 62% center;
+    }
+    .hero-panel {
+      position: absolute;
+      z-index: 1;
+      top: 58%;
+      left: 48px;
+      /* Inner width stays above a 72px, 1em-wide 「チラシ、名刺、」. */
+      width: 42rem;
+      padding: 48px 40px;
+      translate: 0 -50%;
+    }
+    .section { padding: 112px 0; }
+    .section-ink { padding: 120px 0; }
+    .wrap { width: min(72rem, calc(100% - 80px)); }
+    .works { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .stack img {
+      height: clamp(420px, 34vw, 520px);
+      aspect-ratio: auto;
+    }
+    .flow {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+    .about-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 48px;
+    }
+    .about-photo { order: 0; }
+  }
+  @media (min-width: 960px) {
+    .head { height: 80px; padding: 0 40px; gap: 16px; }
+    .mark { width: 36px; height: 36px; font-size: 18px; }
+    .brand { gap: 10px; }
+    .brand-name { font-size: 28px; }
+    .brand-tag {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .nav { display: flex; align-items: center; gap: 4px 12px; }
+    .tel { display: inline-flex; }
+    .menu { display: none; }
+    .btn { padding: 0 20px; }
+    .foot { padding: 96px 40px 64px; }
+    .foot-grid { grid-template-columns: 1.15fr 0.9fr 1.15fr; gap: 40px 48px; align-items: start; }
+    .foot-name { font-size: 44px; }
+    .foot-block h2 { font-size: 24px; }
+    .guide-path { flex-direction: row; align-items: stretch; gap: 0; }
+    .guide-path li { flex: 1 1 0; min-width: 0; }
+    .guide-path li + li { margin-left: 20px; }
+    .guide-path li + li::before {
+      top: 50%;
+      left: -21px;
+      width: 20px;
+      height: 0;
+      border-left: 0;
+      border-top: 2px solid var(--on-ink-muted);
+    }
+    .guide-path li + li::after {
+      top: calc(50% - 4px);
+      left: -8px;
+      border: 4px solid transparent;
+      border-left-color: var(--on-ink-muted);
+    }
+  }
+  /* Entrance motion only. The hero photo stays still. The footer seal is not a stamp. */
+  .js .head .mark { animation: hinata-stamp 480ms var(--ease-out) 0ms both; }
+  .js .hero-panel h1 { animation: hinata-rise 500ms var(--ease-move) 0ms both; }
+  .js .hero-panel .kicker { animation: hinata-fade-up 420ms var(--ease-move) 80ms both; }
+  .js .hero-panel .lead { animation: hinata-fade-up 500ms var(--ease-move) 180ms both; }
+  .js .hero-actions { animation: hinata-fade-up 500ms var(--ease-move) 280ms both; }
+  .js .swatch span { animation: hinata-chip 480ms var(--ease-move) both; }
+  .js .swatch span:nth-child(1) { animation-delay: 320ms; }
+  .js .swatch span:nth-child(2) { animation-delay: 360ms; }
+  .js .swatch span:nth-child(3) { animation-delay: 400ms; }
+  .js .swatch span:nth-child(4) { animation-delay: 440ms; }
+  .js .swatch span:nth-child(5) { animation-delay: 480ms; }
+  .js .swatch span:nth-child(6) { animation-delay: 520ms; }
+
+  @keyframes hinata-stamp {
+    from { opacity: 0; transform: scale(1.15); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes hinata-rise {
+    from { transform: translateY(8px); }
+    to { transform: translateY(0); }
+  }
+  @keyframes hinata-fade-up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes hinata-chip {
+    from { opacity: 0; transform: translateY(8px) rotate(-4deg); }
+    to { opacity: 1; transform: translateY(0) rotate(0deg); }
+  }
+
+  .js [data-reveal] { opacity: 0; }
+  /* Clip lives on the inner text so the heading box stays observable. */
+  .js [data-reveal="ink"] { transition: opacity 600ms var(--ease-move); }
+  .js [data-reveal="ink"] .ink-wipe {
+    display: block;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 600ms var(--ease-move);
+  }
+  .js [data-reveal="ink"].is-visible .ink-wipe { clip-path: inset(0); }
+  .js [data-reveal="paper"] {
+    transform: translateY(20px) rotate(-5deg);
+    transition: transform 600ms var(--ease-move), opacity 600ms var(--ease-move);
+  }
+  .js [data-reveal="stamp"] {
+    transform: scale(1.15);
+    transition: transform 500ms var(--ease-out), opacity 500ms var(--ease-out);
+  }
+  .js [data-reveal="up"] {
+    transform: translateY(16px);
+    transition: transform 500ms var(--ease-move), opacity 500ms var(--ease-move);
+  }
+  .js [data-reveal].is-visible {
+    opacity: 1;
+    clip-path: inset(0);
+    transform: none;
+  }
+  .js [data-reveal="paper"].is-visible { transform: rotate(var(--rest-rot, 0deg)); }
+  .js [data-reveal="stamp"].is-visible { transform: scale(1); }
+
+  .works > li:nth-child(1) { transition-delay: 0ms; }
+  .works > li:nth-child(2) { transition-delay: 80ms; }
+  .works > li:nth-child(3) { transition-delay: 160ms; }
+  .flow > li:nth-child(1) [data-reveal="stamp"] { transition-delay: 0ms; }
+  .flow > li:nth-child(2) [data-reveal="stamp"] { transition-delay: 80ms; }
+  .flow > li:nth-child(3) [data-reveal="stamp"] { transition-delay: 160ms; }
+  .flow > li:nth-child(4) [data-reveal="stamp"] { transition-delay: 240ms; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+    .js [data-reveal],
+    .js [data-reveal].is-visible,
+    .js [data-reveal="ink"] .ink-wipe,
+    .js [data-reveal="ink"].is-visible .ink-wipe {
+      opacity: 1;
+      transform: none;
+      clip-path: none;
+      transition: none;
+    }
+    .btn:active { transform: none; }
+  }
+</style>

@@ -4,7 +4,7 @@ import type { ImageMetadata } from 'astro';
 
 interface Props {
   href: string;
-  moreHref: string;
+  moreHref?: string;
   title: string;
   kind: string;
   body: string;
@@ -41,5 +41,5 @@ const Heading = level;
     <span class="sample-desc">{body}</span>
     <span class="sample-open">サンプルを見る →</span>
   </a>
-  <a class="sample-more" href={moreHref}>このサンプルの考え方を読む →</a>
+  {moreHref && <a class="sample-more" href={moreHref}>このサンプルの考え方を読む →</a>}
 </li>
