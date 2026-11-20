@@ -1,0 +1,4 @@
+# Photo credit pages on the musubi explanation page. Both sites reject
+# requests from CI runners (401/403) although the pages open in a browser.
+^https://unsplash\.com/photos/
+^https://www\.pexels\.com/photo/
