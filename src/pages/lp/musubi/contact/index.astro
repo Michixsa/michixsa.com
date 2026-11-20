@@ -39,7 +39,6 @@ const fields = [
                       <input
                         class="item_text"
                         id={field.id}
-                        name={field.id}
                         type={field.type}
                         autocomplete={field.autocomplete}
                         required
@@ -54,7 +53,7 @@ const fields = [
                   <span class="required">必須</span>
                 </th>
                 <td>
-                  <textarea class="item_text item_text--area" id="message" name="message" required></textarea>
+                  <textarea class="item_text item_text--area" id="message" required></textarea>
                 </td>
               </tr>
             </tbody>
@@ -73,7 +72,7 @@ const fields = [
           </div>
 
           <p class="agree">
-            <label><input type="checkbox" name="agree" required /> プライバシーポリシーに同意する</label>
+            <label><input type="checkbox" required /> プライバシーポリシーに同意する</label>
           </p>
           <p class="center">
             <button class="form_btn" type="submit">送信</button>

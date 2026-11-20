@@ -9,6 +9,8 @@
 }
 
 html {
+  /* Anchor jumps land below the fixed header. */
+  scroll-padding-top: 100px;
   scroll-behavior: smooth;
 }
 
@@ -654,6 +656,10 @@ h2 {
 
 /* Desktop-first overrides, at the reference's breakpoints. */
 @media (max-width: 1210px) {
+  html {
+    scroll-padding-top: 60px;
+  }
+
   .header.is-scrolled {
     height: 60px;
   }
@@ -1156,7 +1162,9 @@ h2 {
 
 .categorylist a {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
   padding-left: 18px;
   color: #f2a200;
   font-weight: 700;
@@ -1183,6 +1191,9 @@ h2 {
 
 .open_title summary {
   position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 48px;
   padding-left: 25px;
   color: #f2a200;
   font-weight: 700;
