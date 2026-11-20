@@ -16,7 +16,6 @@ html {
 
 body {
   margin: 0;
-  padding-top: 100px;
   background: #fff;
   color: #111;
   font-family: 'Noto Sans JP', sans-serif;
@@ -88,8 +87,9 @@ h2 {
 
 /* Header */
 .header {
-  position: fixed;
-  inset: 0 0 auto;
+  /* Sticky rather than the reference's fixed, so it starts below the sample bar. */
+  position: sticky;
+  top: 0;
   z-index: 10;
   height: 100px;
   background: #fff;
@@ -1455,20 +1455,86 @@ h2 {
   }
 }
 
-/* michixsa.com: tells visitors the shop is fictional and links back. Not part
-   of the reference design, so it sits outside the fixed header. */
-.sample-bar {
-  margin: 0;
-  padding: 0 20px;
-  background: #f6f6f6;
-  font-size: 12px;
-  text-align: center;
+/* michixsa.com: tells visitors the shop is fictional and links back, in the
+   same bar as the other samples. Not part of the reference design. */
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 16px;
+  min-height: 48px;
+  padding: 0 16px;
+  background: #1e3a5f;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0;
 }
 
-.sample-bar a {
+.bar-main,
+.bar-links {
+  margin: 0;
+}
+
+.bar-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 6px 0;
+}
+
+.bar-short {
+  white-space: nowrap;
+}
+
+.bar-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 12px;
+}
+
+.badge {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  min-height: 22px;
+  padding: 0 8px;
+  background: #fff;
+  color: #1e3a5f;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.bar a {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
-  margin-left: 1em;
-  color: #111;
+  color: #fff;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Desktop-first like the rest of this sheet: the long wording by default,
+   the short one on phones. */
+.bar-short {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  .bar-long {
+    display: none;
+  }
+
+  .bar-short {
+    display: inline;
+  }
+
+  .bar-links {
+    flex: 1 0 100%;
+  }
 }
