@@ -1,0 +1,126 @@
+---
+import MusubiLayout from '../../../../layouts/MusubiLayout.astro';
+import GuideCards from '../_components/GuideCards.astro';
+import PageHeader from '../_components/PageHeader.astro';
+import Timetable from '../_components/Timetable.astro';
+import { getCats, getShop, imageUrl } from '../_lib/data';
+
+const shop = getShop();
+const cats = getCats();
+const [first, second, third] = cats;
+
+// A real sequence, so the steps are numbered.
+const steps = [
+  { title: 'お店で会う', body: 'カフェで猫と過ごし、気になる子を見つけてください。' },
+  { title: 'スタッフに相談する', body: '猫の性格や、おうちでの暮らし方についてお話しします。' },
+  { title: 'トライアル', body: 'ご自宅で2週間ほど一緒に暮らし、相性を確かめます。' },
+  { title: '正式に譲渡', body: 'お互いに問題がなければ、新しい家族になります。' },
+];
+---
+
+<MusubiLayout title="お店について" description={`${shop.name}のコンセプトと保護猫活動、お迎えまでの流れ。`}>
+  <div class="page">
+    <PageHeader title="お店について" />
+
+    <section class="section">
+      <div class="container con-a-section line_none company_content">
+        <div class="company_content__photo">
+          {
+            first && (
+              <img src={imageUrl(first.photo, 520)} width="800" height="800" alt={`${first.name}の写真`} fetchpriority="high" />
+            )
+          }
+        </div>
+        <div>
+          <p>{shop.concept}</p>
+          <div class="flame">
+            <p><b>アクセス</b><br />{shop.access}</p>
+            <p><b>営業時間</b><br />{shop.hours}<br />定休日：{shop.closed}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Timetable shop={shop} />
+
+    <section class="section">
+      <div class="container">
+        <h2 class="num_h2"><span class="num_h2__num">01.</span>保護猫活動について</h2>
+        <div class="con-b-section">
+          <div class="con-b-box bg" style={second ? `background-image: url(${imageUrl(second.photo, 520)})` : undefined}></div>
+          <div class="con-b-box">
+            <p>{shop.activity}</p>
+            <ul class="listmark">
+              <li>お店の猫は、すべて保護された猫です</li>
+              <li>健康診断・ワクチン・不妊去勢手術を済ませてからお迎えしています</li>
+              <li>譲渡の前に、ご自宅での「トライアル」期間を設けています</li>
+            </ul>
+          </div>
+        </div>
+
+        <h2 class="num_h2"><span class="num_h2__num">02.</span>お迎えまでの流れ</h2>
+        <div class="con-b-section">
+          <div class="con-b-box con-b-box--icon">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <path
+                d="M50 84S16 62 16 38a17 17 0 0 1 34-6 17 17 0 0 1 34 6c0 24-34 46-34 46z"
+                fill="none"
+                stroke="#111"
+                stroke-width="8"
+                stroke-linejoin="round"></path>
+            </svg>
+          </div>
+          <div class="con-b-box">
+            <table class="con_in_table">
+              <tbody>
+                {
+                  steps.map((step, index) => (
+                    <tr>
+                      <th>
+                        <span class="lato">{index + 1}.</span> {step.title}
+                      </th>
+                      <td>{step.body}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h2 class="num_h2"><span class="num_h2__num">03.</span>店舗詳細</h2>
+        <div class="con-b-section">
+          <div class="con-b-box bg" style={third ? `background-image: url(${imageUrl(third.photo, 520)})` : undefined}></div>
+          <div class="con-b-box">
+            <table class="con_in_table">
+              <tbody>
+                <tr>
+                  <th>店舗名</th>
+                  <td>{shop.name}</td>
+                </tr>
+                <tr>
+                  <th>所在地</th>
+                  <td>{shop.address}</td>
+                </tr>
+                <tr>
+                  <th>アクセス</th>
+                  <td>{shop.access}</td>
+                </tr>
+                <tr>
+                  <th>TEL</th>
+                  <td><span class="lato">{shop.phone}</span></td>
+                </tr>
+                <tr>
+                  <th>営業時間</th>
+                  <td>{shop.hours}（{shop.closed}定休）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <GuideCards />
+  </div>
+</MusubiLayout>

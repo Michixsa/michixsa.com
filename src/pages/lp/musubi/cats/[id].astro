@@ -1,0 +1,115 @@
+---
+import type { GetStaticPaths } from 'astro';
+import MusubiLayout from '../../../../layouts/MusubiLayout.astro';
+import PageHeader from '../_components/PageHeader.astro';
+import { formatDate, getCats, imageUrl } from '../_lib/data';
+import type { Cat } from '../_lib/types';
+
+export const getStaticPaths = (() => {
+  const cats = getCats();
+  return cats.map((cat) => ({ params: { id: cat.id }, props: { cat, cats } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  cat: Cat;
+  cats: Cat[];
+}
+
+const { cat, cats } = Astro.props;
+const waiting = cats.filter((other) => other.status !== '卒業');
+const graduates = cats.filter((other) => other.status === '卒業');
+const graduated = cat.status === '卒業';
+---
+
+<MusubiLayout title={`${cat.name}（${cat.sex}・${cat.age}）`} description={cat.profile}>
+  <div class="page">
+    <PageHeader title="猫たちの紹介" band={false} />
+
+    <div class="categorylist-section">
+      <div class="categorylist">
+        <ul>
+          {
+            waiting.map((other) => (
+              <li>
+                <a href={`/lp/musubi/cats/${other.id}/`} aria-current={other.id === cat.id ? 'page' : undefined}>
+                  {other.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        {
+          graduates.length > 0 && (
+            <details class="open_title" open={graduated}>
+              <summary>卒業した猫たち</summary>
+              <ul>
+                {graduates.map((other) => (
+                  <li>
+                    <a href={`/lp/musubi/cats/${other.id}/`} aria-current={other.id === cat.id ? 'page' : undefined}>
+                      {other.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )
+        }
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <h2>{cat.name}</h2>
+        <div class="con-a-section">
+          <div class="cat-photo">
+            <img src={imageUrl(cat.photo, 520)} width="800" height="800" alt={`${cat.name}の写真`} fetchpriority="high" />
+            <span class="cat-photo__tag">{cat.name}</span>
+          </div>
+          <div>
+            <table class="con_in_table">
+              <tbody>
+                <tr>
+                  <th>状況</th>
+                  <td>{cat.status}</td>
+                </tr>
+                <tr>
+                  <th>性別</th>
+                  <td>{cat.sex}</td>
+                </tr>
+                <tr>
+                  <th>年齢</th>
+                  <td>{cat.age}</td>
+                </tr>
+                {
+                  cat.traits.length > 0 && (
+                    <tr>
+                      <th>性格</th>
+                      <td>{cat.traits.join('・')}</td>
+                    </tr>
+                  )
+                }
+                <tr>
+                  <th>来た日</th>
+                  <td>{formatDate(cat.arrivedAt)}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="cat-profile">{cat.profile}</p>
+            {
+              graduated ? (
+                <p>{cat.name}は新しい家族のもとへ卒業しました。</p>
+              ) : (
+                <p>
+                  <a class="link01" href="/lp/musubi/system/">
+                    {cat.name}に会いに行く
+                  </a>
+                </p>
+              )
+            }
+          </div>
+        </div>
+        <p class="center"><a class="link01 light" href="/lp/musubi/cats/">猫たちの紹介に戻る</a></p>
+      </div>
+    </section>
+  </div>
+</MusubiLayout>

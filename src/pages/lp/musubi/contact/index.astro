@@ -1,0 +1,85 @@
+---
+import MusubiLayout from '../../../../layouts/MusubiLayout.astro';
+import PageHeader from '../_components/PageHeader.astro';
+import { getShop } from '../_lib/data';
+
+const shop = getShop();
+const fields = [
+  { id: 'name', label: 'お名前', type: 'text', autocomplete: 'name' },
+  { id: 'email', label: 'メールアドレス', type: 'email', autocomplete: 'email' },
+  { id: 'tel', label: '電話番号', type: 'tel', autocomplete: 'tel' },
+] as const;
+---
+
+<MusubiLayout title="お問い合わせ" description={`${shop.name}へのお問い合わせ。譲渡のご相談やご来店についての質問はこちらから。`}>
+  <div class="page">
+    <PageHeader title="お問い合わせ" />
+
+    <section class="section">
+      <div class="container">
+        <p>
+          譲渡のご相談、ご来店についての質問などは、下のフォームからお送りください。<br />
+          お急ぎの方は、お電話でもお問い合わせいただけます（受付：{shop.hours}、{shop.closed}定休）。
+        </p>
+        <p class="contact-tel">
+          <a class="lato" href={`tel:${shop.phone.replaceAll('-', '')}`}>TEL {shop.phone}</a>
+        </p>
+
+        <form class="contact-form" action="#" onsubmit="return false">
+          <table class="con_in_table">
+            <tbody>
+              {
+                fields.map((field) => (
+                  <tr>
+                    <th>
+                      <label for={field.id}>{field.label}</label>
+                      <span class="required">必須</span>
+                    </th>
+                    <td>
+                      <input
+                        class="item_text"
+                        id={field.id}
+                        type={field.type}
+                        autocomplete={field.autocomplete}
+                        required
+                      />
+                    </td>
+                  </tr>
+                ))
+              }
+              <tr>
+                <th>
+                  <label for="message">お問い合わせ内容</label>
+                  <span class="required">必須</span>
+                </th>
+                <td>
+                  <textarea class="item_text item_text--area" id="message" required></textarea>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2 class="privacy-title">プライバシーポリシー</h2>
+          <div class="privacy_box" tabindex="0">
+            <p>
+              {shop.name}（以下「当店」）は、お問い合わせでお預かりした個人情報を、次のとおり取り扱います。
+            </p>
+            <p>1. 利用目的：お問い合わせへの回答と、譲渡のご相談に関するご連絡のためにだけ使います。</p>
+            <p>2. 第三者への提供：法令に基づく場合を除き、ご本人の同意なく第三者に提供しません。</p>
+            <p>3. 管理：お預かりした情報は、漏えいや紛失のないよう適切に管理します。</p>
+            <p>4. 開示・訂正・削除：ご本人からのお申し出があれば、速やかに対応します。</p>
+            <p>5. お問い合わせ窓口：{shop.name} TEL {shop.phone}</p>
+          </div>
+
+          <p class="agree">
+            <label><input type="checkbox" required /> プライバシーポリシーに同意する</label>
+          </p>
+          <p class="center">
+            <button class="form_btn" type="submit">送信</button>
+          </p>
+          <p class="center note">※サンプルのため、送信はされません。</p>
+        </form>
+      </div>
+    </section>
+  </div>
+</MusubiLayout>

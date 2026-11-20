@@ -1,0 +1,37 @@
+---
+import type { Shop } from '../_lib/types';
+
+interface Props {
+  shop: Shop;
+}
+
+// The hours block shared by the top, shop and pricing pages: the big call to
+// action, a note and the weekday grid.
+const { shop } = Astro.props;
+const days = ['月', '火', '水', '木', '金', '土', '日'];
+const closedDay = shop.closed.match(/[月火水木金土日]/)?.[0];
+---
+
+<section class="section" id="timetable-section">
+  <div class="container">
+    <a class="catchbtn" href="/lp/musubi/cats/">今いる猫たちを見る</a>
+    <p>
+      当店は予約なしでご来店いただけます。混雑時は入店をお待ちいただく場合がございます。<br />
+      {shop.closed}は定休日です。
+    </p>
+    <table class="timetable">
+      <thead>
+        <tr>
+          <th>営業時間</th>
+          {days.map((day) => <th>{day}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>{shop.hours}</th>
+          {days.map((day) => <td>{day === closedDay ? '－' : '〇'}</td>)}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
