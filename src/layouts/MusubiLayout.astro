@@ -51,12 +51,11 @@ const nav = [
           <span class="logo__kind">保護猫カフェ</span>
           <span class="logo__brand">むすび</span>
         </a>
-        <input type="checkbox" id="drawer-toggle" class="drawer-toggle" />
-        <label for="drawer-toggle" class="hamburger" aria-label="メニュー">
+        <button class="hamburger" type="button" aria-label="メニュー" aria-expanded="false" aria-controls="gnav">
           <span></span>
           <span></span>
-        </label>
-        <nav class="gnav" aria-label="メインメニュー">
+        </button>
+        <nav class="gnav" id="gnav" aria-label="メインメニュー">
           <ul>
             {
               nav.map((item) => (
@@ -121,11 +120,20 @@ const nav = [
       window.addEventListener('scroll', onScroll, { passive: true });
       onScroll();
       window.addEventListener('load', () => document.body.classList.add('is-loaded'));
-      document.querySelectorAll('.gnav a').forEach((link) =>
-        link.addEventListener('click', () => {
-          document.getElementById('drawer-toggle').checked = false;
-        }),
-      );
+      // A real button rather than the reference's hidden checkbox, so the
+      // menu also opens from the keyboard.
+      const menuButton = header.querySelector('.hamburger');
+      const setMenu = (open) => {
+        header.classList.toggle('is-open', open);
+        menuButton.setAttribute('aria-expanded', String(open));
+      };
+      menuButton.addEventListener('click', () => setMenu(!header.classList.contains('is-open')));
+      document.querySelectorAll('.gnav a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape' || !header.classList.contains('is-open')) return;
+        setMenu(false);
+        menuButton.focus();
+      });
     </script>
   </body>
 </html>
