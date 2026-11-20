@@ -1,0 +1,76 @@
+---
+import MusubiLayout from '../../../../layouts/MusubiLayout.astro';
+import PageHeader from '../_components/PageHeader.astro';
+import { formatDate, getCats, imageUrl } from '../_lib/data';
+
+const cats = getCats();
+const waiting = cats.filter((cat) => cat.status !== '卒業');
+const graduates = cats.filter((cat) => cat.status === '卒業');
+---
+
+<MusubiLayout title="猫たちの紹介" description="お店で暮らしながら、新しい家族を探している猫たちの紹介です。">
+  <div class="page">
+    <PageHeader title="猫たちの紹介" />
+
+    <section class="section">
+      <div class="container">
+        <ul class="allcast">
+          {
+            waiting.map((cat, index) => (
+              <li>
+                <a href={`/lp/musubi/cats/${cat.id}/`}>
+                  <div class="allcast__photo">
+                    <img
+                      src={imageUrl(cat.photo, 240)}
+                      width="480"
+                      height="400"
+                      alt={`${cat.name}の写真`}
+                      loading={index < 3 ? 'eager' : 'lazy'}
+                    />
+                  </div>
+                  <p class="allcast__name">
+                    {cat.name}
+                    <span class="allcast__sex">({cat.sex})</span>
+                  </p>
+                </a>
+                <div class="allcast__info">
+                  <p>
+                    {cat.status}
+                    <br />
+                    年齢：{cat.age}
+                    <br />
+                    お店に来た日：{formatDate(cat.arrivedAt)}
+                  </p>
+                  <p class="allcast__catch">{cat.traits.join('・')}</p>
+                  <a class="link01 small" href={`/lp/musubi/cats/${cat.id}/`}>
+                    プロフィールを見る
+                  </a>
+                </div>
+              </li>
+            ))
+          }
+          {
+            graduates[0] && (
+              <li>
+                <a href={`/lp/musubi/cats/${graduates[0].id}/`}>
+                  <div class="allcast__photo allcast__photo--mosaic">
+                    {graduates.slice(0, 4).map((cat) => (
+                      <img src={imageUrl(cat.photo, 120)} width="480" height="480" alt="" loading="lazy" />
+                    ))}
+                  </div>
+                  <p class="allcast__name">卒業した猫たち</p>
+                </a>
+                <div class="allcast__info">
+                  <p>新しい家族のもとで暮らしている猫たちです。</p>
+                  <a class="link01 small" href={`/lp/musubi/cats/${graduates[0].id}/`}>
+                    卒業した猫たちを見る
+                  </a>
+                </div>
+              </li>
+            )
+          }
+        </ul>
+      </div>
+    </section>
+  </div>
+</MusubiLayout>

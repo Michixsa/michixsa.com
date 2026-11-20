@@ -1,0 +1,94 @@
+---
+import MusubiLayout from '../../../../layouts/MusubiLayout.astro';
+import PageHeader from '../_components/PageHeader.astro';
+import Timetable from '../_components/Timetable.astro';
+import { getShop } from '../_lib/data';
+
+const shop = getShop();
+---
+
+<MusubiLayout title="料金・営業時間・アクセス" description={`${shop.name}の料金・営業時間・アクセスと、当店でのお約束事。`}>
+  <div class="page">
+    <PageHeader title="料金・営業時間・アクセス" />
+
+    <section class="section">
+      <div class="container">
+        <h2 class="num_h2"><span class="num_h2__num">01.</span>料金</h2>
+        <div class="menu-board">
+          {
+            shop.prices.map((row) => (
+              <div class="menu-board__card">
+                <p class="menu-board__label">{row.label}</p>
+                <p class="menu-board__price">{row.price}</p>
+              </div>
+            ))
+          }
+        </div>
+        <p class="note">※ワンドリンク付き、料金はすべて税込です。</p>
+      </div>
+    </section>
+
+    <Timetable shop={shop} />
+
+    <section class="section" id="access">
+      <div class="container">
+        <h2 class="num_h2"><span class="num_h2__num">02.</span>アクセス</h2>
+        <div class="con-b-section">
+          <div class="con-b-box con-b-box--icon">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <path
+                d="M50 90S20 58 20 38a30 30 0 0 1 60 0c0 20-30 52-30 52z"
+                fill="none"
+                stroke="#111"
+                stroke-width="8"
+                stroke-linejoin="round"></path>
+              <circle cx="50" cy="38" r="10" fill="#111"></circle>
+            </svg>
+          </div>
+          <div class="con-b-box">
+            <table class="con_in_table">
+              <tbody>
+                <tr>
+                  <th>所在地</th>
+                  <td>{shop.address}</td>
+                </tr>
+                <tr>
+                  <th>アクセス</th>
+                  <td>{shop.access}</td>
+                </tr>
+                <tr>
+                  <th>TEL</th>
+                  <td><span class="lato">{shop.phone}</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="map-box">地図（公開時に Google マップ）</div>
+          </div>
+        </div>
+
+        <h2 class="num_h2"><span class="num_h2__num">03.</span>当店でのお約束事</h2>
+        <div class="con-b-section">
+          <div class="con-b-box con-b-box--icon">
+            <svg viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M22 84V40L30 16l16 18h8l16-18 8 24v44z" fill="#111"></path>
+              <circle cx="40" cy="54" r="5" fill="#fff"></circle>
+              <circle cx="60" cy="54" r="5" fill="#fff"></circle>
+            </svg>
+          </div>
+          <div class="con-b-box">
+            <p>猫たちが安心して過ごせるよう、ご協力をお願いします。</p>
+            <ol class="numlist">
+              {shop.rules.map((rule) => <li>{rule}</li>)}
+            </ol>
+            <ul class="listmark">
+              <li>小学生以下のお子さまは、保護者の方と一緒にご来店ください。</li>
+              <li>体調の悪い猫がいるときは、触れ合いをお断りすることがあります。</li>
+            </ul>
+          </div>
+        </div>
+
+        <a class="catchbtn faqbtn" href="/lp/musubi/contact/">お問い合わせはこちら</a>
+      </div>
+    </section>
+  </div>
+</MusubiLayout>

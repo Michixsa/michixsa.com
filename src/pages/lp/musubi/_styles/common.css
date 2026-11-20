@@ -1,0 +1,1450 @@
+/* One stylesheet for every page, as in the reference theme. Values follow
+   https://cattail.jp/ as read on 2026-11-16; the CSS is desktop-first with max-width
+   overrides at the reference's breakpoints. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding-top: 100px;
+  background: #fff;
+  color: #111;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.8;
+  letter-spacing: 0.1em;
+}
+
+/* Whole-page fade-in over 2s, as in the reference. */
+.js body {
+  opacity: 0;
+  transition: opacity 2s;
+}
+
+.js body.is-loaded {
+  opacity: 1;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: #111;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+a:hover {
+  color: #999;
+}
+
+p {
+  margin: 0 0 1.5em;
+}
+
+h2 {
+  margin: 0 0 1em;
+  font-size: 1.5em;
+  font-weight: 700;
+  line-height: 1.8;
+}
+
+.lato {
+  font-family: 'Lato', sans-serif;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.center {
+  text-align: center;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section {
+  padding: 40px 25px;
+}
+
+.section--cream {
+  background: #fff7e6;
+}
+
+/* Header */
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  height: 100px;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  transition: height 0.3s;
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1400px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 25px;
+  position: relative;
+}
+
+.header__seo {
+  position: absolute;
+  top: 4px;
+  left: 25px;
+  margin: 0;
+  font-size: 11px;
+}
+
+.logo {
+  display: inline-flex;
+  flex-direction: column;
+  width: 180px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.logo__kind {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+}
+
+.logo__brand {
+  font-size: 28px;
+  letter-spacing: 0.2em;
+}
+
+.gnav ul {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gnav a {
+  display: block;
+  padding: 0.5em;
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+.gnav a:hover {
+  color: #f3c261;
+}
+
+.gnav .header-tel {
+  margin-left: 0.5em;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+  background: #f3c261;
+  color: #111;
+}
+
+.gnav .header-tel:hover {
+  background: #fff;
+  color: #111;
+}
+
+.drawer-toggle {
+  display: none;
+}
+
+.hamburger {
+  display: none;
+}
+
+/* Hero: 5s fade slideshow with a slow 1.1x zoom on the visible photo. */
+.hero {
+  background: #fff7e6;
+}
+
+.hero__slides {
+  position: relative;
+  max-width: 1900px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+}
+
+.hero__slides img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: slide 15s infinite;
+}
+
+@keyframes slide {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  13% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 1;
+  }
+  46% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
+}
+
+/* News ticker overlapping the bottom of the hero by 96px. */
+.news {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  max-width: 1100px;
+  margin: -96px auto 0;
+  background: #fff;
+  border: 3px solid #f3c261;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.news__label {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 290px;
+  margin: 0;
+  background: #f3c261;
+  font-weight: 700;
+}
+
+.news__window {
+  flex: 1;
+  height: 3.6em;
+  overflow: hidden;
+}
+
+.news__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: ticker 12s infinite;
+}
+
+.news__list li {
+  display: flex;
+  gap: 1.5em;
+  align-items: center;
+  height: 3.6em;
+  padding: 0 25px;
+  white-space: nowrap;
+}
+
+.news__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes ticker {
+  0%,
+  25% {
+    transform: translateY(0);
+  }
+  33%,
+  58% {
+    transform: translateY(-3.6em);
+  }
+  66%,
+  91% {
+    transform: translateY(-7.2em);
+  }
+  100% {
+    transform: translateY(-10.8em);
+  }
+}
+
+/* Big call to action with the flat offset shadow. */
+.catchbtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  margin: 0 0 40px;
+  padding: 0 80px;
+  border-radius: 30px;
+  background: #f3c261;
+  font-size: 1.2em;
+  font-weight: 700;
+  box-shadow: 0 5px 0 #aaa;
+  transition: all 0.3s;
+}
+
+.catchbtn:hover {
+  color: #111;
+  box-shadow: 0 5px 0 #666;
+}
+
+.timetable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.timetable th,
+.timetable td {
+  padding: 0.5em;
+}
+
+.timetable thead th {
+  border-bottom: 1px solid #111;
+}
+
+.timetable tbody th {
+  border-right: 1px solid #111;
+  white-space: nowrap;
+}
+
+.timetable tbody tr:nth-child(even) {
+  background: #eee;
+}
+
+.price {
+  width: 100%;
+  margin-bottom: 25px;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.price th,
+.price td {
+  padding: 0.5em;
+  border: 1px solid #ccc;
+}
+
+.price th {
+  width: 40%;
+  background: #eee;
+  font-weight: 400;
+}
+
+.link01 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 40px;
+  padding: 0 80px;
+  border-radius: 20px;
+  background: #f3c261;
+  overflow: hidden;
+}
+
+.link01::after {
+  content: '→';
+  position: absolute;
+  right: 50%;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.link01:hover {
+  color: #111;
+}
+
+.link01:hover::after {
+  right: 20px;
+  opacity: 1;
+}
+
+.link01.light {
+  background: #f2d291;
+}
+
+/* Guide cards: 2px black frame, icon on white, yellow footer band. */
+.guide {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide li {
+  width: 30%;
+}
+
+.guide__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  border: 2px solid #111;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  transition: all 0.3s;
+}
+
+.guide__card:hover {
+  border-color: #f3c261;
+  color: #111;
+}
+
+.guide__icon svg {
+  width: 100px;
+  height: 100px;
+  margin: 25px 0 10px;
+  transition: all 0.3s;
+}
+
+.guide__card:hover svg {
+  transform: scale(1.05);
+}
+
+.guide__text {
+  flex: 1;
+  padding: 0 15px 20px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.guide__more {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 60px;
+  background: #f3c261;
+}
+
+/* Cat cards: cream with a dotted frame and a thick yellow bottom edge. */
+.cast {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3.5%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cast__card {
+  width: 31%;
+  margin-bottom: 40px;
+  padding: 15px;
+  background: #fff7e6;
+  border: 4px dotted #f3c261;
+  border-bottom: 6px solid #f3c261;
+}
+
+.cast__photo {
+  overflow: hidden;
+}
+
+.cast__photo img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  transition: all 0.6s;
+}
+
+.cast__card:hover img {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.cast__name {
+  margin: 10px 0 0;
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.cast__meta {
+  margin: 0 0 10px;
+  font-size: 0.8em;
+}
+
+.cast__profile {
+  margin: 0;
+  font-size: 0.9em;
+}
+
+/* "N reasons": double-ruled heading over a cream box with a numbered list. */
+.con_h2 {
+  padding-bottom: 10px;
+  border-bottom: 4px double #f3c261;
+}
+
+.reasons {
+  padding: 25px;
+  background: #fff7e6;
+}
+
+.reasons ol {
+  margin: 0 0 1.5em;
+  padding-left: 1.5em;
+}
+
+.reasons li::marker {
+  font-weight: 700;
+}
+
+.blog {
+  display: flex;
+  margin: 0 0 25px;
+  padding: 0;
+  list-style: none;
+}
+
+.blog li {
+  position: relative;
+  flex: 1;
+  border-right: 1px solid #fff;
+}
+
+.blog img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.blog__caption {
+  position: absolute;
+  inset: auto 0 0;
+  margin: 0;
+  padding: 5px;
+  background: rgba(17, 17, 17, 0.6);
+  color: #fff;
+  font-size: 0.8em;
+}
+
+.iconmenu {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.iconmenu li {
+  width: 12%;
+}
+
+.iconmenu a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 700;
+  text-align: center;
+}
+
+.iconmenu svg {
+  width: 100px;
+  height: 100px;
+}
+
+.contact__lead {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.contact__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.contact__tel a {
+  font-size: 40px;
+  letter-spacing: 0.2rem;
+}
+
+.footer {
+  background: #f3c261;
+}
+
+.footer__inner {
+  display: flex;
+  gap: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 60px;
+}
+
+.footer__info {
+  width: 40%;
+}
+
+.footer__info .logo {
+  margin-bottom: 20px;
+}
+
+.footer__map {
+  display: grid;
+  place-items: center;
+  width: 60%;
+  min-height: 300px;
+  background: #fff;
+  opacity: 0.8;
+}
+
+.footer__note {
+  margin: 0;
+  font-size: 0.75em;
+}
+
+.footer__pills {
+  display: flex;
+  gap: 10px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid #111;
+  border-radius: 14px;
+}
+
+.pill:hover {
+  background: #111;
+  color: #f3c261;
+}
+
+.pagetop {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 45px;
+  height: 45px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.pagetop::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border-top: 3px solid #f3c261;
+  border-left: 3px solid #f3c261;
+  transform: rotate(45deg);
+}
+
+.pagetop.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Desktop-first overrides, at the reference's breakpoints. */
+@media (max-width: 1210px) {
+  .header.is-scrolled {
+    height: 60px;
+  }
+
+  .hamburger {
+    display: block;
+    position: relative;
+    z-index: 12;
+    width: 40px;
+    height: 15px;
+    cursor: pointer;
+  }
+
+  .hamburger span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #111;
+    transition: all 0.5s;
+  }
+
+  .hamburger span:first-child {
+    top: 0;
+  }
+
+  .hamburger span:last-child {
+    bottom: 0;
+  }
+
+  .drawer-toggle:checked ~ .hamburger span:first-child {
+    top: 6.5px;
+    transform: rotate(22.5deg);
+  }
+
+  .drawer-toggle:checked ~ .hamburger span:last-child {
+    bottom: 6.5px;
+    transform: rotate(-22.5deg);
+  }
+
+  .gnav {
+    position: fixed;
+    top: 0;
+    right: -250px;
+    z-index: 11;
+    width: 250px;
+    height: 100vh;
+    padding: 100px 20px 20px;
+    background: #fff;
+    border-left: 1px solid #eee;
+    transition: right 0.5s;
+  }
+
+  .drawer-toggle:checked ~ .gnav {
+    right: 0;
+  }
+
+  .gnav ul {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .gnav .header-tel {
+    margin: 1em 0 0;
+    text-align: center;
+  }
+}
+
+@media (max-width: 1000px) {
+  .news {
+    margin: 25px;
+  }
+}
+
+@media (max-width: 800px) {
+  .guide {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .guide li {
+    width: 100%;
+  }
+
+  .cast__card {
+    width: 48%;
+  }
+
+  .cast {
+    gap: 4%;
+  }
+
+  .blog {
+    flex-direction: column;
+  }
+
+  .iconmenu {
+    flex-wrap: wrap;
+    row-gap: 25px;
+  }
+
+  .iconmenu li {
+    width: 33%;
+  }
+
+  .footer__inner {
+    flex-direction: column;
+    padding: 40px 25px;
+  }
+
+  .footer__info,
+  .footer__map {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .section {
+    padding: 30px 25px;
+  }
+
+  /* Portrait photos on phones. */
+  .hero__slides {
+    aspect-ratio: 4 / 5;
+  }
+
+  .news {
+    flex-direction: column;
+  }
+
+  .news__label {
+    width: 100%;
+    padding: 0.3em;
+  }
+
+  /* In a column the flex basis would override the one-line height. */
+  .news__window {
+    flex: none;
+  }
+
+  .timetable {
+    font-size: 0.8em;
+    letter-spacing: 0;
+  }
+
+  .timetable th,
+  .timetable td {
+    padding: 0.4em 0.2em;
+  }
+
+  .timetable tbody th {
+    white-space: normal;
+  }
+
+  .catchbtn {
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  .section {
+    padding: 30px 20px;
+  }
+
+  h2 {
+    line-height: 1.5;
+  }
+
+  .header__seo {
+    display: none;
+  }
+
+  .contact__lead {
+    font-size: 18px;
+  }
+
+  .contact__tel a {
+    font-size: 28px;
+  }
+
+  .link01 {
+    padding: 0 40px;
+  }
+
+  .footer__map {
+    display: none;
+  }
+}
+
+/* ---- Shared by both page types ---- */
+
+.gnav a[aria-current='page'] {
+  color: #f3c261;
+}
+
+.cast__card > a {
+  display: block;
+}
+
+.cast__card > a:hover {
+  color: #111;
+}
+
+.note {
+  font-size: 0.9em;
+}
+
+/* ---- Sub-pages ---- */
+
+/* On sub-pages the hours block sits flush under the content above it. */
+.page #timetable-section {
+  padding-top: 0;
+  border-bottom: 1px solid #f3c261;
+}
+
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.5em;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 15px;
+  list-style: none;
+  font-size: 0.8em;
+}
+
+.breadcrumb li + li::before {
+  content: '>';
+  margin-right: 0.5em;
+}
+
+.breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-title {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 15px;
+}
+
+.page-title h1 {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.8;
+}
+
+.page-band {
+  height: 60px;
+  background: #f6f6f6;
+}
+
+/* Two equal columns, closed by a thin yellow rule. */
+.con-a-section {
+  display: flex;
+  padding-bottom: 60px;
+  border-bottom: 1px solid #f3c261;
+}
+
+.con-a-section > * {
+  width: 50%;
+  padding: 0 15px;
+}
+
+.con-a-section.line_none {
+  border-bottom: none;
+}
+
+/* 30 / 70 columns with the same rule. */
+.con-b-section {
+  display: flex;
+  margin-bottom: 40px;
+  padding: 40px 0 60px;
+  border-bottom: 1px solid #f3c261;
+}
+
+.con-b-box:first-child {
+  width: 30%;
+}
+
+.con-b-box:last-child {
+  width: 70%;
+  padding-left: 25px;
+}
+
+.con-b-box.bg {
+  min-height: 260px;
+  background-size: cover;
+  background-position: center;
+}
+
+.con-b-box--icon {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.con-b-box--icon svg {
+  width: 100px;
+  height: 100px;
+}
+
+/* Rows divided by horizontal rules only, unlike the fully ruled price table. */
+.con_in_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.con_in_table th,
+.con_in_table td {
+  padding: 1.5em 0.5em;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+  vertical-align: top;
+}
+
+.con_in_table th {
+  width: 20%;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+
+.con_in_table td {
+  padding-left: 2.5em;
+}
+
+/* Chapter headings numbered "01." in yellow Lato black italic. */
+.num_h2__num {
+  margin-right: 0.4em;
+  color: #f3c261;
+  font-family: 'Lato', sans-serif;
+  font-style: italic;
+  font-weight: 900;
+  font-size: 1.2em;
+}
+
+.listmark {
+  margin: 0 0 1.5em;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.numlist {
+  margin: 0 0 1.5em;
+  padding-left: 1.5em;
+}
+
+.numlist li::marker {
+  font-weight: 700;
+}
+
+/* Cream box with ruled paragraphs (shop page). */
+.flame {
+  padding: 15px 25px;
+  background: #fff7e6;
+}
+
+.flame p {
+  margin: 0 0 0.7em;
+  padding-bottom: 0.7em;
+  line-height: 1.5;
+  border-bottom: 1px solid #f3c261;
+}
+
+.company_content p {
+  line-height: 2.2;
+}
+
+.company_content__photo {
+  padding: 0 60px !important;
+}
+
+/* Cat list: business-card style, cream with a thick yellow bottom edge. */
+.allcast {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.allcast > li {
+  width: 31%;
+  margin: 5px 1%;
+  padding: 10px;
+  background: #fff7e6;
+  border-bottom: 6px solid #f3c261;
+  text-align: center;
+}
+
+.allcast > li > a:hover {
+  color: #111;
+}
+
+.allcast__photo {
+  overflow: hidden;
+  aspect-ratio: 485 / 400;
+}
+
+.allcast__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.6s;
+}
+
+.allcast > li:hover .allcast__photo img {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.allcast__photo--mosaic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.allcast__name {
+  margin: 10px 0 0;
+  padding-bottom: 10px;
+  border-bottom: 4px dotted #f3c261;
+  font-weight: 700;
+}
+
+.allcast__sex {
+  margin-left: 0.3em;
+  font-size: 0.8em;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.allcast__info {
+  padding-top: 10px;
+}
+
+.allcast__info p {
+  margin: 0 0 0.5em;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+.allcast__info .allcast__catch {
+  margin-bottom: 1em;
+  font-size: 1em;
+  font-weight: 700;
+  line-height: 2;
+}
+
+.link01.small {
+  height: 30px;
+  padding: 0 60px;
+  font-size: 0.8em;
+}
+
+/* Cat page: name filter on a cream band, dot grows in for the current cat. */
+.categorylist-section {
+  padding: 5px 20px 15px;
+  background: #fff7e6;
+}
+
+.categorylist {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 1em;
+  background: #fff;
+}
+
+.categorylist ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.categorylist li {
+  width: 14%;
+  min-width: 140px;
+}
+
+.categorylist a {
+  position: relative;
+  display: inline-block;
+  padding-left: 18px;
+  color: #f2a200;
+  font-weight: 700;
+}
+
+.categorylist a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: #f3c261;
+  transform: scale(0);
+  transition: transform 0.3s;
+}
+
+.categorylist a:hover::before,
+.categorylist a[aria-current='page']::before {
+  transform: scale(1);
+}
+
+.open_title summary {
+  position: relative;
+  padding-left: 25px;
+  color: #f2a200;
+  font-weight: 700;
+  list-style: none;
+  cursor: pointer;
+}
+
+.open_title summary::-webkit-details-marker {
+  display: none;
+}
+
+.open_title summary::before,
+.open_title summary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 15px;
+  height: 2px;
+  background: #f2a200;
+  transition: transform 0.5s;
+}
+
+.open_title summary::after {
+  transform: rotate(90deg);
+}
+
+.open_title[open] summary::before {
+  transform: rotate(45deg);
+}
+
+.open_title[open] summary::after {
+  transform: rotate(135deg);
+}
+
+.cat-photo {
+  position: relative;
+}
+
+.cat-photo img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+/* Yellow name tag on the photo's lower left, as on the reference's post cards. */
+.cat-photo__tag {
+  position: absolute;
+  left: 23px;
+  bottom: 6px;
+  padding: 0 0.5em;
+  border-radius: 12px;
+  background: #f3c261;
+  font-size: 0.9em;
+}
+
+.cat-profile {
+  margin-top: 1.5em;
+}
+
+/* Price board (estimated from the reference's menu image): white cards on a
+   yellow ground, like a paper menu. */
+.menu-board {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  padding: 25px;
+  background: #f3c261;
+}
+
+.menu-board__card {
+  padding: 15px 20px;
+  border-radius: 12px;
+  background: #fff;
+  text-align: center;
+}
+
+.menu-board__card p {
+  margin: 0;
+}
+
+.menu-board__label {
+  font-weight: 700;
+}
+
+.menu-board__price {
+  font-size: 1.2em;
+}
+
+.map-box {
+  display: grid;
+  place-items: center;
+  min-height: 240px;
+  margin-top: 25px;
+  background: #f6f6f6;
+}
+
+/* Same shape as the main call to action, in the light yellow. */
+.faqbtn {
+  margin: 0;
+  background: #f2d291;
+}
+
+/* Contact form */
+.contact-tel a {
+  font-size: 2em;
+}
+
+.item_text {
+  width: 100%;
+  height: 40px;
+  padding: 5px 10px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  font: inherit;
+}
+
+.item_text--area {
+  height: 200px;
+}
+
+.required {
+  margin-left: 0.5em;
+  color: #f3c261;
+  font-size: 0.7em;
+  font-weight: 700;
+}
+
+.privacy-title {
+  margin-top: 40px;
+  font-size: 1.2em;
+}
+
+.privacy_box {
+  height: 300px;
+  overflow: auto;
+  padding: 10px 15px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  background: #fafafa;
+  color: #333;
+  font-size: 12px;
+}
+
+.agree {
+  margin: 1.5em 0;
+  text-align: center;
+}
+
+/* The one square button: it matches the inputs instead of the pills. */
+.form_btn {
+  width: 160px;
+  height: 50px;
+  border: 1px solid #f3c261;
+  border-radius: 5px;
+  background: #f3c261;
+  color: #111;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.form_btn:hover {
+  background: #fff;
+  color: #f3c261;
+}
+
+@media (max-width: 900px) {
+  .allcast > li {
+    width: 48%;
+  }
+}
+
+@media (max-width: 800px) {
+  .page-title h1 {
+    font-size: 24px;
+  }
+
+  .page-band {
+    height: 30px;
+  }
+
+  .con-a-section,
+  .con-b-section {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0 30px;
+  }
+
+  .con-a-section > *,
+  .con-b-box:first-child,
+  .con-b-box:last-child {
+    width: 100%;
+    padding: 0;
+  }
+
+  .company_content__photo {
+    padding: 0 !important;
+  }
+
+  .con-b-box.bg {
+    min-height: 160px;
+  }
+
+  .menu-board {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .con_in_table,
+  .con_in_table tbody,
+  .con_in_table tr,
+  .con_in_table th,
+  .con_in_table td {
+    display: block;
+    width: 100%;
+  }
+
+  .con_in_table th {
+    padding: 1em 0.5em 0.3em;
+    border-bottom: none;
+  }
+
+  .con_in_table td {
+    padding: 0 0.5em 1em;
+    border-top: none;
+  }
+}
+
+@media (max-width: 580px) {
+  .allcast > li {
+    width: 98%;
+  }
+
+  .categorylist {
+    height: 160px;
+    overflow: auto;
+    border-top: 3px solid #ddd;
+    border-bottom: 3px solid #ddd;
+  }
+}
+
+@media (max-width: 480px) {
+  .num_h2__num {
+    display: block;
+  }
+
+  .company_content p {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .link01.small {
+    padding: 0 30px;
+  }
+}
+
+/* michixsa.com: tells visitors the shop is fictional and links back. Not part
+   of the reference design, so it sits outside the fixed header. */
+.sample-bar {
+  margin: 0;
+  padding: 0 20px;
+  background: #f6f6f6;
+  font-size: 12px;
+  text-align: center;
+}
+
+.sample-bar a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  margin-left: 1em;
+  color: #111;
+}

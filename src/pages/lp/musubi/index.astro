@@ -1,0 +1,186 @@
+---
+import MusubiLayout from '../../../layouts/MusubiLayout.astro';
+import GuideCards from './_components/GuideCards.astro';
+import Timetable from './_components/Timetable.astro';
+import { dotDate, getCats, getNews, getShop, imageUrl } from './_lib/data';
+
+const shop = getShop();
+const cats = getCats();
+const news = getNews();
+const waiting = cats.filter((cat) => cat.status !== '卒業');
+const slides = waiting.slice(0, 3);
+
+const reasons = [
+  '保護された猫だけが暮らすカフェです',
+  '健康診断・ワクチン・不妊去勢手術を済ませた猫たちです',
+  '気になる子がいたら、その場でスタッフに相談できます',
+  'ご自宅で2週間ほど暮らす「トライアル」で相性を確かめられます',
+  '予約なしでも、ふらっと立ち寄れます',
+];
+
+const iconMenu = [
+  { label: 'お店について', href: '/lp/musubi/about/', shape: 'circle' },
+  { label: '料金', href: '/lp/musubi/system/', shape: 'rect' },
+  { label: '猫たち', href: '/lp/musubi/cats/', shape: 'cat' },
+  { label: 'アクセス', href: '/lp/musubi/system/#access', shape: 'circle' },
+  { label: 'ブログ', href: '#blog', shape: 'rect' },
+  { label: 'お問い合わせ', href: '/lp/musubi/contact/', shape: 'cat' },
+];
+---
+
+<MusubiLayout title={shop.name} description={`${shop.name}の公式サイト。${shop.catchcopy}`}>
+  <section class="hero" aria-label="メイン写真">
+    <div class="hero__slides">
+      {
+        slides.map((cat, index) => (
+          <img
+            src={imageUrl(cat.photo, 520)}
+            width={cat.photo.width}
+            height={cat.photo.height}
+            alt={`${cat.name}の写真`}
+            style={`animation-delay: ${index * 5}s`}
+            fetchpriority={index === 0 ? 'high' : undefined}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="news">
+    <p class="news__label">お知らせ</p>
+    <div class="news__window">
+      <ul class="news__list">
+        {
+          [...news, ...news.slice(0, 1)].map((item) => (
+            <li>
+              <span class="lato">{dotDate(item.publishedAt)}</span>
+              <span class="news__title">{item.title}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <Timetable shop={shop} />
+
+  <section class="section section--cream" id="price">
+    <div class="container">
+      <h2>料金</h2>
+      <table class="price">
+        <tbody>
+          {
+            shop.prices.map((row) => (
+              <tr>
+                <th>{row.label}</th>
+                <td>{row.price}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      <p class="center"><a class="link01" href="/lp/musubi/system/">詳しくはこちら</a></p>
+    </div>
+  </section>
+
+  <GuideCards heading="猫たちとゆっくり過ごせる保護猫カフェ" />
+
+  <section class="section" id="cats">
+    <div class="container">
+      <h2>今いる猫たち</h2>
+      <ul class="cast">
+        {
+          waiting.map((cat) => (
+            <li class="cast__card">
+              <a href={`/lp/musubi/cats/${cat.id}/`}>
+                <div class="cast__photo">
+                  <img src={imageUrl(cat.photo, 240)} width="480" height="480" alt={`${cat.name}の写真`} loading="lazy" />
+                </div>
+                <p class="cast__name">{cat.name}</p>
+                <p class="cast__meta">
+                  {cat.status}｜{cat.sex}・{cat.age}
+                </p>
+                <p class="cast__profile">{cat.profile}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="center"><a class="link01" href="/lp/musubi/cats/">猫たちの紹介を見る</a></p>
+    </div>
+  </section>
+
+  <section class="section section--cream" id="reasons">
+    <div class="container">
+      <h2 class="con_h2">「むすび」が選ばれる{reasons.length}つの理由</h2>
+      <div class="reasons">
+        <ol>
+          {reasons.map((reason) => <li>{reason}</li>)}
+        </ol>
+        <p>{shop.concept}</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="blog">
+    <div class="container">
+      <h2>スタッフブログ</h2>
+      <ul class="blog">
+        {
+          news.map((item, index) => {
+            const cat = waiting[index % waiting.length];
+            return (
+              cat && (
+                <li>
+                  <img src={imageUrl(cat.photo, 240)} width="480" height="320" alt="" loading="lazy" />
+                  <p class="blog__caption">
+                    <span class="lato">{dotDate(item.publishedAt)}</span>
+                    <br />
+                    {item.title}
+                  </p>
+                </li>
+              )
+            );
+          })
+        }
+      </ul>
+      <p class="center"><a class="link01 light" href="#blog">ブログを見る</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ul class="iconmenu">
+        {
+          iconMenu.map((item) => (
+            <li>
+              <a href={item.href}>
+                <svg viewBox="0 0 100 100" aria-hidden="true">
+                  {item.shape === 'circle' && <circle cx="50" cy="50" r="36" fill="none" stroke="#111" stroke-width="8" />}
+                  {item.shape === 'rect' && (
+                    <rect x="16" y="22" width="68" height="56" rx="8" fill="none" stroke="#111" stroke-width="8" />
+                  )}
+                  {item.shape === 'cat' && <path d="M22 84V40L30 16l16 18h8l16-18 8 24v44z" fill="#111" />}
+                </svg>
+                <span>{item.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--cream contact" id="contact">
+    <div class="container center">
+      <p class="contact__lead">お問い合わせはこちらから、お気軽にご連絡ください。</p>
+      <p class="contact__buttons">
+        <a class="link01" href="/lp/musubi/contact/">お問い合わせフォーム</a>
+        <a class="link01 light" href="/lp/musubi/system/">ご利用案内・料金</a>
+      </p>
+      <p class="contact__lead">お電話でのお問い合わせ</p>
+      <p>受付時間：{shop.hours}</p>
+      <p class="contact__tel"><a class="lato" href={`tel:${shop.phone.replaceAll('-', '')}`}>{shop.phone}</a></p>
+    </div>
+  </section>
+</MusubiLayout>

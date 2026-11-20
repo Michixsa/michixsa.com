@@ -1,0 +1,131 @@
+---
+// Shared frame for every page, modelled on https://cattail.jp/. Like that
+// theme, all styles live in one stylesheet (common.css).
+import '../pages/lp/musubi/_styles/common.css';
+import { getShop } from '../pages/lp/musubi/_lib/data';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const shop = getShop();
+const siteName = `${shop.name}（架空のサンプル）`;
+const pageTitle = title === shop.name ? siteName : `${title}｜${siteName}`;
+const tel = `tel:${shop.phone.replaceAll('-', '')}`;
+const current = Astro.url.pathname;
+
+const nav = [
+  { href: '/lp/musubi/about/', label: 'お店について' },
+  { href: '/lp/musubi/cats/', label: '猫たちの紹介' },
+  { href: '/lp/musubi/system/', label: '料金・営業時間・アクセス' },
+  { href: '/lp/musubi/contact/', label: 'お問い合わせ' },
+];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/lp/musubi/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300;1,700;1,900&family=Noto+Sans+JP:wght@400;700&display=swap"
+    />
+    <title>{pageTitle}</title>
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <header class="header" id="header">
+      <div class="header__inner">
+        <p class="header__seo">架空のお店のサンプルです。店名・住所・猫のプロフィールは作りものです。</p>
+        <a class="logo" href="/lp/musubi/">
+          <span class="logo__kind">保護猫カフェ</span>
+          <span class="logo__brand">むすび</span>
+        </a>
+        <input type="checkbox" id="drawer-toggle" class="drawer-toggle" />
+        <label for="drawer-toggle" class="hamburger" aria-label="メニュー">
+          <span></span>
+          <span></span>
+        </label>
+        <nav class="gnav" aria-label="メインメニュー">
+          <ul>
+            {
+              nav.map((item) => (
+                <li>
+                  <a href={item.href} aria-current={current.startsWith(item.href) ? 'page' : undefined}>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <a class="header-tel" href={tel}><span class="lato">TEL {shop.phone}</span></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <p class="sample-bar">
+      これは架空のサンプルです。「保護猫カフェ むすび」は実在しません。
+      <a href="/works/sample-musubi/">解説を見る</a>
+      <a href="/">michixsa のトップへ戻る</a>
+    </p>
+
+    <main id="top">
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <div class="footer__info">
+          <a class="logo" href="/lp/musubi/">
+            <span class="logo__kind">保護猫カフェ</span>
+            <span class="logo__brand">むすび</span>
+          </a>
+          <p>
+            {shop.address}<br />
+            {shop.access}<br />
+            TEL <span class="lato">{shop.phone}</span>
+          </p>
+          <p class="footer__pills">
+            <a class="pill" href="/lp/musubi/contact/"><span class="lato">mail</span></a>
+            <a class="pill" href="/lp/musubi/system/#access"><span class="lato">map</span></a>
+          </p>
+          <p class="footer__note">このサイトは提案用の架空のサンプルです。</p>
+        </div>
+        <div class="footer__map">地図（公開時に Google マップ）</div>
+      </div>
+    </footer>
+
+    <a class="pagetop" id="pagetop" href="#top" aria-label="ページの先頭へ"></a>
+
+    <script is:inline>
+      // The reference shrinks the fixed header and shows the page-top button
+      // once the page scrolls, and fades the whole page in on load.
+      const header = document.getElementById('header');
+      const pagetop = document.getElementById('pagetop');
+      const onScroll = () => {
+        header.classList.toggle('is-scrolled', window.scrollY > 0);
+        pagetop.classList.toggle('is-visible', window.scrollY > 100);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      window.addEventListener('load', () => document.body.classList.add('is-loaded'));
+      document.querySelectorAll('.gnav a').forEach((link) =>
+        link.addEventListener('click', () => {
+          document.getElementById('drawer-toggle').checked = false;
+        }),
+      );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+---
+// Breadcrumb, plain text title and the grey band that open every sub-page.
+interface Props {
+  title: string;
+  /** Intermediate crumbs between home and this page. */
+  trail?: { href: string; label: string }[];
+  /** The cat pages drop the grey band, as the reference's category pages do. */
+  band?: boolean;
+}
+
+const { title, trail = [], band = true } = Astro.props;
+---
+
+<nav class="breadcrumb" aria-label="パンくず">
+  <ol>
+    <li>
+      <a href="/lp/musubi/">
+        <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+          <path d="M8 1 1 7.5h2V15h4v-4h2v4h4V7.5h2z" fill="currentColor"></path>
+        </svg>
+        ホーム
+      </a>
+    </li>
+    {
+      trail.map((crumb) => (
+        <li>
+          <a href={crumb.href}>{crumb.label}</a>
+        </li>
+      ))
+    }
+    <li aria-current="page">{title}</li>
+  </ol>
+</nav>
+<div class="page-title">
+  <h1>{title}</h1>
+</div>
+{band && <div class="page-band"></div>}
