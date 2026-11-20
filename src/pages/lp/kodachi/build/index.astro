@@ -3,32 +3,32 @@ import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
 import FramePhoto from '../_components/FramePhoto.astro';
 import PageHero from '../_components/PageHero.astro';
 import ContactCta from '../_components/ContactCta.astro';
-import path from '../../../../assets/lp/kodachi/work-build.webp';
-import azalea from '../../../../assets/lp/kodachi/strip-azalea.webp';
-import pine from '../../../../assets/lp/kodachi/examples-pine.webp';
+import plan from '../../../../assets/lp/kodachi/build-plan.webp';
+import corner from '../../../../assets/lp/kodachi/work-build.webp';
+import shrubs from '../../../../assets/lp/kodachi/hero-pc.webp';
 import hedge from '../../../../assets/lp/kodachi/examples-hedge.webp';
 
-const heroWidths = [640, 960, 1280, 1600];
+const heroWidths = [640, 960, 1280, 1448];
 const services = [
   {
     title: '植え替え',
     body: '弱った低木を、別の木に植え替えます。残す木は先に分けます。',
-    image: azalea,
-    alt: '軒先のツツジと、家の壁（AIで生成した画像です）',
-    widths: [360, 520, 800],
+    image: shrubs,
+    alt: '縁側から見た住宅の小さな庭。低めの常緑樹、苔のついた飛び石、砂利（AIで生成した画像です）',
+    widths: [480, 800, 1200],
   },
   {
     title: '小さな庭の作り直し',
     body: '庭全体を一度に変えず、残す木と、手を入れる範囲を決めてから進めます。',
-    image: pine,
-    alt: '住宅の塀の手前で、枝を短く整えた松（AIで生成した画像です）',
+    image: corner,
+    alt: '庭の角。明るい灰色の砂利と飛び石、低木（AIで生成した画像です）',
     widths: [480, 800, 1200],
   },
   {
     title: '庭の一部の直し',
     body: '生垣の高さや、通りに面したところだけ直すこともできます。',
     image: hedge,
-    alt: '道路沿いに、上面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）',
+    alt: '住宅地の歩道沿いに並ぶ、常緑の生垣（AIで生成した画像です）',
     widths: [480, 800, 1200],
   },
 ];
@@ -49,10 +49,10 @@ const steps = [
   <PageHero
     en="GARDEN"
     title="庭づくり"
-    image={path}
-    alt="家の脇の通路に敷いた、明るい灰色の砂利と飛び石（AIで生成した画像です）"
+    image={plan}
+    alt="木の机の上の、鉛筆で描いた庭の図と石、鉛筆（AIで生成した画像です）"
     widths={heroWidths}
-    objectPosition="center 70%"
+    objectPosition="center 58%"
   />
 
   <section class="section" data-reveal aria-labelledby="build-services">
@@ -60,7 +60,7 @@ const steps = [
       <header class="section-head">
         <p class="en">WORK</p>
         <h2 id="build-services">庭づくりでできること</h2>
-        <p class="lead">人が歩くところには、砂利と飛び石を足せます。上の写真は、その仕上がりの見本です。</p>
+        <p class="lead">人が歩くところには、砂利と飛び石を足せます。上の写真は、作業前の図の見本です。</p>
       </header>
       <div class="cards">
         {

@@ -3,12 +3,12 @@ import KodachiLayout from '../../../../layouts/KodachiLayout.astro';
 import FramePhoto from '../_components/FramePhoto.astro';
 import PageHero from '../_components/PageHero.astro';
 import ContactCta from '../_components/ContactCta.astro';
+import care from '../../../../assets/lp/kodachi/work-care.webp';
 import tools from '../../../../assets/lp/kodachi/care-tools.webp';
 import pine from '../../../../assets/lp/kodachi/examples-pine.webp';
 import hedge from '../../../../assets/lp/kodachi/examples-hedge.webp';
-import yard from '../../../../assets/lp/kodachi/garden.webp';
 
-const heroWidths = [640, 960, 1280, 1600];
+const heroWidths = [640, 960, 1280, 1448];
 const services = [
   {
     title: '庭木の剪定',
@@ -21,15 +21,15 @@ const services = [
     title: '生垣の刈り込み',
     body: '道路に面した生垣を、通りから見て高さが揃うように刈ります。',
     image: hedge,
-    alt: '道路沿いに、上面を平らに刈り込んだ常緑の生垣（AIで生成した画像です）',
+    alt: '住宅地の歩道沿いに並ぶ、常緑の生垣（AIで生成した画像です）',
     widths: [480, 800, 1200],
   },
   {
     title: '草取り・清掃',
     body: '植込みの周りの草や落ち葉を集め、麻袋にまとめて運び出します。',
-    image: yard,
-    alt: '住宅の小さな庭。整えられた松とツツジ、ブロック塀が見える（AIで生成した画像です）',
-    widths: [480, 960, 1280],
+    image: tools,
+    alt: '木の板の上に置いた、使い込んだ刈り込みばさみと麻袋（AIで生成した画像です）',
+    widths: [480, 800, 1200],
   },
 ];
 const prices = [
@@ -53,10 +53,10 @@ const flow = [
   <PageHero
     en="CARE"
     title="手入れ・剪定"
-    image={tools}
-    alt="木の台に置いた、使い込んだ刈り込みばさみ、剪定ばさみ、折りたたみのこぎり、麻縄と麻袋（AIで生成した画像です）"
+    image={care}
+    alt="刈り込んだ直後の生垣の上面と、置かれた刈り込みばさみ（AIで生成した画像です）"
     widths={heroWidths}
-    objectPosition="center 42%"
+    objectPosition="center 40%"
   />
 
   <section class="section" data-reveal aria-labelledby="care-services">
