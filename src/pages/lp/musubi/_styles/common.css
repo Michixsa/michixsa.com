@@ -1485,10 +1485,6 @@ h2 {
   padding: 6px 0;
 }
 
-.bar-short {
-  white-space: nowrap;
-}
-
 .bar-links {
   display: flex;
   flex-wrap: wrap;
