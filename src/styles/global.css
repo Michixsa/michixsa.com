@@ -272,6 +272,17 @@ section{padding-block:var(--sec)}
 .sample-open{margin-top:auto;padding:4px 20px 8px;font-size:15px;font-weight:800;color:var(--accent-ink)}
 .sample-main:hover h2,.sample-main:hover h3{text-decoration:underline}
 @media (min-width:1024px){.sample-grid{grid-template-columns:repeat(4,1fr)}}
+.sample-carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.sample-carousel::-webkit-scrollbar{display:none}
+.sample-carousel:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.sample-carousel>li{flex:0 0 85%;scroll-snap-align:start}
+.carousel-dots{display:flex;justify-content:center;margin-top:8px}
+.carousel-dots[hidden]{display:none}
+.carousel-dots button{display:grid;place-items:center;width:48px;height:48px;padding:0;border:0;background:none;cursor:pointer}
+.carousel-dots button::before{content:"";width:12px;height:12px;border-radius:50%;border:2px solid var(--muted);box-sizing:border-box;transition:background .2s,border-color .2s}
+.carousel-dots button[aria-current="true"]::before{background:var(--accent);border-color:var(--accent)}
+@media (min-width:720px){.sample-carousel>li{flex-basis:calc((100% - 20px)/2)}}
+@media (min-width:1024px){.sample-carousel>li{flex-basis:calc((100% - 60px)/4)}}
 
 .chevron-list{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:12px}
 .chevron-list li{display:flex;gap:14px;align-items:center;background:var(--main);color:#fff;border-radius:999px;padding:12px 20px;min-height:48px}
