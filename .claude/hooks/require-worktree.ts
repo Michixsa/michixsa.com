@@ -6,6 +6,7 @@
  * in the main worktree is how edits end up on the wrong branch.
  */
 import { spawnSync } from 'node:child_process';
+import os from 'node:os';
 import path from 'node:path';
 
 type HookInput = { cwd?: string; tool_input?: { command?: string } };
@@ -13,6 +14,11 @@ type HookInput = { cwd?: string; tool_input?: { command?: string } };
 const input = JSON.parse(await Bun.stdin.text()) as HookInput;
 const command = input.tool_input?.command ?? '';
 const cwd = input.cwd ?? process.cwd();
+
+const shells = new Set(['sh', 'bash', 'zsh', 'fish', 'dash']);
+const wrappers = new Set(['command', 'builtin', 'env', 'exec']);
+// Global git options whose value is the next word.
+const gitOptionsWithValue = new Set(['-c', '--git-dir', '--work-tree', '--namespace', '--config-env']);
 
 function git(dir: string, ...args: string[]): string | undefined {
   const result = spawnSync('git', ['-C', dir, ...args], { encoding: 'utf8' });
@@ -26,47 +32,174 @@ function isMainWorktree(dir: string): boolean {
   return gitDir !== undefined && gitDir === commonDir;
 }
 
-const createFlags = new Set(['-c', '-C', '-b', '-B', '--create', '--force-create', '--orphan']);
+/**
+ * Splits a shell script into simple commands, each a list of words with the
+ * quoting removed. Variables and command substitutions are left unexpanded.
+ */
+function parseCommands(script: string): string[][] {
+  const commands: string[][] = [];
+  let words: string[] = [];
+  let word = '';
+  // Tracks whether a word has started, so that '' still counts as a word.
+  let inWord = false;
+  const endWord = () => {
+    if (inWord) words.push(word);
+    word = '';
+    inWord = false;
+  };
+  const endCommand = () => {
+    endWord();
+    if (words.length > 0) commands.push(words);
+    words = [];
+  };
+  for (let i = 0; i < script.length; i++) {
+    const ch = script[i];
+    if (ch === "'") {
+      // Single quotes keep everything literally up to the closing quote.
+      const close = script.indexOf("'", i + 1);
+      const end = close === -1 ? script.length : close;
+      word += script.slice(i + 1, end);
+      inWord = true;
+      i = end;
+    } else if (ch === '"') {
+      // Double quotes treat a backslash as an escape only before " \ $ `.
+      inWord = true;
+      for (i++; i < script.length && script[i] !== '"'; i++) {
+        if (script[i] === '\\' && '"\\$`'.includes(script[i + 1] ?? '')) i++;
+        if (i < script.length) word += script[i];
+      }
+    } else if (ch === '\\') {
+      // An unquoted backslash escapes the next character, and joins lines
+      // when that character is a newline.
+      if (script[i + 1] !== '\n') {
+        word += script[i + 1] ?? '';
+        inWord = true;
+      }
+      i++;
+    } else if (ch === ' ' || ch === '\t') {
+      endWord();
+    } else if ('\n;&|()'.includes(ch)) {
+      // Operators and subshell parentheses end the current simple command.
+      endCommand();
+    } else if (ch === '#' && !inWord) {
+      // A comment runs to the end of the line.
+      const newline = script.indexOf('\n', i);
+      i = newline === -1 ? script.length : newline - 1;
+    } else {
+      word += ch;
+      inWord = true;
+    }
+  }
+  endCommand();
+  return commands;
+}
 
-/** Returns why the git invocation must be blocked, or undefined to allow it. */
+/** Drops redirections such as `>/dev/null`, `2>` and `< file`. */
+function stripRedirections(words: string[]): string[] {
+  const kept: string[] = [];
+  for (let i = 0; i < words.length; i++) {
+    const match = /^\d*[<>]+/.exec(words[i]);
+    if (match === null) kept.push(words[i]);
+    // A bare operator takes its target from the next word.
+    else if (match[0] === words[i]) i++;
+  }
+  return kept;
+}
+
+/** Resolves the directory a `cd` with these arguments moves to. */
+function changeDir(dir: string, args: string[]): string {
+  const target = args.find((arg) => !arg.startsWith('-') || arg === '-');
+  if (target === undefined || target === '~') return os.homedir();
+  // `cd -` returns to a directory this parser cannot know; keep the current one.
+  if (target === '-') return dir;
+  if (target.startsWith('~/')) return path.join(os.homedir(), target.slice(2));
+  return path.resolve(dir, target);
+}
+
+/** True when `name` names a commit or a remote branch that checkout would track. */
+function isRef(dir: string, name: string): boolean {
+  if (git(dir, 'rev-parse', '--verify', '--quiet', `${name}^{commit}`) !== undefined) return true;
+  return (git(dir, 'for-each-ref', '--count=1', `refs/remotes/*/${name}`) ?? '') !== '';
+}
+
+/** Returns why `git switch` / `git checkout` must be blocked, or undefined to allow it. */
 function violation(args: string[], dir: string): string | undefined {
   const [subcommand, ...rest] = args;
   if (subcommand !== 'switch' && subcommand !== 'checkout') return undefined;
-  if (rest.some((arg) => createFlags.has(arg))) return 'creates a branch';
-  // `git checkout -- <path>` restores files; everything after `--` is a path.
-  const positional = rest.slice(0, rest.includes('--') ? rest.indexOf('--') : undefined);
-  const target = positional.find((arg) => !arg.startsWith('-'));
+  // Short creation flags may be clustered or carry a joined value (`-bname`);
+  // long ones may use `--create=name`.
+  const createsBranch = rest.some(
+    (arg) => /^-[^-]*[cCbB]/.test(arg) || /^--(create|force-create|orphan)(=|$)/.test(arg),
+  );
+  if (createsBranch) return 'creates a branch';
+  const separator = rest.indexOf('--');
+  const options = separator === -1 ? rest : rest.slice(0, separator);
+  const positional = options.filter((arg) => arg === '-' || !arg.startsWith('-'));
+  // `git checkout [<tree-ish>] [--] <path>…` restores files without moving HEAD.
+  if (subcommand === 'checkout') {
+    const hasPathsAfterSeparator = separator !== -1 && separator < rest.length - 1;
+    if (hasPathsAfterSeparator || positional.length > 1) return undefined;
+  }
+  let target = positional[0];
   if (target === undefined || target === 'main') return undefined;
-  if (subcommand === 'switch') return `switches to ${target}`;
-  // For checkout, only a local branch name counts; anything else is a path.
-  const isBranch = git(dir, 'show-ref', '--verify', '--quiet', `refs/heads/${target}`) !== undefined;
-  return isBranch ? `switches to ${target}` : undefined;
+  if (target === '-') {
+    // `-` means the previously checked-out branch.
+    const previous = git(dir, 'rev-parse', '--abbrev-ref', '@{-1}');
+    if (previous === undefined || previous === 'main') return undefined;
+    target = previous;
+  } else if (subcommand === 'checkout' && !isRef(dir, target)) {
+    // Anything checkout cannot resolve as a ref is a path to restore.
+    return undefined;
+  }
+  return `switches to ${target}`;
 }
 
-// Split the shell command into simple commands; quoting is ignored because
-// branch names and the flags we look for never contain spaces.
-for (const segment of command.split(/&&|\|\||[;|\n]/)) {
-  const tokens = segment.trim().split(/\s+/);
-  const gitIndex = tokens.indexOf('git');
-  if (gitIndex === -1) continue;
-  let dir = cwd;
-  let i = gitIndex + 1;
+/** Inspects one git invocation and returns why it must be blocked, if it must. */
+function checkGit(args: string[], dir: string): string | undefined {
+  let gitDir = dir;
+  let i = 0;
   // Skip global options before the subcommand, honouring `-C <dir>`.
-  while (i < tokens.length && tokens[i].startsWith('-')) {
-    if (tokens[i] === '-C' && i + 1 < tokens.length) {
-      dir = path.resolve(dir, tokens[i + 1]);
-      i += 2;
-    } else {
-      i += 1;
+  while (i < args.length && args[i].startsWith('-')) {
+    if (args[i] === '-C') gitDir = path.resolve(gitDir, args[i + 1] ?? '');
+    i += args[i] === '-C' || gitOptionsWithValue.has(args[i]) ? 2 : 1;
+  }
+  const reason = violation(args.slice(i), gitDir);
+  return reason !== undefined && isMainWorktree(gitDir) ? `${reason} in the main worktree (${gitDir})` : undefined;
+}
+
+/** Walks a shell script command by command, following `cd` and nested shells. */
+function check(script: string, startDir: string, depth = 0): string | undefined {
+  let dir = startDir;
+  for (const words of parseCommands(script).map(stripRedirections)) {
+    // Skip leading `VAR=value` assignments and wrappers that run their arguments.
+    let i = 0;
+    while (i < words.length && (/^[A-Za-z_]\w*=/.test(words[i]) || wrappers.has(words[i]))) i++;
+    const [name, ...args] = words.slice(i);
+    if (name === undefined) continue;
+    const program = path.basename(name);
+    if (program === 'cd') {
+      dir = changeDir(dir, args);
+    } else if (program === 'git') {
+      const reason = checkGit(args, dir);
+      if (reason !== undefined) return reason;
+    } else if (shells.has(program) && depth < 3) {
+      // `bash -lc '<script>'` or `fish --command '<script>'`: the script is the
+      // word after the first option that contains `c`.
+      const flag = args.findIndex((arg) => /^-[a-z]*c[a-z]*$/.test(arg) || arg === '--command');
+      const nested = flag === -1 ? undefined : args[flag + 1];
+      const reason = nested === undefined ? undefined : check(nested, dir, depth + 1);
+      if (reason !== undefined) return reason;
     }
   }
-  const reason = violation(tokens.slice(i), dir);
-  if (reason !== undefined && isMainWorktree(dir)) {
-    console.error(
-      `Blocked: this ${reason} in the main worktree (${dir}). ` +
-        'Keep the main worktree on main and create the branch with its own worktree: ' +
-        '`git wt --nocd <branch>`, then work in the printed path (see AGENTS.md).',
-    );
-    process.exit(2);
-  }
+  return undefined;
+}
+
+const reason = check(command, cwd);
+if (reason !== undefined) {
+  console.error(
+    `Blocked: this ${reason}. ` +
+      'Keep the main worktree on main and create the branch with its own worktree: ' +
+      '`git wt --nocd <branch>`, then work in the printed path (see AGENTS.md).',
+  );
+  process.exit(2);
 }
