@@ -16,7 +16,16 @@ const command = input.tool_input?.command ?? '';
 const cwd = input.cwd ?? process.cwd();
 
 const shells = new Set(['sh', 'bash', 'zsh', 'fish', 'dash']);
-const wrappers = new Set(['command', 'builtin', 'env', 'exec']);
+// Words that can precede the program of a simple command: wrappers that run
+// their arguments, and shell keywords that open a control block.
+const prefixes = new Set([
+  'command', 'builtin', 'env', 'exec', 'time', '!', '{',
+  'if', 'then', 'elif', 'else', 'while', 'until', 'do',
+  'begin', 'and', 'or', 'not',
+]);
+
+/** One simple command, or the start or end of a subshell. */
+type Token = string[] | '(' | ')';
 // Global git options whose value is the next word.
 const gitOptionsWithValue = new Set(['-c', '--git-dir', '--work-tree', '--namespace', '--config-env']);
 
@@ -36,8 +45,8 @@ function isMainWorktree(dir: string): boolean {
  * Splits a shell script into simple commands, each a list of words with the
  * quoting removed. Variables and command substitutions are left unexpanded.
  */
-function parseCommands(script: string): string[][] {
-  const commands: string[][] = [];
+function parseCommands(script: string): Token[] {
+  const commands: Token[] = [];
   let words: string[] = [];
   let word = '';
   // Tracks whether a word has started, so that '' still counts as a word.
@@ -79,8 +88,10 @@ function parseCommands(script: string): string[][] {
     } else if (ch === ' ' || ch === '\t') {
       endWord();
     } else if ('\n;&|()'.includes(ch)) {
-      // Operators and subshell parentheses end the current simple command.
+      // Operators and parentheses end the current simple command; parentheses
+      // (including `$(`) are kept so that a `cd` inside them stays inside.
       endCommand();
+      if (ch === '(' || ch === ')') commands.push(ch);
     } else if (ch === '#' && !inWord) {
       // A comment runs to the end of the line.
       const newline = script.indexOf('\n', i);
@@ -135,6 +146,8 @@ function violation(args: string[], dir: string): string | undefined {
   const separator = rest.indexOf('--');
   const options = separator === -1 ? rest : rest.slice(0, separator);
   const positional = options.filter((arg) => arg === '-' || !arg.startsWith('-'));
+  // For switch, `--` only ends the options, so the branch may follow it.
+  if (subcommand === 'switch' && separator !== -1) positional.push(...rest.slice(separator + 1));
   // `git checkout [<tree-ish>] [--] <path>…` restores files without moving HEAD.
   if (subcommand === 'checkout') {
     const hasPathsAfterSeparator = separator !== -1 && separator < rest.length - 1;
@@ -170,10 +183,21 @@ function checkGit(args: string[], dir: string): string | undefined {
 /** Walks a shell script command by command, following `cd` and nested shells. */
 function check(script: string, startDir: string, depth = 0): string | undefined {
   let dir = startDir;
-  for (const words of parseCommands(script).map(stripRedirections)) {
-    // Skip leading `VAR=value` assignments and wrappers that run their arguments.
+  // Directories to return to when each open subshell ends.
+  const outer: string[] = [];
+  for (const token of parseCommands(script)) {
+    if (token === '(') {
+      outer.push(dir);
+      continue;
+    }
+    if (token === ')') {
+      dir = outer.pop() ?? dir;
+      continue;
+    }
+    const words = stripRedirections(token);
+    // Skip leading `VAR=value` assignments, wrappers and control keywords.
     let i = 0;
-    while (i < words.length && (/^[A-Za-z_]\w*=/.test(words[i]) || wrappers.has(words[i]))) i++;
+    while (i < words.length && (/^[A-Za-z_]\w*=/.test(words[i]) || prefixes.has(words[i]))) i++;
     const [name, ...args] = words.slice(i);
     if (name === undefined) continue;
     const program = path.basename(name);
