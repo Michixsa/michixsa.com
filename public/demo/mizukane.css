@@ -7,17 +7,9 @@ a{color:var(--ink);text-underline-offset:3px}a:hover{color:var(--green-t)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 h1,h2{font-weight:800;font-feature-settings:"palt";margin:0;letter-spacing:.01em}
-/* band */
-.band{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:var(--s3);min-height:40px;padding:0 var(--s4);background:var(--ink-2);color:#fff;font-size:var(--fs-s)}
-.band-tag{background:#fff;color:var(--ink-2);font-weight:800;font-size:var(--fs-xs);padding:2px 8px;border-radius:999px;white-space:nowrap}
-.band-txt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.band-act{display:flex;gap:var(--s3);align-items:center;white-space:nowrap}.band a{color:#fff}
-.band-reset{position:relative;font:inherit;font-weight:700;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.7);border-radius:6px;padding:3px 10px;cursor:pointer}
-.band-reset::after{content:"";position:absolute;inset:-8px -4px}
-.band-reset:hover{background:rgba(255,255,255,.12)}
 /* app shell */
 .app{background:linear-gradient(90deg,var(--ink) 232px,transparent 232px);display:grid;grid-template-columns:232px 1fr;min-height:calc(100vh - 40px)}
-.side{position:sticky;top:40px;height:calc(100vh - 40px);background:var(--ink);color:#fff;display:flex;flex-direction:column;padding:var(--s4) var(--s3)}
+.side{position:sticky;top:0;height:100vh;background:var(--ink);color:#fff;display:flex;flex-direction:column;padding:var(--s4) var(--s3)}
 .brand{display:flex;gap:10px;align-items:center;padding:4px 8px 20px}.brand b{display:block;font-size:16px}.brand small{font-size:var(--fs-xs);opacity:.85}
 .mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#2a9d78,var(--green))}
 .side nav{display:flex;flex-direction:column;gap:2px;flex:1}
@@ -130,7 +122,6 @@ select,input,textarea{font:inherit;color:var(--ink)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 /* ===== SP ===== */
 @media (max-width:767px){
- .band{padding:0 12px;gap:8px}.band-txt,.band-act a{display:none}.band-act{margin-left:auto}
  .app{display:block}.side{display:none}
  .top{padding:var(--s4) var(--s4) var(--s3);align-items:center}.top h1{font-size:20px}
  .top-r{width:100%}.search{width:auto;flex:1}.top-r .btn.p{padding:0 12px}
@@ -162,8 +153,7 @@ select,input,textarea{font:inherit;color:var(--ink)}
 @media (max-width:767px){.app{background:none}}
 
 /* Tap targets and toasts. The mock uses 36–40px; this site requires 48px. */
-.band{min-height:48px}
-.btn,.band-reset,.chip,.pg a,.days button,.lnk{min-height:48px}
+.btn,.chip,.pg a,.days button,.lnk{min-height:48px}
 .side .nv{min-height:48px}
 .search{height:48px}
 .btn.sm{min-height:48px}
@@ -177,10 +167,8 @@ select,input,textarea{font:inherit;color:var(--ink)}
 @media (max-width:767px){
   .toast{bottom:84px}
   .filters .csv{display:none}
-  .band-act a.home{display:inline-flex;align-items:center;min-height:48px;color:#fff}
 }
 .date,.due,.wk-h,.wk-nav b{letter-spacing:0;word-spacing:0;font-feature-settings:normal;font-variant-numeric:normal}
 .sched li,.inq li{position:relative}
 .row1 a::after{content:"";position:absolute;inset:0}
 .inq a.btn{position:relative;z-index:1}
-@media (min-width:768px){.band-act a{display:inline-flex;align-items:center;min-height:48px}}
