@@ -16,7 +16,6 @@ html {
 
 body {
   margin: 0;
-  padding-top: 100px;
   background: #fff;
   color: #111;
   font-family: 'Noto Sans JP', sans-serif;
@@ -88,8 +87,10 @@ h2 {
 
 /* Header */
 .header {
-  position: fixed;
-  inset: 0 0 auto;
+  /* Sticky rather than the reference's fixed, so it starts below the sample bar
+     that src/middleware.ts adds. */
+  position: sticky;
+  top: 0;
   z-index: 10;
   height: 100px;
   background: #fff;
@@ -1455,20 +1456,3 @@ h2 {
   }
 }
 
-/* michixsa.com: tells visitors the shop is fictional and links back. Not part
-   of the reference design, so it sits outside the fixed header. */
-.sample-bar {
-  margin: 0;
-  padding: 0 20px;
-  background: #f6f6f6;
-  font-size: 12px;
-  text-align: center;
-}
-
-.sample-bar a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 48px;
-  margin-left: 1em;
-  color: #111;
-}

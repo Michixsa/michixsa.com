@@ -74,12 +74,6 @@ const nav = [
       </div>
     </header>
 
-    <p class="sample-bar">
-      これは架空のサンプルです。「保護猫カフェ むすび」は実在しません。
-      <a href="/works/sample-musubi/">解説を見る</a>
-      <a href="/">michixsa のトップへ戻る</a>
-    </p>
-
     <main id="top">
       <slot />
     </main>
@@ -109,21 +103,33 @@ const nav = [
     <a class="pagetop" id="pagetop" href="#top" aria-label="ページの先頭へ"></a>
 
     <script is:inline>
-      // The reference shrinks the fixed header and shows the page-top button
-      // once the page scrolls, and fades the whole page in on load.
+      // The reference shrinks the header and shows the page-top button once
+      // the page scrolls, and fades the whole page in on load.
       const header = document.getElementById('header');
       const pagetop = document.getElementById('pagetop');
+      const gnav = document.getElementById('gnav');
+      // The phone menu covers the whole screen from the top, but the header
+      // sits lower while the sample bar is in view; start the links below it
+      // so the close button never lies over the first link.
+      const placeMenu = () => {
+        const drawer = getComputedStyle(gnav).position === 'fixed';
+        gnav.style.paddingTop = drawer ? `${Math.max(header.getBoundingClientRect().bottom, 0)}px` : '';
+      };
+      window.addEventListener('resize', placeMenu);
       const onScroll = () => {
         header.classList.toggle('is-scrolled', window.scrollY > 0);
         pagetop.classList.toggle('is-visible', window.scrollY > 100);
+        if (header.classList.contains('is-open')) placeMenu();
       };
       window.addEventListener('scroll', onScroll, { passive: true });
+      header.addEventListener('transitionend', onScroll);
       onScroll();
       window.addEventListener('load', () => document.body.classList.add('is-loaded'));
       // A real button rather than the reference's hidden checkbox, so the
       // menu also opens from the keyboard.
       const menuButton = header.querySelector('.hamburger');
       const setMenu = (open) => {
+        if (open) placeMenu();
         header.classList.toggle('is-open', open);
         menuButton.setAttribute('aria-expanded', String(open));
       };

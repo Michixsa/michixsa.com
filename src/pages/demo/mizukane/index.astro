@@ -18,15 +18,6 @@ const tabs = tabbar('today');
     <link rel="stylesheet" href="/demo/mizukane.css" />
   </head>
   <body>
-    <div class="band" role="note">
-      <span class="band-tag">架空のサンプル</span>
-      <span class="band-txt">みずかね設備は実在しません。入力はこの端末のブラウザにだけ保存されます。</span>
-      <span class="band-act">
-        <a class="home" href="/">トップへ</a>
-        <a href="/works/sample-mizukane/">解説</a>
-        <button type="button" class="band-reset" data-act="reset">最初の状態に戻す</button>
-      </span>
-    </div>
     <div id="app" class="app" set:html={inner} />
     <nav id="tabs" class="tabbar" aria-label="メニュー" set:html={tabs} />
     <dialog id="ask" class="dlg">

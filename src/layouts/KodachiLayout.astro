@@ -33,7 +33,6 @@ const phone = '000-0000-0000';
   </head>
   <body>
     <div class="mast">
-      <p class="sample" role="note">架空のサンプルです。「木立造園」は実在しません。写真は AI で生成した画像です。</p>
       <header class="head">
         <a class="logo" href="/lp/kodachi/">木立造園</a>
         <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
@@ -152,7 +151,7 @@ const phone = '000-0000-0000';
     --sans: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Noto Sans JP", "Noto Sans CJK JP", "Yu Gothic", YuGothic, Meiryo, sans-serif;
   }
   *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-padding-top: 108px; }
+  html { scroll-padding-top: 72px; }
   body {
     margin: 0;
     background: var(--cream);
@@ -197,14 +196,6 @@ const phone = '000-0000-0000';
     z-index: 40;
     background: #fff;
     border-bottom: 1px solid var(--line);
-  }
-  .sample {
-    margin: 0;
-    padding: 6px 16px;
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.6;
-    text-align: center;
   }
   .head {
     display: flex;
@@ -828,7 +819,6 @@ const phone = '000-0000-0000';
     .section-head { margin-bottom: 80px; }
   }
   @media (min-width: 960px) {
-    .sample { padding-inline: 40px; }
     .head { padding: 0 40px; gap: 24px; }
     .menu-btn { display: none; }
     .nav, .nav.is-open {

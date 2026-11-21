@@ -111,12 +111,6 @@ const hours = [
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
   <body>
-    <p class="return-bar"><a href="/">michixsa のトップへ戻る</a></p>
-    <p class="sample-bar" role="note">
-      これは架空のサンプルです。「珈琲 ゆうまど」は<strong>架空の店舗</strong>で、実在しません。
-      <a href="/works/sample-cafe-lp/">制作の解説を見る</a>
-    </p>
-
     <header class="site-header">
       <div class="wrap site-header__inner">
         <a class="brand" href="#top">
@@ -491,7 +485,6 @@ const hours = [
   }
 
   /* The ring sits on the dark band, so it has to be light to stay visible. */
-  .sample-bar a:focus-visible,
   .cta-band a:focus-visible {
     outline-color: var(--bg);
   }
@@ -530,37 +523,7 @@ const hours = [
     background: linear-gradient(transparent 62%, var(--mustard) 62%);
   }
 
-  /* ---------- sample notice and header ---------- */
-
-  .return-bar {
-    margin: 0;
-    background: #1e3a5f;
-  }
-
-  .return-bar a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 48px;
-    padding: 0 1.25rem;
-    color: #fff;
-    font-weight: 700;
-  }
-
-  .sample-bar {
-    padding: 0.5rem 1.25rem;
-    background: var(--main);
-    color: var(--bg);
-    font-size: 0.8rem;
-    text-align: center;
-  }
-
-  .sample-bar a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 48px;
-    color: var(--paper);
-    text-decoration: underline;
-  }
+  /* ---------- header ---------- */
 
   .site-header {
     position: sticky;

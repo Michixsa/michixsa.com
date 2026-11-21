@@ -35,16 +35,6 @@ const nav = [
   <body>
     <a class="skip" href="#main">本文へ進む</a>
     <div class="top">
-      <div class="bar" role="note">
-        <p class="bar-main">
-          <span class="badge">架空のサンプル</span>
-          <span class="bar-long">「ひなた堂印刷」は実在しません。写真は AI で生成した画像です。</span>
-          <span class="bar-short">実在しません。写真はAI生成です。</span>
-        </p>
-        <p class="bar-links">
-          <a href="/">michixsa のトップへ戻る</a>
-        </p>
-      </div>
       <header class="head">
         <a class="brand" href="/lp/hinata/">
           <span class="mark" aria-hidden="true">ひ</span>
@@ -172,7 +162,6 @@ const nav = [
     --on-ink-muted: #c4b8a6;
     --line: #7f786c;
     --rust: #5c2e18;
-    --bar: #1e3a5f;
     --focus: #5c2e18;
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-move: cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -183,10 +172,10 @@ const nav = [
      on-ink/ink 15.13, on-ink-muted/ink 8.82, muted/paper 6.50,
      muted/surface 7.28, muted/ink 2.33 (not used on ink),
      line/paper 3.84, line/surface 4.30, white/rust 11.30, rust/paper 9.93,
-     rust/ink 1.52 (not used on ink), white/bar 11.50.
-     Focus on the bar, the ink panel, and the footer uses --on-ink. */
+     rust/ink 1.52 (not used on ink).
+     Focus on the ink panel and the footer uses --on-ink. */
   *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-padding-top: 168px; }
+  html { scroll-padding-top: 72px; }
   body {
     margin: 0;
     background: var(--paper);
@@ -271,59 +260,6 @@ const nav = [
     z-index: 40;
     background: var(--paper);
   }
-  .bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0 16px;
-    min-height: 48px;
-    padding: 0 16px;
-    background: var(--bar);
-    color: #fff;
-    font-size: 14px;
-    line-height: 1.4;
-  }
-  .bar-main, .bar-links { margin: 0; }
-  .bar-main {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 32px;
-    padding: 6px 0;
-  }
-  .bar-long { display: none; }
-  .bar-short { white-space: nowrap; }
-  .bar-links { flex: 1 0 100%; }
-  .badge {
-    display: inline-flex;
-    flex-shrink: 0;
-    align-items: center;
-    min-height: 22px;
-    padding: 0 8px;
-    background: #fff;
-    color: var(--bar);
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.2;
-  }
-  .bar-links {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0 12px;
-  }
-  .bar a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 48px;
-    color: #fff;
-    font-weight: 700;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-  .bar a:visited { color: #fff; }
-  .bar a:focus-visible { outline-color: #fff; }
   .sr {
     position: absolute;
     width: 1px;
@@ -886,11 +822,7 @@ const nav = [
   .foot-notes p { margin: 0; color: var(--on-ink-muted); font-size: 14px; line-height: 1.6; }
 
   @media (min-width: 1080px) {
-    html { scroll-padding-top: 140px; }
-    .bar { flex-wrap: nowrap; padding: 0 40px; }
-    .bar-short { display: none; }
-    .bar-long { display: inline; }
-    .bar-links { flex: 0 0 auto; }
+    html { scroll-padding-top: 92px; }
     .hero { min-height: calc(100svh - 128px); }
     .hero-photo img {
       /* Stacks and the cutter stay on the right of the ink panel. */
