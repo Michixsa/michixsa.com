@@ -1,4 +1,4 @@
-/** Deterministic fictional jobs for the landscaping-equipment contractor demo. */
+/** Deterministic fictional jobs for the plumbing and air-conditioning contractor demo. */
 
 export const TODAY = '2026-11-04';
 export const STORAGE_KEY = 'michixsa-demo-v1';

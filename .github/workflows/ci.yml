@@ -66,7 +66,7 @@ jobs:
         with:
           name: dist
           path: dist
-      # Top page and portfolio pages: every category must score 100.
+      # Team site pages: every category must score 100.
       - run: bunx lhci autorun --config=lighthouserc.json
       # Sample LPs are noindexed on purpose, so only the crawlability audit is skipped.
       - run: bunx lhci autorun --config=lighthouserc.lp.json

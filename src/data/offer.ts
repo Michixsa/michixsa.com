@@ -1,6 +1,6 @@
 /**
  * Approved prices and public copy.
- * Amounts follow pricing.md. Do not invent figures or promise 24-hour support.
+ * Do not invent figures or promise 24-hour support.
  */
 
 export const priceIntro =
