@@ -24,7 +24,7 @@ export const fictionalKinds = ['sample', 'demo', 'case'] as const;
  */
 export const workStatuses = ['active', 'completed'] as const;
 
-/** One case study per Markdown file in `src/content/works/`. */
+/** One work per Markdown file in `src/content/works/`. */
 const works = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/works' }),
   schema: z

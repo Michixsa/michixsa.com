@@ -38,7 +38,7 @@ flowchart LR
 | リンク | [lychee](https://github.com/lycheeverse/lychee) | サイト内・外部のリンクが1つでも切れている |
 | Lighthouse | [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) | パフォーマンス・アクセシビリティ・ベストプラクティス・SEO のどれかが 100 点未満（モバイル） |
 
-架空のサンプル LP には、検索結果に出ないよう `noindex` を付けています。Lighthouse の SEO 項目は `noindex` を減点するため、LP の計測（`lighthouserc.lp.json`）ではその1項目（`is-crawlable`）だけを対象から外しています。それ以外の項目はすべて合格が必要です。
+架空のサンプル LP には、検索結果に出ないよう `noindex` を付けています。Lighthouse の SEO 項目は `noindex` を減点するため、LP の計測（`lighthouserc.lp.json`）ではその1項目（`is-crawlable`）だけを対象から外しています。それ以外の項目はすべて合格が必要です。架空の管理画面の見本（`/demo/mizukane/`）もこの計測に含めます。参考サイトの雰囲気を再現した「むすび」（`/lp/musubi/`）だけは、オーナーの判断で計測の対象から外しています。
 
 ## 構成
 
@@ -53,7 +53,7 @@ src/
 │  ├─ faq.astro              # よくある質問
 │  ├─ contact.astro          # メール（info@michixsa.com）
 │  ├─ privacy.astro
-│  ├─ demo/clinic-admin/     # 架空の予約管理画面
+│  ├─ demo/mizukane/         # 架空の案件管理画面
 │  └─ lp/<name>/             # 独立したサンプル LP
 ├─ content/works/*.md
 ├─ layouts/BaseLayout.astro
@@ -64,20 +64,11 @@ src/
 
 トップページの並びは、最初の画面、できること、強み、サンプル、料金の目安、保守、進め方、同業者さまへ、チーム、よくある質問、お問い合わせです。
 
-掲載するものにはすべて `kind`（`client`・`employment`・`personal`・`sample`）があります。実在の実績には `status`（`active`・`completed`）も必須で、カードには「稼働中」「完了」「架空のサンプル」のバッジが自動で付きます。AI で生成した画像を使う作例は `aiImages: true` とし、「AI生成画像」も同じ仕組みで出します。架空のサンプルを受託実績と取り違えられないようにしています。
-
-会社員時代のインフラ業務は、制作実績としては出していません。チームのページに、個人名・勤務先・数値を出さない短い説明だけを残しています。
+掲載するものにはすべて `kind`（実在の `client`・`employment`・`personal`、架空の `sample`・`demo`・`case`）があります。実在の実績には `status`（`active`・`completed`）も必須で、解説ページ（`works/<slug>/`）には「稼働中」「完了」「架空のサンプル」のバッジが自動で付きます。トップページと一覧のカードは、「架空のサンプル」の表示を直接書いています。AI で生成した画像を使う作例は `aiImages: true` とし、「AI生成画像」も同じ仕組みで出します。架空のサンプルを受託実績と取り違えられないようにしています。
 
 ## 料金
 
 金額は `src/data/offer.ts` にまとめています。ページでは「目安（税込）」と、その金額からという意味の「〜」を付けて表示します。金額は勝手に変えないでください。
-
-## まだ決まっていないこと
-
-サイト上の【要確認】は、次の2つです。
-
-- お問い合わせの窓口（どの手段で連絡を受けるか）
-- 遠方からのご依頼と、対面での打ち合わせ
 
 ## ローカルでの開発
 

@@ -15,13 +15,14 @@ export function mailHref(subject: string, body: string): string {
   return `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-/** Japanese labels for each `kind`, shown as group headings. */
+/** Kinds that are always shown as fictional samples. */
 export const fictionalKinds = ['sample', 'demo', 'case'] as const;
 
 export function isFictional(kind: CollectionEntry<'works'>['data']['kind']): boolean {
   return (fictionalKinds as readonly string[]).includes(kind);
 }
 
+/** Japanese labels for each `kind`, shown next to the badges. */
 export const kindLabels: Record<CollectionEntry<'works'>['data']['kind'], string> = {
   client: '受託案件',
   employment: '担当した業務',
@@ -31,7 +32,7 @@ export const kindLabels: Record<CollectionEntry<'works'>['data']['kind'], string
   case: '架空のサンプル',
 };
 
-/** A status badge as shown on cards and case studies. */
+/** A status badge as shown on work pages. */
 export interface WorkBadge {
   label: string;
   tone: 'active' | 'completed' | 'sample';
